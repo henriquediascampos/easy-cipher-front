@@ -1,0 +1,52 @@
+@use "sass:map";
+$contrast: #ffffff;
+
+$holy-palette-primary: (
+    50: #e2f8fb,
+    100: #b7edf4,
+    200: #8ae2ed,
+    300: #61d6e5,
+    400: #4accde,
+    500: #41c3d8,
+    600: #3cb3c5,
+    700: #379eab,
+    800: #328993,
+    900: #296668,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: $contrast,
+        400: $contrast,
+        500: $contrast,
+        600: $contrast,
+        700: $contrast,
+        800: $contrast,
+        900: $contrast
+    ),
+);
+
+$holy-palette-accent: (
+    50: #e1f2ec,
+    100: #b6decf,
+    200: #89c9b1,
+    300: #5eb493,
+    400: #43a37f,
+    500: #32936c,
+    600: #2d8661,
+    700: #277653,
+    800: #206646,
+    900: #144b2e,
+    contrast: (
+        50: rgba(black, 0.87),
+        100: rgba(black, 0.87),
+        200: rgba(black, 0.87),
+        300: $contrast,
+        400: $contrast,
+        500: $contrast,
+        600: $contrast,
+        700: $contrast,
+        800: $contrast,
+        900: $contrast
+    ),
+);

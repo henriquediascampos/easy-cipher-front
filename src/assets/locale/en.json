@@ -1,0 +1,80 @@
+{
+    "HEADER": {
+        "TITLE": "Cipher Book"
+    },
+    "MENU": {
+        "HOME": "Home",
+        "CIPHER_FACTORY": "Manufacture of ciphers",
+        "MUSIC_BOOK": "Music Book"
+    },
+    "BUTTONS": {
+        "BUTTON_CONTINUE": "Continue",
+        "LANG_PT": "Portuguese",
+        "LANG_EN": "English",
+        "SAVE": "Save",
+        "UPDATE": "Update",
+        "CANCEL": "Cancel",
+        "CLEAN": "Clean",
+        "NEW": "New",
+        "EDIT": "Edit",
+        "SHEETS": "Sheets"
+    },
+
+    "HOME": {},
+
+    "CIPHER_FACTORY": {
+        "TITLE": "Cipher Factory",
+        "LYRICS": "Lyric",
+        "INSERT_LYRICS_PLACEHOLDER": "Type the lyrics here",
+        "CIPHER": "Cypher",
+        "TITLE_MUSIC": "Title",
+        "TONE": "Tone",
+        "REQUIRE_TONE": "Select a tone"
+    },
+
+    "FORM": {
+        "E-MAIL": "Email",
+        "EMAIL_PLACEHOLDER": "Ex. joao@example.com",
+        "EMAIL_REQUIRED": "The email is mandatory!",
+
+        "PASSWORD": "Password",
+        "PASSWORD_PLACEHOLDER": "Enter your password",
+        "PASSWORD_REQUIRED": "Password is mandatory!",
+        "FORGOT_PASSWORD": "The password is mandatory!",
+
+        "VALIDATE_PASSWORD": "Confirm password",
+        "VALIDATE_PASSWORD_PLACEHOLDER": "Please enter your password again",
+        "VALIDATE_PASSWORD_REQUIRED": "Password confirmation required!",
+
+        "PASSWORD_REQUIRED_NUMBER": "Your password must contain at least one number.",
+        "PASSWORD_REQUIRED_LOWER_CASE": "Your password must contain at least one lowercase letter",
+        "PASSWORD_REQUIRED_UPPER_CASE": "Your password must contain at least one capital letter",
+        "PASSWORD_REQUIRED_SPECIAL_CHARACTER": "Your password must contain at least one special character",
+        "PASSWORD_REQUIRED_MIN_LENGTH": "Your password must contain at least 6 characters",
+
+        "NAME": "Name",
+        "NAME_PLACEHOLDER": "Enter your name",
+        "NAME_REQUIRED": "The name is mandatory!",
+
+        "PHONE": "Phone",
+        "PHONE_PLACEHOLDER": "Enter your phone",
+        "PHONE_REQUIRED": "The phone is required!"
+    },
+
+    "LOGIN": {
+        "LOGIN": "Login",
+        "REMEMBER": "Remember me",
+        "RECOVER_PASSWORD": "Forgot password?",
+        "BUTTON_LOGIN": "Login"
+    },
+
+    "REGISTRATION": {
+        "TITLE": "Registration",
+        "CONFIRM_EMAIL": "Confirm email",
+        "NO_RECEIVE_CODE": "I didn't receive any code",
+        "REGISTRATION_COMPLETION_MESSAGES": "To complete your registration, enter the code that was sent in your email:"
+    }
+
+
+
+}

@@ -1,0 +1,67 @@
+<ng-container [formGroup]="_formGroup">
+    <div class="container row margin-16">
+        <ng-content></ng-content>
+
+        <div>
+            <button
+                mat-icon-button
+                color="primary"
+                title="{{ 'CIPHER_FACTORY.BACK_TONE' | translate }}"
+                (click)="backTone()"
+            >
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+
+            <mat-form-field class="form-tone" appearance="standard">
+                <mat-label class="tone-label container center">{{
+                    "CIPHER_FACTORY.TONE" | translate
+                }}</mat-label>
+                <input
+                    type="text"
+                    placeholder="{{
+                        'CIPHER_FACTORY.REQUIRE_TONE' | translate
+                    }}"
+                    matInput
+                    [formControlName]="_toneName"
+                    [matAutocomplete]="auto"
+                    class="tone"
+                />
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                    <mat-option
+                        *ngFor="let option of filteredTones | async"
+                        [value]="option"
+                    >
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <button
+                mat-icon-button
+                color="primary"
+                title="{{ 'CIPHER_FACTORY.NEXT_TONE' | translate }}"
+                (click)="nextTone()"
+            >
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="container column full-width cipher-container font-mono" #cipher [ngClass]="{'disable': _disable }">
+        <ng-container
+            *ngFor="let line of this.text | async; let indexLine = index"
+        >
+            <pre class="container line-text" *ngIf="line?.type === 'text'">{{
+                line.content
+            }}</pre>
+            <pre
+                class="container line-cipher"
+                *ngIf="line?.type === 'cipher'"
+            ><b *ngFor="let char of splitLine(line.content) let indexChar = index;"
+                    [style.--note]='"\""+char+"\""'
+                    [ngClass]="{'note': char !== ' '}"
+                    (click)="alterChar(indexLine, indexChar)"> </b>
+            </pre>
+        </ng-container>
+    </div>
+</ng-container>

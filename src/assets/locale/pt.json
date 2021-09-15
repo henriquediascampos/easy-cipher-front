@@ -1,0 +1,91 @@
+{
+    "HEADER": {
+        "TITLE": "Livro de cifras"
+    },
+    "MENU": {
+        "HOME": "Inicio",
+        "CIPHER_FACTORY": "Fabrica de cifras",
+        "MUSIC_BOOK": "Livro de musicas"
+    },
+    "BUTTONS": {
+        "BUTTON_CONTINUE": "Continuar",
+        "LANG_PT": "Português",
+        "LANG_EN": "Inglês",
+        "SAVE": "Salvar",
+        "UPDATE": "Atualizar",
+        "CANCEL": "Cancelar",
+        "CLEAN": "Limpar",
+        "NEW": "Novo",
+        "EDIT": "Editar",
+        "SHEETS": "Planilhas"
+    },
+
+    "SYSTEM": {
+        "DIALOG": {
+            "WARN": "Atenção",
+            "ERROR": "Erro",
+            "SUCESS": "Sucesso",
+            "INFO": "Informação"
+        }
+    },
+
+    "HOME": {},
+
+    "CIPHER_FACTORY": {
+        "TITLE": "Fábrica de cifras",
+        "LYRICS": "Letra",
+        "INSERT_LYRICS_PLACEHOLDER": "Digite aqui a letra da música aqui",
+        "CIPHER": "Cifra",
+        "TITLE_MUSIC": "Título",
+        "TONE": "Tom",
+        "REQUIRE_TONE": "Selecione um tom",
+        "BACK_TONE": "Voltar um tom",
+        "NEXT_TONE": "Avançar um tom"
+    },
+
+    "FORM": {
+        "EMAIL": "E-mail",
+        "EMAIL_PLACEHOLDER": "Ex. joao@example.com",
+        "EMAIL_REQUIRED": "O e-mail é de preenchimento obrigatório!",
+
+        "PASSWORD": "Senha",
+        "PASSWORD_PLACEHOLDER": "Digite sua senha",
+        "PASSWORD_REQUIRED": "A senha é de preenchimento obrigatório!",
+        "FORGOT_PASSWORD": "A senha é de preenchimento obrigatório!",
+
+        "VALIDATE_PASSWORD": "Confirmar senha",
+        "VALIDATE_PASSWORD_PLACEHOLDER": "Digite sua senha novamente",
+        "VALIDATE_PASSWORD_REQUIRED": "É necessário confirmar a senha!",
+
+        "PASSWORD_REQUIRED_NUMBER": "Sua senha deve conter pelo menos um numero.",
+        "PASSWORD_REQUIRED_LOWER_CASE": "Sua senha deve conter pelo menos uma letra minúscula",
+        "PASSWORD_REQUIRED_UPPER_CASE": "Sua senha deve conter pelo menos uma letra maiúscula",
+        "PASSWORD_REQUIRED_SPECIAL_CHARACTER": "Sua senha deve conter pelo menos um carácter especial",
+        "PASSWORD_REQUIRED_MIN_LENGTH": "Sua senha deve conter pelo menos 6 caracteres",
+
+        "NAME": "Nome",
+        "NAME_PLACEHOLDER": "Digite seu nome",
+        "NAME_REQUIRED": "O nome é de preenchimento obrigatório!",
+
+        "PHONE": "Telefone",
+        "PHONE_PLACEHOLDER": "Digite seu telefone",
+        "PHONE_REQUIRED": "O telefone é de preenchimento obrigatório!"
+    },
+
+    "LOGIN": {
+        "LOGIN": "Login",
+        "REMEMBER": "Lembrar-me",
+        "RECOVER_PASSWORD": "Esqueceu senha?",
+        "BUTTON_LOGIN": "Entrar"
+    },
+
+    "REGISTRATION": {
+        "TITLE": "Cadastro",
+        "CONFIRM_EMAIL": "Confirmar e-mail",
+        "NO_RECEIVE_CODE": "Não recebi nenhum código",
+        "REGISTRATION_COMPLETION_MESSAGES": "Para concluir seu cadastro, informe o código que foi enviado no seu email:"
+    }
+
+
+
+}

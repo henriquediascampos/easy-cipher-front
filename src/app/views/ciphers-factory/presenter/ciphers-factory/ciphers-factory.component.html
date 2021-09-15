@@ -1,0 +1,99 @@
+<cipher-container title="MENU.CIPHER_FACTORY">
+    <div buttons>
+        <button mat-raised-button color="accent" (click)="save()">
+            {{ "BUTTONS.SAVE" | translate }}
+        </button>
+    </div>
+
+    <div content class="container column full-width margin-16">
+        <section>
+            <mat-progress-bar
+                color="accent"
+                [mode]="mode"
+                [value]="value2"
+                [bufferValue]="bufferValue"
+            >
+            </mat-progress-bar>
+        </section>
+
+        <div class="container column font-mono" [formGroup]="formGroup">
+            <mat-tab-group class="container">
+                <mat-tab [label]="firstTab">
+                    <ec-first-tab
+                        #primary
+                        [formGroup]="formGroup"
+                        lyricsName="lyrics"
+                        titleName="title"
+                    >
+                        <mat-form-field
+                            class="container"
+                            appearance="standard"
+                        >
+                            <mat-label>{{
+                                "CIPHER_FACTORY.TITLE_MUSIC" | translate
+                            }}</mat-label>
+                            <input required
+                                matInput
+                                type="text"
+                                formControlName="title"
+                                [formControl]="toControl('title')"
+                                class="title-music"
+                            />
+                            <button
+                                color="primary"
+                                matSuffix
+                                mat-icon-button
+                                (click)="disableTitle()"
+                            >
+                                <mat-icon>{{
+                                    this.formGroup.get("title")?.disabled
+                                        ? "edit"
+                                        : "check"
+                                }}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </ec-first-tab>
+                </mat-tab>
+
+                <mat-tab [label]="secondaryTab">
+                    <ec-secondary-tab
+                        #secondary
+                        [formGroup]="formGroup"
+                        cipherName="cipher"
+                        toneName="tone"
+                        titleName="title"
+                    >
+                        <mat-form-field
+                            class="container"
+                            class="container full"
+                            appearance="standard"
+                        >
+                            <mat-label>{{
+                                "CIPHER_FACTORY.TITLE_MUSIC" | translate
+                            }}</mat-label>
+                            <input required
+                                matInput
+                                type="text"
+                                formControlName="title"
+                                [formControl]="toControl('title')"
+                                class="title-music"
+                            />
+                            <button
+                                color="primary"
+                                matSuffix
+                                mat-icon-button
+                                (click)="disableTitle()"
+                            >
+                                <mat-icon>{{
+                                    this.formGroup.get("title")?.disabled
+                                        ? "edit"
+                                        : "check"
+                                }}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </ec-secondary-tab>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</cipher-container>

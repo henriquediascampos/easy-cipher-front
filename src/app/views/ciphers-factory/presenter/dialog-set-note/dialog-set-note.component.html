@@ -1,0 +1,39 @@
+<div class="container column full-height margin-8">
+    <mat-toolbar color="primary">
+        <span>My Application</span>
+    </mat-toolbar>
+
+    <div
+        class="
+            container
+            row
+            full-height full-width
+            content
+            full-width--child
+            margin-8
+        "
+        [formGroup]="formGroup"
+    >
+        <mat-form-field appearance="standard" class="container full-width">
+            <mat-label>Note primary</mat-label>
+            <input
+                type="text"
+                placeholder="Note"
+                matInput
+                formControlName="note"
+                [matAutocomplete]="autoNotePrimary"
+            />
+            <mat-autocomplete #autoNotePrimary="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptionsNote | async" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+    <div class="container row flex-end margin-8">
+        <button mat-raised-button (click)="close()">Basic</button>
+        <button mat-raised-button color="primary" (click)="ok()">
+            Primary
+        </button>
+    </div>
+</div>

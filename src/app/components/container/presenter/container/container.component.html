@@ -1,0 +1,16 @@
+<div class="container full full-height column container-module">
+    <mat-toolbar
+        class="toolbar mat-elevation-z2"
+        title="{{ title | translate }}"
+    >
+        <div class="container row between full">
+            <span class="title-module">{{ title | translate }}</span>
+
+            <ng-content select="[buttons]"> </ng-content>
+        </div>
+    </mat-toolbar>
+
+    <div class="container-box container full padding-16">
+        <ng-content select="[content]"></ng-content>
+    </div>
+</div>

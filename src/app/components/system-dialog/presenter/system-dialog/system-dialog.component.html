@@ -1,0 +1,23 @@
+<div class="container column full-height margin-16">
+    <mat-toolbar [ngClass]="this.data.type">
+        <div class="container row between full">
+            <span class="title">{{ title }}</span>
+            <span class="container column center">
+                <mat-icon class="icon">
+                    {{ icon() }}
+                </mat-icon>
+            </span>
+        </div>
+    </mat-toolbar>
+
+    <div class="container column full">
+        <span class="content">
+            {{ this.data.mensage }}
+        </span>
+    </div>
+
+    <div class="container row flex-end margin-8">
+        <button mat-raised-button (click)="close()">Close</button>
+        <button mat-raised-button [ngClass]="this.data.type" (click)="ok()" #btnOk >Ok</button>
+    </div>
+</div>

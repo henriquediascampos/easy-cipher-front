@@ -1,0 +1,247 @@
+@use '~@angular/material' as mat;
+@import "./app/styles/palette";
+@include mat.core();
+
+$my-primary: mat.define-palette($holy-palette-primary, 800);
+
+$my-accent: mat.define-palette($holy-palette-accent, 500);
+
+// The "warn" palette is optional and defaults to red if not specified.
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$my-theme: mat.define-light-theme(
+    (
+        color: (
+            primary: $my-primary,
+            accent: $my-accent,
+            warn: $my-warn,
+        ),
+    )
+);
+
+@include mat.core-theme($my-theme);
+@include mat.all-component-themes($my-theme);
+
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@mixin shadow-default() {
+    box-shadow: 0 1px 4px #000000;
+    border-radius: 4px;
+}
+
+.content-padding {
+    padding: 16px;
+}
+
+.container {
+    display: flex;
+
+    &.padding {
+        &-8 {
+            padding: 8px;
+        }
+
+        &-8-16 {
+            padding: 8px 16px;
+        }
+
+        &-16 {
+            padding: 16px;
+        }
+
+        &-20 {
+            padding: 20px;
+        }
+
+        &-32 {
+            padding: 32px;
+        }
+    }
+
+    &.full {
+        flex: 1;
+    }
+
+    &.full-height {
+        height: 100%;
+    }
+
+    &.full-width {
+        width: 100%;
+    }
+
+    &.full-height--child {
+        * {
+            height: 100%;
+        }
+    }
+
+    &.full-width--child {
+        * {
+            width: 100%;
+        }
+    }
+
+    &.row {
+        flex-direction: row;
+
+        &.margin {
+            &-8 > :not(:last-child) {
+                margin-right: 8px;
+            }
+
+            &-16 > :not(:last-child) {
+                margin-right: 16px;
+            }
+
+            &-32 > :not(:last-child) {
+                margin-right: 32px;
+            }
+
+            &-48 > :not(:last-child) {
+                margin-right: 48px;
+            }
+
+            &-64 > :not(:last-child) {
+                margin-right: 64px;
+            }
+        }
+    }
+
+    &.column {
+        flex-direction: column;
+
+        &.margin {
+            &-8 > :not(:last-child) {
+                margin-bottom: 8px;
+            }
+
+            &-16 > :not(:last-child) {
+                margin-bottom: 16px;
+            }
+
+            &-32 > :not(:last-child) {
+                margin-bottom: 32px;
+            }
+
+            &-48 > :not(:last-child) {
+                margin-bottom: 48px;
+            }
+
+            &-64 > :not(:last-child) {
+                margin-bottom: 64px;
+            }
+        }
+    }
+
+    &.between {
+        justify-content: space-between;
+    }
+
+    &.center {
+        justify-content: center;
+    }
+
+    &.flex-start {
+        justify-content: flex-start;
+    }
+    &.flex-end {
+        justify-content: flex-end;
+    }
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.form-errors {
+    font-size: 10pt;
+    div > div:last-child {
+        position: relative;
+    }
+}
+
+mat-toolbar.toolbar {
+    height: 56px;
+}
+
+.container-module-overflow {
+    height: calc(100vh - (56px + 64px + 46px));
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: #e9eaeb;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(119, 119, 119, 0.397);
+        border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-button {
+        background-color: rgba(0, 0, 0, 0.288);
+        height: 2px;
+    }
+
+    &::-webkit-scrollbar-corner {
+        background-color: rgb(21, 100, 202);
+    }
+}
+
+.hover-scale {
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.blur {
+    filter: blur(2px);
+}
+
+.title {
+    &-1 {
+        font-weight: 500;
+        font-size: 16pt;
+    }
+    &-2 {
+        font-weight: 500;
+        font-size: 15pt;
+    }
+    &-3 {
+        font-size: 14pt;
+        font-weight: 500;
+    }
+    &-4 {
+        font-size: 13pt;
+        font-weight: 500;
+    }
+    &-5 {
+        font-size: 12pt;
+        font-weight: 500;
+    }
+    &-6 {
+        font-size: 11pt;
+        font-weight: 500;
+    }
+}

@@ -1,0 +1,47 @@
+<mat-drawer-container class="container full row" mode="over">
+    <mat-drawer class="side-sidenav" mode="side" [(opened)]="opened">
+        <mat-selection-list [multiple]="false">
+            <ng-container *ngFor="let menu of menus">
+                <div class="simple-menu">
+                    <a class="full-height full-width menu-item link container" [routerLink]="menu.path" matRipple
+                        [matRippleColor]="'#3f51b524'" matTooltip="{{ (menu?.describe|| menu.name) | translate }}"
+                        [matTooltipPosition]="'right'" matTooltipHideDelay="400" *ngIf="!menu.childrens"
+                        routerLinkActive="link-active">
+                        <div class="menu-icon container center full-height">
+                            <mat-icon>{{ menu?.icon }}</mat-icon>
+                        </div>
+                        <span class="menu-name container full-height full-width">{{ menu.name | translate }}</span>
+                    </a>
+                </div>
+
+                <div *ngIf="!!menu.childrens" class="group-menu">
+                    <mat-list-option [value]="menu" class="menu-item"
+                        (click)="groupMenuToogle(groupmenuitems, menu.childrens.length, icontoggle)">
+                        <a class="link container">
+                            <mat-icon class="menu-icon">{{menu?.icon}}</mat-icon>
+                            <span class="menu-name container full-width">{{ menu.name | translate }}</span>
+                            <mat-icon #icontoggle class="icon-group-menu-toggle">chevron_right</mat-icon>
+                        </a>
+                    </mat-list-option>
+
+                    <div #groupmenuitems class="group-menu-item" opened='false'>
+                        <mat-list-option [value]="submenu" class="menu-item" *ngFor="let submenu of menu.childrens"
+                            matTooltip="{{ (submenu?.describe|| submenu.name) | translate }}" [matTooltipPosition]="'right'"
+                            matTooltipHideDelay="400">
+                            <a class="link container">
+                                <mat-icon class="menu-icon">{{ submenu?.icon }}</mat-icon>
+                                <span class="menu-name menu-name-sub">{{ submenu.name | translate }}</span>
+                            </a>
+                        </mat-list-option>
+                    </div>
+                </div>
+            </ng-container>
+
+        </mat-selection-list>
+    </mat-drawer>
+
+    <mat-drawer-content class="side-sidenav-content container full">
+        <ng-content></ng-content>
+    </mat-drawer-content>
+
+</mat-drawer-container>

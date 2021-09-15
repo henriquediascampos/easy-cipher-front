@@ -1,0 +1,58 @@
+
+mat-drawer-container
+    display: flex
+
+.side-sidenav-content
+    margin: 0 !important
+    overflow-y: auto
+    height: calc(100vh - 56px - 46px)
+
+.side-sidenav
+    position: relative
+    padding: 0
+    *
+        user-select: none
+    &:not(.mat-drawer-opened)
+        box-shadow: 1px 0px 18px -4px #444444bf !important
+        transition: width 300ms cubic-bezier(.53,.28,.36,.94)
+        width: 64px
+        transform: none
+        visibility: visible !important
+    &.mat-drawer-opened
+        transform: none
+        box-shadow: 1px 0px 18px -4px #444444bf !important
+        transition: width 300ms cubic-bezier(.53,.28,.36,.94)
+        width: 255px
+
+.group-menu
+    transition: height 200ms
+    transition-timing-function: cubic-bezier(.53,.28,.36,.94)
+    .group-menu-item
+        overflow: hidden
+        height: 0px
+        transition: height 200ms cubic-bezier(.53,.28,.36,.94)
+
+.simple-menu, .group-menu, .group-menu-item
+    .menu-item
+        font-size: 16px
+        height: 48px
+        color: #464646
+        text-decoration: none
+        overflow: hidden
+        &:hover
+            background: #8496fc1a
+        &.link-active
+            color: #32936c
+        >.icon-toogle
+            justify-content: flex-end
+        >.menu-icon
+            min-width: 63px
+            align-items: center
+        >.menu-name
+            overflow: hidden
+            align-items: center
+
+.icon-group-menu-toggle
+    transition: transform 200ms cubic-bezier(.53,.28,.36,.94)
+    &.icon-toggle
+        transform: rotate(90deg)

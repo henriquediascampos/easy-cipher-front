@@ -1,0 +1,15 @@
+<ng-container [formGroup]="_formGroup">
+    <ng-content></ng-content>
+
+    <mat-form-field class="container full-width" appearance="outline">
+        <mat-label>{{ "CIPHER_FACTORY.LYRICS" | translate }}</mat-label>
+        <textarea required
+            matInput
+            class="lyrics"
+            placeholder="{{
+                'CIPHER_FACTORY.INSERT_LYRICS_PLACEHOLDER' | translate
+            }}"
+            [formControlName]="_lyricsName"
+        ></textarea>
+    </mat-form-field>
+</ng-container>
