@@ -1,0 +1,17 @@
+<div class="container column full-width cipher-container font-mono">
+    <ng-container
+        *ngFor="let line of this.text; let indexLine = index"
+    >
+        <pre class="container line-text" *ngIf="line?.type === 'text'">{{
+            line.content
+        }}</pre>
+        <pre
+            class="container line-cipher"
+            *ngIf="line?.type === 'cipher'"
+        ><b *ngFor="let char of splitLine(line.content) let indexChar = index;"
+                [style.--note]='"\""+char+"\""'
+                [ngClass]="{'note': char !== ' '}"
+                > </b>
+        </pre>
+    </ng-container>
+</div>

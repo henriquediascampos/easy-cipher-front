@@ -1,0 +1,8 @@
+{
+    "/api": {
+        "logLevel": "debug",
+        "target": "http://localhost:8080/easy-cipher",
+        "secure": false,
+        "changeOrigin": true
+    }
+}

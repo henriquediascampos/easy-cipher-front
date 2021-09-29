@@ -84,6 +84,10 @@
         "CONFIRM_EMAIL": "Confirmar e-mail",
         "NO_RECEIVE_CODE": "Não recebi nenhum código",
         "REGISTRATION_COMPLETION_MESSAGES": "Para concluir seu cadastro, informe o código que foi enviado no seu email:"
+    },
+    "MUSIC_BOOK": {
+        "TITLE":"Livro de cifras"
+
     }
 
 

@@ -1,0 +1,9 @@
+<cipher-container class="music-book" title="MUSIC_BOOK.TITLE">
+    <div content class="container column full-heigth full-width margin-16">
+        <mat-form-field appearance="standard">
+            <mat-label>Filter</mat-label>
+            <input type="text" matInput [formControl]="filterControl" placeholder="Filter">
+        </mat-form-field>
+        <ec-music-card *ngFor="let item of musicFiltered | async" [matTooltip]="item.lyric" [music]="item"></ec-music-card>
+    </div>
+</cipher-container>

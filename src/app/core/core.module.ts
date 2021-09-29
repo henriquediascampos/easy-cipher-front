@@ -1,3 +1,4 @@
+import { FormatMusicService } from './services/format-musica.service';
 
 import { MusicalScaleService } from './services/musical-scale.service';
 import { SpinnerService } from './services/spinner.service';
@@ -15,7 +16,8 @@ import CipherTranslateService from './services/cipher-translate.service';
         RoutesGuard,
         SpinnerService,
         CipherTranslateService,
-        MusicalScaleService
+        MusicalScaleService,
+        FormatMusicService
     ],
 })
 export class CoreModule { }

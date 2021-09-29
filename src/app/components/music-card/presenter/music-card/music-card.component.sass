@@ -1,0 +1,19 @@
+.card
+    border-radius: 4px
+    cursor: pointer
+    color: #4c4c4c
+    overflow: hidden
+    transition: height 150ms ease-out
+    height: 55px
+    &.toggle
+        height: 100%
+    &:hover
+        transform: scale(1.002)
+        background: #32936c0c
+    .header
+        align-items: center
+        .title
+            font-weight: 500
+    &.present
+        transition: transform 700ms cubic-bezier(.5,-0.25,.72,.78)
+        transform: translateX(150%)

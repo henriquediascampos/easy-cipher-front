@@ -1,0 +1,12 @@
+<div #card [ngClass]="{ 'toggle': toggleClass }" class="container column mat-elevation-z2 card full">
+
+    <div class="padding-8-16 header container row full">
+        <div class="title container full-width" (click)="toggleClass = !toggleClass">
+            {{music.title}}
+        </div>
+        <button mat-icon-button (click)="presentMusic(music)">
+            <mat-icon>music_note</mat-icon>
+        </button>
+    </div>
+    <pre class="padding-8-16 header container row full"> {{ music.lyric }}</pre>
+</div>

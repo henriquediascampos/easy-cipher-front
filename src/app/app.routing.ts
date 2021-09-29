@@ -24,6 +24,22 @@ const routes: Routes = [
                 (module) => module.CiphersFactoryModule
             ),
     },
+    {
+        path: 'music-book',
+        canActivate: [RoutesGuard],
+        loadChildren: () =>
+            import('./views/music-book/music-book.module').then(
+                (module) => module.MusicBookModule
+            ),
+    },
+    {
+        path: 'present-music',
+        canActivate: [RoutesGuard],
+        loadChildren: () =>
+            import('./views/present-music/present-music.module').then(
+                (module) => module.PresentMusicModule
+            ),
+    },
 
 
 ];
@@ -39,4 +55,4 @@ const routes: Routes = [
     exports: [RouterModule],
     providers: [RoutesGuard],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

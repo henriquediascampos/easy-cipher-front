@@ -5,7 +5,7 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 import CipherTranslateService from 'src/app/core/services/cipher-translate.service';
 import { SystemDialogComponent } from './../../../../components/system-dialog/presenter/system-dialog/system-dialog.component';
 import { CiphersFactoryFirstTabComponent } from '../ciphers-factory-first-tab/ciphers-factory-first-tab.component';
-import { CiphersFactorySecondaryTabComponent } from '../ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
+import { CiphersFactorySecondaryTabComponent, Line } from '../ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
 import { CiphersFactoryPresenter } from '../../domain/boudaries/ciphers-factory.presenter';
 
 @Component({
@@ -34,7 +34,7 @@ export class CiphersFactoryComponent implements OnInit {
 
         this.formGroup = this.formBuilder.group({
             title: ['', [Validators.required, Validators.minLength(3)]],
-            lyrics: ['', [Validators.required, Validators.minLength(100)]],
+            lyric: ['', [Validators.required, Validators.minLength(100)]],
             cipher: [''],
             tone: [''],
         });
@@ -44,20 +44,25 @@ export class CiphersFactoryComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.toControl('lyrics').valueChanges.subscribe(value => {
+        this.toControl('lyric').valueChanges.subscribe(value => {
             this.secondary?.transformText(value);
         });
         this.reflectTitle()
 
-        this.dependesOn('lyrics', ['title']);
-        this.dependesOn('cipher', ['title', 'lyrics', 'tone'], disable => {
+        this.dependesOn('lyric', ['title']);
+        this.dependesOn('cipher', ['title', 'lyric', 'tone'], disable => {
             this.secondary?.disable(disable);
         });
 
-        this.toControl('lyrics').disable();
+        this.toControl('lyric').disable();
         setTimeout(() => {
             this.secondary?.disable(true)
         }, 100);
+
+
+        this.presenter.findByAll({}).subscribe( sub => {
+            console.log(sub);
+        });
     }
 
     reflectTitle() {
@@ -76,7 +81,15 @@ export class CiphersFactoryComponent implements OnInit {
 
     save(): void {
         if (this.formGroup.valid) {
-            this.presenter.save(this.formGroup.getRawValue())
+            const music = this.formGroup.getRawValue()
+            music.cipher = music.cipher.reduce((accu: string, curr: Line) => {
+                accu = accu ? accu + "\n" + curr.content: "" + curr.content;
+                return accu;
+            }, "");
+
+            console.log(music);
+
+            this.presenter.save(music)
                 .subscribe(reponse => {
                     console.log(reponse);
                 });

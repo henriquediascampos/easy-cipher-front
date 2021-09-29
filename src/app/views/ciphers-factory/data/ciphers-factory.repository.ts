@@ -8,21 +8,21 @@ export class CiphersFactoryRepository {
     constructor(private http: HttpClient) { }
 
     save(music: Music): Observable<Music> {
-        return this.http.post<Music>(`easy-cipher/api/ciphers-factory`, music);
+        return this.http.post<Music>(`/api/cipher`, music);
     }
     update(music: Music): Observable<Music> {
-        return this.http.put<Music>(`easy-cipher/api/ciphers-factory`, music);
+        return this.http.put<Music>(`/api/cipher`, music);
     }
     delete(music: Music): Observable<any> {
-        return this.http.delete(`easy-cipher/api/ciphers-factory`, {
+        return this.http.delete(`/api/cipher`, {
             body: music
         });
     }
     findById(id: string): Observable<Music> {
-        return this.http.get<Music>(`easy-cipher/api/ciphers-factory/${id}`);
+        return this.http.get<Music>(`/api/cipher/${id}`);
     }
-    findByAll(parameters: {}): Observable<Music[]> {
-        return this.http.get<Music[]>(`easy-cipher/api/ciphers-factory`, {
+    findByAll(parameters: {}): Observable<any[]> {
+        return this.http.get<any[]>(`/api/cipher`, {
             params: parameters
         });
     }
