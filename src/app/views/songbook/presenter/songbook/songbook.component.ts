@@ -1,3 +1,4 @@
+import { Songbook } from './../../domain/models/Songbook';
 import { DialogAddCipherComponent } from './../dialog-add-cipher/dialog-add-cipher.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomCipher } from './../../domain/models/CustomCipher';
@@ -18,6 +19,7 @@ export class SongbookComponent implements OnInit {
     panelOpenState = false;
     filterControl = new FormControl(['']);
     musicFiltered?: Observable<CustomCipher[]>;
+    id!: string;
 
     constructor(
         private presenter: SongbookPresenter,
@@ -30,21 +32,27 @@ export class SongbookComponent implements OnInit {
     ngOnInit(): void {
 
         this.route.queryParams.subscribe(params => {
-            const id = params['id'];
-            this.presenter.findById(id).subscribe((response) => {
-                this.title = response.title;
-                this.musicFiltered = this.filterControl.valueChanges.pipe(
-                    startWith(''),
-                    map((value: string) => response.ciphers.filter(option => !!option.cipher.title.toUpperCase().includes(value.toUpperCase()))))
-            });
-
+            this.id = params['id'];
+            this.loadSongbook();
         })
+    }
+
+    loadSongbook() {
+        this.presenter.findById(this.id).subscribe((response) => {
+            this.title = response.title;
+            this.musicFiltered = this.filterControl.valueChanges.pipe(
+                startWith(''),
+                map((value: string) => response.ciphers.filter(option => !!option.cipher.title.toUpperCase().includes(value.toUpperCase()))))
+        });
     }
 
     showDialogAdd(): void {
         this.dialog.open(DialogAddCipherComponent, {
             width: '600px',
-            height: '300px'
+            height: '300px',
+            data: {
+                songbook: this.id
+            }
         });
     }
 

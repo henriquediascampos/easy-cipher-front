@@ -17,7 +17,6 @@ export class AssembleSongbookComponent implements OnInit {
     optionsVision?: Observable<string[]>;
     options: string[];
     songbookForm: FormGroup;
-    @ViewChild('card') card!: ElementRef;
 
     constructor(private presenter: SongbookPresenter, private formBuilder: FormBuilder, private router: Router) {
         this.songbookForm = this.formBuilder.group({
@@ -52,8 +51,8 @@ export class AssembleSongbookComponent implements OnInit {
         }
     }
 
-    selectSongbook(id: string): void {
-        (this.card.nativeElement as HTMLElement).classList.add('navigate');
+    selectSongbook(card: HTMLElement, id: string): void {
+        card.classList.add('navigate');
         setTimeout(() => {
             this.router.navigate(['songbook/songbook'], {
                 queryParams: {id}

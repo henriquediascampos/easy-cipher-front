@@ -4,8 +4,8 @@
         <span>{{ "SONGBOOK.ADD_CIPHER" | translate }}</span>
     </mat-toolbar>
 
-    <div class="container column full">
-        <mat-form-field class="example-full-width" appearance="standard">
+    <div class="container row full margin-8">
+        <mat-form-field class="container full-width" appearance="standard">
             <mat-label>{{ "SONGBOOK.MUSICS" | translate }}</mat-label>
             <input type="text" class="upper"
                    placeholder="{{ 'SONGBOOK.MUSICS_PLACEHOLDER' | translate }}"
@@ -14,7 +14,21 @@
                    [matAutocomplete]="auto">
             <mat-autocomplete #teste autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayProperty">
               <mat-option *ngFor="let option of filteredOptions | async; let index = index" [value]="option" >
-                {{ index+1 }} - {{ option.title }}
+                {{ option.title }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width" appearance="standard">
+            <mat-label>{{ "CIPHER_FACTORY.TONE" | translate }}</mat-label>
+            <input type="text" class="upper"
+                   placeholder="{{ 'CIPHER_FACTORY.REQUIRE_TONE' | translate }}"
+                   matInput
+                   formControlName="tone"
+                   [matAutocomplete]="autotone">
+            <mat-autocomplete  autoActiveFirstOption #autotone="matAutocomplete">
+              <mat-option *ngFor="let option of filteredTones | async" [value]="option" >
+                {{ option }}
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>

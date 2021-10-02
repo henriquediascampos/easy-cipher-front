@@ -1,14 +1,18 @@
-import { startWith, map } from 'rxjs/operators';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Cipher } from './../../domain/models/Cipher';
-import { Observable } from 'rxjs';
-import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SongbookPresenter } from '../../domain/boundaries/songbook.presenter';
 import { MatAutocomplete } from '@angular/material/autocomplete';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { Scale } from 'src/app/core/services/musical-scale.service';
+import { SongbookPresenter } from '../../domain/boundaries/songbook.presenter';
+import { MusicalScaleService } from './../../../../core/services/musical-scale.service';
+import { Cipher } from './../../domain/models/Cipher';
+import { CustomCipher } from './../../domain/models/CustomCipher';
+import { Songbook } from './../../domain/models/Songbook';
 
 export interface DialogData {
-    mensage: string;
+    songbook: string;
     callback?: (value?: any) => void
 }
 
@@ -19,6 +23,8 @@ export interface DialogData {
 })
 export class DialogAddCipherComponent implements OnInit {
 
+    filteredTones?: Observable<Scale[]>
+
     formGroup: FormGroup;
     filteredOptions?: Observable<Cipher[]>
     @ViewChild('teste') teste!: MatAutocomplete;
@@ -27,14 +33,22 @@ export class DialogAddCipherComponent implements OnInit {
         public dialogRef: MatDialogRef<DialogAddCipherComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private presenter: SongbookPresenter,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private scale: MusicalScaleService
     ) {
         this.formGroup = this.formBuilder.group({
-            cipher: ['', Validators.required]
-        })
+            cipher: ['', Validators.required],
+            tone: ['']
+        });
     }
 
     ngOnInit(): void {
+        this.scale.getScale().subscribe(scaleOptions => {
+            this.filteredTones = this.formGroup.get('tone')?.valueChanges.pipe(
+                startWith(''),
+                map((value: string) => scaleOptions.filter(option => !!option.toUpperCase().includes(value.toUpperCase()))))
+        });
+
         this.presenter.findAllCiphers({}).subscribe(response => {
             this.filteredOptions = this.formGroup.get('cipher')?.valueChanges.pipe(
                 startWith(''),
@@ -42,9 +56,9 @@ export class DialogAddCipherComponent implements OnInit {
                     return !!option.title.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
                         .includes(
                             value.toUpperCase ?
-                            value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                            : (value as Cipher).title.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                    )
+                                value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                                : (value as Cipher).title.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                        )
                 })))
 
         });
@@ -55,17 +69,19 @@ export class DialogAddCipherComponent implements OnInit {
     }
 
     add(): void {
-        if (this.data?.callback) {
-            this.data.callback();
-        }
-        console.log(this.formGroup.get('cipher')?.value);
-
-        // this.close();
+        const customCipher: CustomCipher = this.formGroup.getRawValue();
+        customCipher.songbook = { id: this.data.songbook } as Songbook;
+        this.presenter.add(customCipher).subscribe(response => {
+            if (this.data?.callback) {
+                this.data.callback();
+            }
+            this.close();
+        });
     }
 
     public displayProperty(value: { title: any; }) {
         if (value) {
-          return value.title;
+            return value.title;
         }
-      }
+    }
 }
