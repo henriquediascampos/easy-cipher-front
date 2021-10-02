@@ -1,0 +1,51 @@
+@mixin highlighted-note()
+    padding: 0 4px
+    margin: 0 -4px
+    background: #f70
+    color: #fff
+    border-radius: 3px
+    text-decoration: none
+
+.title-5
+    margin-top: 32px
+
+.font-mono
+    font-family: monospace
+
+.form-tone
+    width: 120px
+
+.tone
+    text-align: center
+    font-weight: 400
+    font-size: 12pt
+    text-transform: uppercase
+
+.cipher-container
+    overflow-x: auto
+    border-radius: 4px
+    min-height: 400px
+    font-size: 12pt
+    padding: 16px
+    &:current
+        background: #ce6b6b !important
+    *
+        margin: 0
+    &.disable
+        color: #00000061
+    &:not(.disable)
+        .line-cipher
+            b.note
+                color: #f70
+                cursor: pointer
+                position: relative
+                &::before
+                    position: absolute
+                    content: var(--note)
+                &:hover::before
+                    @include highlighted-note()
+                &:active::before
+                    @include highlighted-note()
+                    transition: all 30ms
+                    transform: scale(1.2)
+

@@ -61,8 +61,8 @@ export class DialogSetNoteComponent {
     }
 
     private _filter(value: string, options: string[]): string[] {
-        const filterValue = value.toLowerCase();
-        return options.filter(option => option.toLowerCase().includes(filterValue));
+        const filterValue = value.toUpperCase();
+        return options.filter(option => option.toUpperCase().includes(filterValue));
     }
 
 

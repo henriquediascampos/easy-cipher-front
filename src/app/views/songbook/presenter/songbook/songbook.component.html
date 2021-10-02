@@ -1,0 +1,34 @@
+<cipher-container class="music-book" [title-container]="title">
+    <div content class="container column full-heigth full-width margin-16">
+        <div class="container row margin-8">
+            <mat-form-field appearance="standard" class="container full-width">
+                <mat-label>Filter</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    [formControl]="filterControl"
+                    placeholder="Filter"
+                />
+            </mat-form-field>
+            <div class="container column center">
+                <button
+                    mat-raised-button
+                    color="primary"
+                    (click)="showDialogAdd()"
+                >
+                    <mat-icon>add</mat-icon>
+                    {{ "BUTTONS.ADD" | translate }}
+                </button>
+            </div>
+        </div>
+
+        <ec-music-card
+            *ngFor="let item of musicFiltered | async"
+            [matTooltip]="item.cipher.lyric"
+            [music]="item.cipher"
+        ></ec-music-card>
+        <span *ngIf="!(musicFiltered | async)?.length">
+            {{ "SONGBOOK.SONGBOOK_EMPTY" | translate }}
+        </span>
+    </div>
+</cipher-container>

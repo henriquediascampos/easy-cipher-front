@@ -1,9 +1,9 @@
-import { Music } from './../models/Music';
 import { Observable } from 'rxjs';
+import { Music } from '../models/Music';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export abstract class CiphersFactoryGateway {
+export abstract class CiphersFactoryPresenter {
 
     abstract save(music: Music): Observable<Music>;
     abstract update(music: Music): Observable<Music>;

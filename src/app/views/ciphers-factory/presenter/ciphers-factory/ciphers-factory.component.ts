@@ -2,11 +2,11 @@ import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ProgressBarMode } from '@angular/material/progress-bar';
-import CipherTranslateService from 'src/app/core/services/cipher-translate.service';
 import { SystemDialogComponent } from './../../../../components/system-dialog/presenter/system-dialog/system-dialog.component';
 import { CiphersFactoryFirstTabComponent } from '../ciphers-factory-first-tab/ciphers-factory-first-tab.component';
 import { CiphersFactorySecondaryTabComponent, Line } from '../ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
-import { CiphersFactoryPresenter } from '../../domain/boudaries/ciphers-factory.presenter';
+import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory.presenter';
+import CipherTranslateService from 'src/app/translate/cipher-translate.service';
 
 @Component({
     selector: 'ec-ciphers-factory',

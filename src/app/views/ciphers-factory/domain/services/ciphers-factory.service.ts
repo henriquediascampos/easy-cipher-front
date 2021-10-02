@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Music } from './../models/Music';
 import { Injectable } from '@angular/core';
-import { CiphersFactoryGateway } from '../boudaries/ciphers-factory.gateway';
+import { CiphersFactoryGateway } from '../boundaries/ciphers-factory.gateway';
 
 @Injectable()
 export class CiphersFactoryService {

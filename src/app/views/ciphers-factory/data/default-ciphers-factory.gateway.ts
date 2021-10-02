@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Music } from '../domain/models/Music';
 import { CiphersFactoryRepository } from './ciphers-factory.repository';
 import { Injectable } from '@angular/core';
-import { CiphersFactoryGateway } from '../domain/boudaries/ciphers-factory.gateway';
+import { CiphersFactoryGateway } from '../domain/boundaries/ciphers-factory.gateway';
 
 @Injectable()
 export class DefaultCiphersFactoryGateway implements CiphersFactoryGateway {

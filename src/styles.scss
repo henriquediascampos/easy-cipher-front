@@ -1,5 +1,7 @@
-@use '~@angular/material' as mat;
+@use "~@angular/material" as mat;
 @import "./app/styles/palette";
+@import "./app/styles/menu";
+
 @include mat.core();
 
 $my-primary: mat.define-palette($holy-palette-primary, 800);
@@ -21,7 +23,6 @@ $my-theme: mat.define-light-theme(
 
 @include mat.core-theme($my-theme);
 @include mat.all-component-themes($my-theme);
-
 
 * {
     box-sizing: border-box;
@@ -244,4 +245,32 @@ mat-toolbar.toolbar {
         font-size: 11pt;
         font-weight: 500;
     }
+}
+
+.adaptable-width {
+    &-32 {
+        @include adaptable-width(closed, 32px);
+    }
+    &-64 {
+        @include adaptable-width(closed, 64px);
+    }
+}
+
+.menu-opened {
+    .adaptable-width {
+        &-32 {
+            @include adaptable-width(opened, 32px);
+        }
+        &-64 {
+            @include adaptable-width(opened, 64px);
+        }
+    }
+}
+
+.upper {
+    text-transform: uppercase;
+    &::placeholder {
+        text-transform: none;
+    }
+
 }

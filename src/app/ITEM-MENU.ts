@@ -28,9 +28,9 @@ export const MENU_ITENS: NavigationItem[] = [
         path: 'ciphers-factory',
     },
     {
-        name: 'MENU.MUSIC_BOOK',
+        name: 'MENU.SONGBOOK',
         icon: 'auto_stories',
-        path: 'music-book',
+        path: 'songbook',
     }
 
 ];

@@ -1,3 +1,5 @@
+// import a file with measurements from the menu component
+@import "../../../styles/menu"
 
 mat-drawer-container
     display: flex
@@ -14,23 +16,23 @@ mat-drawer-container
         user-select: none
     &:not(.mat-drawer-opened)
         box-shadow: 1px 0px 18px -4px #444444bf !important
-        transition: width 300ms cubic-bezier(.53,.28,.36,.94)
-        width: 64px
+        @include menu-transition-width()
+        width: $width-menu-closed
         transform: none
         visibility: visible !important
     &.mat-drawer-opened
         transform: none
         box-shadow: 1px 0px 18px -4px #444444bf !important
-        transition: width 300ms cubic-bezier(.53,.28,.36,.94)
-        width: 255px
+        @include menu-transition-width()
+        width: $width-menu-opened
+
 
 .group-menu
-    transition: height 200ms
-    transition-timing-function: cubic-bezier(.53,.28,.36,.94)
+    @include menu-transition-height()
     .group-menu-item
         overflow: hidden
+        @include menu-transition-height()
         height: 0px
-        transition: height 200ms cubic-bezier(.53,.28,.36,.94)
 
 .simple-menu, .group-menu, .group-menu-item
     .menu-item
@@ -51,6 +53,8 @@ mat-drawer-container
         >.menu-name
             overflow: hidden
             align-items: center
+            min-width: 192px
+
 
 .icon-group-menu-toggle
     transition: transform 200ms cubic-bezier(.53,.28,.36,.94)

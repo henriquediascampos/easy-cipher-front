@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <div class="container column full-width cipher-container font-mono" #cipher [ngClass]="{'disable': _disable }">
+    <div class="container column adaptable-width-64 cipher-container font-mono " #cipher [ngClass]="{'disable': _disable }">
         <ng-container
             *ngFor="let line of this.text | async; let indexLine = index"
         >

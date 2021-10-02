@@ -1,0 +1,17 @@
+$width-menu-closed: 64px
+$width-menu-opened: 255px
+
+@mixin menu-transition-width()
+    transition: width 300ms cubic-bezier(.53,.28,.36,.94)
+
+@mixin menu-transition-height()
+    transition: height 200ms cubic-bezier(.53,.28,.36,.94)
+
+@mixin adaptable-width($opened, $length)
+    @include menu-transition-width()
+    @if ($opened == opened)
+        width: calc(100vw - (#{$width-menu-opened} + #{$length}))
+    @else
+        width: calc(100vw - (#{$width-menu-closed} + #{$length}))
+
+

@@ -5,7 +5,7 @@
     "MENU": {
         "HOME": "Inicio",
         "CIPHER_FACTORY": "Fabrica de cifras",
-        "MUSIC_BOOK": "Livro de musicas"
+        "SONGBOOK": "Livro de musicas"
     },
     "BUTTONS": {
         "BUTTON_CONTINUE": "Continuar",
@@ -16,6 +16,7 @@
         "CANCEL": "Cancelar",
         "CLEAN": "Limpar",
         "NEW": "Novo",
+        "ADD": "Adicionar",
         "EDIT": "Editar",
         "SHEETS": "Planilhas"
     },
@@ -69,7 +70,13 @@
 
         "PHONE": "Telefone",
         "PHONE_PLACEHOLDER": "Digite seu telefone",
-        "PHONE_REQUIRED": "O telefone é de preenchimento obrigatório!"
+        "PHONE_REQUIRED": "O telefone é de preenchimento obrigatório!",
+
+        "TITLE": "Título",
+        "TITLE_PLACEHOLDER": "Digite um título para seu caderno de músicas",
+
+        "VISAO": "Visão",
+        "VISAO_PLACEHOLDER": "Escolha uma visão"
     },
 
     "LOGIN": {
@@ -85,11 +92,16 @@
         "NO_RECEIVE_CODE": "Não recebi nenhum código",
         "REGISTRATION_COMPLETION_MESSAGES": "Para concluir seu cadastro, informe o código que foi enviado no seu email:"
     },
-    "MUSIC_BOOK": {
-        "TITLE":"Livro de cifras"
-
+    "SONGBOOK": {
+        "TITLE_SONGBOOK":"Livro de cifras",
+        "TITLE_ASSEMBLE_SONGBOOK":"Montar livro de cifras",
+        "SONGBOOK_EMPTY": "Este livro de músicas ainda esta vazio, você pode adicionar musicas no botão adicionar.",
+        "ADD_CIPHER": "Adicionar música/cifra.",
+        "MUSICS": "Músicas / cifra",
+        "MUSICS_PLACEHOLDER": "Pesquise por uma música / cifra"
+    },
+    "PRESENTER_MUSIC": {
+        "TITLE": "Musica"
     }
-
-
 
 }

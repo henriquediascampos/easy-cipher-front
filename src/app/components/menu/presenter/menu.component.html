@@ -40,7 +40,7 @@
         </mat-selection-list>
     </mat-drawer>
 
-    <mat-drawer-content class="side-sidenav-content container full">
+    <mat-drawer-content class="side-sidenav-content container full" [ngClass]="{'menu-opened': opened}">
         <ng-content></ng-content>
     </mat-drawer-content>
 

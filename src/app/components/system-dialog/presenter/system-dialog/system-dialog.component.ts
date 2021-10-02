@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import CipherTranslateService from 'src/app/core/services/cipher-translate.service';
+import CipherTranslateService from 'src/app/translate/cipher-translate.service';
 
 export declare type TypeDialog = 'error' | 'warn' | 'sucess' | 'info'
 
@@ -30,9 +30,11 @@ export class SystemDialogComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        setTimeout(() => {
-            this.btnOk.focus('program')
-        }, 250);
+        if (this.data.callback) {
+            setTimeout(() => {
+                this.btnOk.focus('program')
+            }, 250);
+        }
     }
 
     close(): void {

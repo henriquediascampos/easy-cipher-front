@@ -1,3 +1,4 @@
+import { FormatMusicService } from './../../../../core/services/format-musica.service';
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,6 +21,7 @@ export interface Line {
 export class CiphersFactorySecondaryTabComponent implements OnInit {
 
     value = ''
+    maxLengthLine = 70;
 
     @HostBinding('class') clazz = 'container column padding-16'
     filteredTones?: Observable<Scale[]>
@@ -52,7 +54,7 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
         this._disable = value;
     }
 
-    constructor(public dialog: MatDialog, private scale: MusicalScaleService) {
+    constructor(public dialog: MatDialog, private scale: MusicalScaleService, private format: FormatMusicService) {
         this.textNotify.subscribe(change => {
             this.text = of(change).pipe(
                 startWith([]),
@@ -65,7 +67,7 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
         this.scale.getScale().subscribe(scaleOptions => {
             this.filteredTones = this._formGroup.get(this._toneName)?.valueChanges.pipe(
                 startWith(''),
-                map((value: string) => scaleOptions.filter(option => !!option.toLowerCase().includes(value.toUpperCase()))))
+                map((value: string) => scaleOptions.filter(option => !!option.toUpperCase().includes(value.toUpperCase()))))
         })
 
         this._formGroup.get(this._toneName)?.
@@ -75,36 +77,12 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
     }
 
     transformText(value: string): Line[] {
-        const maxLengthLine = 70;
-        const lyricLines = value.split('\n').map<Line>(line => ({
-            type: this.checkTypeLine(line),
-            content: this.formatContent(line)
-        }));
-
-        const newtext: Line[] = [];
-        let beforLine: TypeLine = lyricLines.length === 0 || lyricLines[0].type === 'text' ? 'text' : 'cipher';
-
-        for (const currentLine of lyricLines) {
-            if (beforLine === 'text' && currentLine.type === 'text') {
-                newtext.push({
-                    content: Array.from(Array(maxLengthLine).keys()).reduce((a, b) => ' ' + a, ''),
-                    type: 'cipher'
-                })
-            }
-
-            if (currentLine.type === 'cipher') {
-                const aditionalWitheSpace = maxLengthLine - currentLine.content.length;
-                currentLine.content = currentLine.content + Array.from(Array(aditionalWitheSpace).keys()).reduce((a, b) => ' ' + a, '')
-            }
-
-            newtext.push(currentLine)
-            beforLine = currentLine.type;
-        }
+        const newtext = this.format.transformText(value, this.maxLengthLine);
 
         if (this.text) {
             this.text.subscribe(
                 value => {
-                    this.changeText(
+                    this.emitterChangeText(
                         newtext.map((line, i) => {
                             if (line.type === 'cipher' && line.content.trim().length === 0) {
                                 return value.length && value[i] ? value[i] : line;
@@ -114,40 +92,21 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
                 }
             );
         } else {
-            this.changeText(newtext);
+            this.emitterChangeText(newtext);
         }
 
         return newtext;
     }
-    formatContent(line: string): string {
-        return this.validateContent(line);
-    }
 
-    changeText(newText: Line[]): void {
+
+    emitterChangeText(newText: Line[]): void {
         this._formGroup.get(this._cipherName)?.setValue(newText);
         this._text.next(newText);
     }
 
-    validateContent(value: string): string {
-        return value.length === 0 ? '' : value;
-    }
-
-    checkTypeLine(value: string): TypeLine {
-        if (value.length === 0 || value.trim().length === 0) {
-            return 'text'
-        }
-        return /[A-Z]{1}(\s|[m|M|/|#|b|&]*)/.test(value) && /\s{5,}/.test(value) ? 'cipher' : 'text';
-    }
 
     splitLine(line: string): string[] {
-        return line.split('').reduce((accu: any[], curr) => {
-            if (accu.length > 0 && !/\s/.test(accu[accu.length - 1]) && !/\s/.test(curr)) {
-                accu[accu.length - 1] = accu[accu.length - 1] + curr;
-            } else {
-                accu.push(curr);
-            }
-            return accu;
-        }, [])
+        return this.format.splitLine(line);
     }
 
     alterChar(indexLine: number, indexChar: number): void {
@@ -173,7 +132,7 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
                                 })
                             })
                         ).subscribe((newtext) => {
-                            this.changeText(newtext as Line[]);
+                            this.emitterChangeText(newtext as Line[]);
                         });
                     }
                 }

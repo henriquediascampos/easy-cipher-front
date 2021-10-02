@@ -25,11 +25,11 @@ const routes: Routes = [
             ),
     },
     {
-        path: 'music-book',
+        path: 'songbook',
         canActivate: [RoutesGuard],
         loadChildren: () =>
-            import('./views/music-book/music-book.module').then(
-                (module) => module.MusicBookModule
+            import('./views/songbook/songbook.module').then(
+                (module) => module.SongbookModule
             ),
     },
     {

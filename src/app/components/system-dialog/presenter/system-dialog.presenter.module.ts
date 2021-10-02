@@ -1,3 +1,4 @@
+import { CipherTranslateModule } from './../../../translate/cipher-translate.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +23,7 @@ import { SystemDialogComponent } from './system-dialog/system-dialog.component';
         MatInputModule,
         MatIconModule,
         MatButtonModule,
-        CoreModule,
+        CipherTranslateModule,
         MatDialogModule,
         MatToolbarModule
     ],

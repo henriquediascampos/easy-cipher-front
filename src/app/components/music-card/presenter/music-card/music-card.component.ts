@@ -20,7 +20,7 @@ export class MusicCardComponent implements OnInit {
     }
 
     presentMusic(music: Music): void {
-        (this.card.nativeElement as HTMLElement).classList.add('present');
+        (this.card.nativeElement as HTMLElement).classList.add('navigate');
         setTimeout(() => {
             this.router.navigate(['present-music'], {
                 queryParams: music

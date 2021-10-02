@@ -1,3 +1,4 @@
+import { CipherTranslateModule } from './../../../translate/cipher-translate.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from 'src/app/core/core.module';
-import { CiphersFactoryPresenter } from '../domain/boudaries/ciphers-factory.presenter';
+import { CiphersFactoryPresenter } from '../domain/boundaries/ciphers-factory.presenter';
 import { ContainerModule } from './../../../components/container/container.module';
 import { SystemDialogModule } from './../../../components/system-dialog/system-dialog.module';
 import { CiphersFactoryFirstTabComponent } from './ciphers-factory-first-tab/ciphers-factory-first-tab.component';
@@ -30,6 +31,7 @@ import { DialogSetNoteComponent } from './dialog-set-note/dialog-set-note.compon
         CommonModule,
         CiphersFactoryRouting,
         TranslateModule,
+        CipherTranslateModule,
         MatInputModule,
         FormsModule,
         ReactiveFormsModule,
@@ -44,7 +46,7 @@ import { DialogSetNoteComponent } from './dialog-set-note/dialog-set-note.compon
         ContainerModule,
         MatProgressBarModule,
         MatCardModule,
-        SystemDialogModule
+        SystemDialogModule,
     ],
     providers: [
         {

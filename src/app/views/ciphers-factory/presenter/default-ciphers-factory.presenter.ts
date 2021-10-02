@@ -1,6 +1,6 @@
 import { CiphersFactoryService } from './../domain/services/ciphers-factory.service';
 import { Injectable } from '@angular/core';
-import { CiphersFactoryPresenter } from '../domain/boudaries/ciphers-factory.presenter';
+import { CiphersFactoryPresenter } from '../domain/boundaries/ciphers-factory.presenter';
 import { Observable } from 'rxjs';
 import { Music } from '../domain/models/Music';
 

@@ -18,6 +18,6 @@
 
     <div class="container row flex-end margin-8">
         <button mat-raised-button (click)="close()">Close</button>
-        <button mat-raised-button [ngClass]="this.data.type" (click)="ok()" #btnOk >Ok</button>
+        <button *ngIf="!!this.data.callback" mat-raised-button [ngClass]="this.data.type" (click)="ok()" #btnOk >Ok</button>
     </div>
 </div>

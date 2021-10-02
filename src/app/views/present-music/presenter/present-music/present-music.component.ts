@@ -11,17 +11,20 @@ import { FormatMusicService } from './../../../../core/services/format-musica.se
 export class PresentMusicComponent implements OnInit {
     @HostBinding('class') _class = 'container full';
     text!: Line[];
+    title!: string;
 
     constructor(private route: ActivatedRoute, private format: FormatMusicService) { }
 
     ngOnInit(): void {
+
         this.route.queryParams.subscribe(params => {
-            this.text = this.format.transformText(params['cipher']);
+            this.title = params['title'];
+            this.text = this.format.transformText(params['cipher'], 70);
         });
     }
 
     splitLine(content: string): string[] {
-        return this.format.splitLine(content)
+        return this.format.splitLine(content);
     }
 
 }

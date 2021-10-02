@@ -1,0 +1,54 @@
+<cipher-container title-container="SONGBOOK.TITLE_ASSEMBLE_SONGBOOK">
+    <div content class="container column full-heigth full-width margin-16">
+        <div class="container row margin-8" [formGroup]="songbookForm">
+            <mat-form-field class="container full-width" appearance="standard">
+                <mat-label>{{ "FORM.TITLE" | translate }}</mat-label>
+                <input
+                    matInput
+                    placeholder="{{ 'FORM.TITLE_PLACEHOLDER' | translate }}"
+                    formControlName="title"
+                />
+            </mat-form-field>
+
+            <mat-form-field appearance="standard">
+                <mat-label>{{ "FORM.VISAO" | translate }}</mat-label>
+                <input
+                    type="text"
+                    placeholder="{{ 'FORM.VISAO_PLACEHOLDER' | translate }}"
+                    aria-label="Number"
+                    matInput
+                    formControlName="vision"
+                    [matAutocomplete]="auto"
+                />
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option
+                        *ngFor="let option of optionsVision | async"
+                        [value]="option"
+                    >
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <div class="container column center">
+                <button mat-raised-button color="primary" (click)="save()">
+                    <mat-icon>add</mat-icon>
+                    {{ "BUTTONS.ADD" | translate }}
+                </button>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+
+        <div #card
+            class="container row mat-elevation-z2 card padding-16"
+            *ngFor="let item of musicFiltered | async"
+        >
+            <span class="container column center full">
+                {{ item.title }}
+            </span>
+            <button mat-icon-button (click)="selectSongbook(item.id)">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+    </div>
+</cipher-container>

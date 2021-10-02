@@ -1,6 +1,5 @@
-import { Observable, Subject } from 'rxjs';
-import { TypeLine } from 'src/app/components/types/TypeLine';
 import { Injectable } from '@angular/core';
+import { TypeLine } from 'src/app/components/types/TypeLine';
 
 interface Line {
     type: TypeLine;
@@ -10,22 +9,11 @@ interface Line {
 @Injectable()
 export class FormatMusicService {
 
-    text!: Observable<Line[]>;
-    _text = new Subject<Line[]>();
-    textNotify = this._text.asObservable();
-
     constructor() { }
 
-    changeText(newText: Line[]): void {
-        this._text.next(newText);
-    }
 
-    transformText(value: string): Line[] {
-        const maxLengthLine = 70;
-        const lyricLines = value.split('\n').map<Line>(line => ({
-            type: this.checkTypeLine(line),
-            content: this.formatContent(line)
-        }));
+    transformText(value: string, maxLengthLine: number): Line[] {
+        const lyricLines = this.brackText(value);
 
         const newtext: Line[] = [];
         let beforLine: TypeLine = lyricLines.length === 0 || lyricLines[0].type === 'text' ? 'text' : 'cipher';
@@ -47,23 +35,15 @@ export class FormatMusicService {
             beforLine = currentLine.type;
         }
 
-        if (this.text) {
-            this.text.subscribe(
-                value => {
-                    this.changeText(
-                        newtext.map((line, i) => {
-                            if (line.type === 'cipher' && line.content.trim().length === 0) {
-                                return value.length && value[i] ? value[i] : line;
-                            }
-                            return line;
-                        }));
-                }
-            );
-        } else {
-            this.changeText(newtext);
-        }
-
         return newtext;
+    }
+
+
+    brackText(value: string) {
+        return value.split('\n').map<Line>(line => ({
+            type: this.checkTypeLine(line),
+            content: this.formatContent(line)
+        }));
     }
 
     checkTypeLine(value: string): TypeLine {
@@ -72,6 +52,11 @@ export class FormatMusicService {
         }
         return /[A-Z]{1}(\s|[m|M|/|#|b|&]*)/.test(value) && /\s{5,}/.test(value) ? 'cipher' : 'text';
     }
+
+    formatContent(value: string): string {
+        return value.length === 0 ? '' : value;
+    }
+
 
     splitLine(line: string): string[] {
         return line.split('').reduce((accu: any[], curr) => {
@@ -83,15 +68,4 @@ export class FormatMusicService {
             return accu;
         }, [])
     }
-
-    formatContent(line: string): string {
-        return this.validateContent(line);
-    }
-
-
-    validateContent(value: string): string {
-        return value.length === 0 ? '' : value;
-    }
-
-
 }
