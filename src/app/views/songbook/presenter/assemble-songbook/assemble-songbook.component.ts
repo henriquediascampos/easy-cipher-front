@@ -57,8 +57,13 @@ export class AssembleSongbookComponent implements OnInit {
             this.router.navigate(['songbook/songbook'], {
                 queryParams: {id}
             });
-        }, 650);
+        }, 600);
 
     }
 
+    delete(id: string) {
+        this.presenter.delete(id).subscribe( value => {
+
+        });
+    }
 }

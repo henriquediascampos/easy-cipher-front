@@ -17,6 +17,7 @@
         "CLEAN": "Limpar",
         "NEW": "Novo",
         "ADD": "Adicionar",
+        "DELETE": "Excluir",
         "EDIT": "Editar",
         "SHEETS": "Planilhas"
     },
@@ -102,6 +103,9 @@
     },
     "PRESENTER_MUSIC": {
         "TITLE": "Musica"
+    },
+    "GENERIC_TOOLTIPS": {
+        "ACCESS_CIPHER": "Acessar cifra"
     }
 
 }

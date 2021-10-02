@@ -56,4 +56,7 @@ export class SongbookComponent implements OnInit {
         });
     }
 
+    edit() {
+
+    }
 }

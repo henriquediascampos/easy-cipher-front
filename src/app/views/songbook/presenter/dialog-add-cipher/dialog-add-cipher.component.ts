@@ -38,13 +38,13 @@ export class DialogAddCipherComponent implements OnInit {
     ) {
         this.formGroup = this.formBuilder.group({
             cipher: ['', Validators.required],
-            tone: ['']
+            customTone: ['']
         });
     }
 
     ngOnInit(): void {
         this.scale.getScale().subscribe(scaleOptions => {
-            this.filteredTones = this.formGroup.get('tone')?.valueChanges.pipe(
+            this.filteredTones = this.formGroup.get('customTone')?.valueChanges.pipe(
                 startWith(''),
                 map((value: string) => scaleOptions.filter(option => !!option.toUpperCase().includes(value.toUpperCase()))))
         });

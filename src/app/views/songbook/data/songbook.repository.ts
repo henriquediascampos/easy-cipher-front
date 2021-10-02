@@ -30,7 +30,7 @@ export class SongBookRepository {
     }
 
     findAll(): Observable<Songbook[]> {
-        return this.http.get<Songbook[]>(`/api/songbook`);
+        return this.http.get<Songbook[]>(`/api/songbook/resume-list`);
     }
 
     save(songbook: Songbook): Observable<Songbook> {

@@ -24,7 +24,7 @@
             <input type="text" class="upper"
                    placeholder="{{ 'CIPHER_FACTORY.REQUIRE_TONE' | translate }}"
                    matInput
-                   formControlName="tone"
+                   formControlName="customTone"
                    [matAutocomplete]="autotone">
             <mat-autocomplete  autoActiveFirstOption #autotone="matAutocomplete">
               <mat-option *ngFor="let option of filteredTones | async" [value]="option" >

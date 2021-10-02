@@ -25,7 +25,7 @@ export class MusicCardComponent implements OnInit {
             this.router.navigate(['present-music'], {
                 queryParams: music
             });
-        }, 650);
+        }, 600);
 
     }
 }

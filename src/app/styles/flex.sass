@@ -1,0 +1,84 @@
+.container
+    display: flex
+    &.padding
+        &-8
+            padding: 8px
+
+        &-8-16
+            padding: 8px 16px
+
+        &-16
+            padding: 16px
+
+        &-20
+            padding: 20px
+
+        &-32
+            padding: 32px
+
+    &.full
+        flex: 1
+
+    &.full-height
+        height: 100%
+
+    &.full-width
+        width: 100%
+
+    &.full-height--child
+        *
+            height: 100%
+
+    &.full-width--child
+        *
+            width: 100%
+
+    &.row
+        flex-direction: row
+
+        &.margin
+            &-8 > :not(:last-child)
+                margin-right: 8px
+
+            &-16 > :not(:last-child)
+                margin-right: 16px
+
+            &-32 > :not(:last-child)
+                margin-right: 32px
+
+            &-48 > :not(:last-child)
+                margin-right: 48px
+
+            &-64 > :not(:last-child)
+                margin-right: 64px
+
+    &.column
+        flex-direction: column
+
+        &.margin
+            &-8 > :not(:last-child)
+                margin-bottom: 8px
+
+            &-16 > :not(:last-child)
+                margin-bottom: 16px
+
+            &-32 > :not(:last-child)
+                margin-bottom: 32px
+
+            &-48 > :not(:last-child)
+                margin-bottom: 48px
+
+            &-64 > :not(:last-child)
+                margin-bottom: 64px
+
+    &.between
+        justify-content: space-between
+
+    &.center
+        justify-content: center
+
+    &.flex-start
+        justify-content: flex-start
+
+    &.flex-end
+        justify-content: flex-end

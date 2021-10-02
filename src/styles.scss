@@ -1,6 +1,8 @@
 @use "~@angular/material" as mat;
 @import "./app/styles/palette";
 @import "./app/styles/menu";
+@import "./app/styles/flex";
+@import "./app/styles/typography";
 
 @include mat.core();
 
@@ -49,123 +51,6 @@ body {
 
 .content-padding {
     padding: 16px;
-}
-
-.container {
-    display: flex;
-
-    &.padding {
-        &-8 {
-            padding: 8px;
-        }
-
-        &-8-16 {
-            padding: 8px 16px;
-        }
-
-        &-16 {
-            padding: 16px;
-        }
-
-        &-20 {
-            padding: 20px;
-        }
-
-        &-32 {
-            padding: 32px;
-        }
-    }
-
-    &.full {
-        flex: 1;
-    }
-
-    &.full-height {
-        height: 100%;
-    }
-
-    &.full-width {
-        width: 100%;
-    }
-
-    &.full-height--child {
-        * {
-            height: 100%;
-        }
-    }
-
-    &.full-width--child {
-        * {
-            width: 100%;
-        }
-    }
-
-    &.row {
-        flex-direction: row;
-
-        &.margin {
-            &-8 > :not(:last-child) {
-                margin-right: 8px;
-            }
-
-            &-16 > :not(:last-child) {
-                margin-right: 16px;
-            }
-
-            &-32 > :not(:last-child) {
-                margin-right: 32px;
-            }
-
-            &-48 > :not(:last-child) {
-                margin-right: 48px;
-            }
-
-            &-64 > :not(:last-child) {
-                margin-right: 64px;
-            }
-        }
-    }
-
-    &.column {
-        flex-direction: column;
-
-        &.margin {
-            &-8 > :not(:last-child) {
-                margin-bottom: 8px;
-            }
-
-            &-16 > :not(:last-child) {
-                margin-bottom: 16px;
-            }
-
-            &-32 > :not(:last-child) {
-                margin-bottom: 32px;
-            }
-
-            &-48 > :not(:last-child) {
-                margin-bottom: 48px;
-            }
-
-            &-64 > :not(:last-child) {
-                margin-bottom: 64px;
-            }
-        }
-    }
-
-    &.between {
-        justify-content: space-between;
-    }
-
-    &.center {
-        justify-content: center;
-    }
-
-    &.flex-start {
-        justify-content: flex-start;
-    }
-    &.flex-end {
-        justify-content: flex-end;
-    }
 }
 
 .pointer {
@@ -220,33 +105,6 @@ mat-toolbar.toolbar {
     filter: blur(2px);
 }
 
-.title {
-    &-1 {
-        font-weight: 500;
-        font-size: 16pt;
-    }
-    &-2 {
-        font-weight: 500;
-        font-size: 15pt;
-    }
-    &-3 {
-        font-size: 14pt;
-        font-weight: 500;
-    }
-    &-4 {
-        font-size: 13pt;
-        font-weight: 500;
-    }
-    &-5 {
-        font-size: 12pt;
-        font-weight: 500;
-    }
-    &-6 {
-        font-size: 11pt;
-        font-weight: 500;
-    }
-}
-
 .adaptable-width {
     &-32 {
         @include adaptable-width(closed, 32px);
@@ -267,10 +125,3 @@ mat-toolbar.toolbar {
     }
 }
 
-.upper {
-    text-transform: uppercase;
-    &::placeholder {
-        text-transform: none;
-    }
-
-}
