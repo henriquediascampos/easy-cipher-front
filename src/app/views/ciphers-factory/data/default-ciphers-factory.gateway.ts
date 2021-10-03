@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Music } from '../domain/models/Music';
+import { Cipher } from '../domain/models/Cipher';
 import { CiphersFactoryRepository } from './ciphers-factory.repository';
 import { Injectable } from '@angular/core';
 import { CiphersFactoryGateway } from '../domain/boundaries/ciphers-factory.gateway';
@@ -8,19 +8,19 @@ import { CiphersFactoryGateway } from '../domain/boundaries/ciphers-factory.gate
 export class DefaultCiphersFactoryGateway implements CiphersFactoryGateway {
     constructor(private repository: CiphersFactoryRepository) { }
 
-    save(music: Music): Observable<Music> {
+    save(music: Cipher): Observable<Cipher> {
         return this.repository.save(music);
     }
-    update(music: Music): Observable<Music> {
+    update(music: Cipher): Observable<Cipher> {
         return this.repository.update(music);
     }
-    delete(music: Music): Observable<any> {
+    delete(music: Cipher): Observable<any> {
         return this.repository.delete(music);
     }
-    findById(id: string): Observable<Music> {
+    findById(id: string): Observable<Cipher> {
         return this.repository.findById(id);
     }
-    findByAll(parameters: {}): Observable<Music[]> {
+    findByAll(parameters: {}): Observable<Cipher[]> {
         return this.repository.findByAll(parameters);
     }
 }

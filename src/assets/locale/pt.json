@@ -106,6 +106,8 @@
     },
     "GENERIC_TOOLTIPS": {
         "ACCESS_CIPHER": "Acessar cifra"
+    },
+    "MESSAGE": {
+        "SAVE_SUCCESS": "{{arg}} salva com sucesso."
     }
-
 }

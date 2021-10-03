@@ -18,13 +18,13 @@ export class SongBookRepository {
             params: cipher
         }) as any;
     }
+
+
     delete(id: string): Observable<any> {
-        return this.http.delete(`/api/custom-cipher`, {
-            params: {id}
+        return this.http.request('DELETE', `/api/songbook`, {
+            body: id
         });
     }
-
-
     findById(id: string): Observable<Songbook> {
         return this.http.get<Songbook>(`/api/songbook/${id}`);
     }

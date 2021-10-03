@@ -1,3 +1,5 @@
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MusicCardModule } from './../../../components/music-card/music-card.module';
 import { CipherTranslateModule } from './../../../translate/cipher-translate.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -23,10 +25,11 @@ import { CiphersFactoryRouting } from './ciphers-factory.routing';
 import { CiphersFactoryComponent } from './ciphers-factory/ciphers-factory.component';
 import { DefaultCiphersFactoryPresenter } from './default-ciphers-factory.presenter';
 import { DialogSetNoteComponent } from './dialog-set-note/dialog-set-note.component';
+import { CipherListComponent } from './cipher-list/cipher-list.component';
 
 
 @NgModule({
-    declarations: [CiphersFactoryComponent, DialogSetNoteComponent, CiphersFactoryFirstTabComponent, CiphersFactorySecondaryTabComponent],
+    declarations: [CiphersFactoryComponent, DialogSetNoteComponent, CiphersFactoryFirstTabComponent, CiphersFactorySecondaryTabComponent, CipherListComponent],
     imports: [
         CommonModule,
         CiphersFactoryRouting,
@@ -47,6 +50,8 @@ import { DialogSetNoteComponent } from './dialog-set-note/dialog-set-note.compon
         MatProgressBarModule,
         MatCardModule,
         SystemDialogModule,
+        MusicCardModule,
+        MatTooltipModule
     ],
     providers: [
         {

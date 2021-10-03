@@ -2,25 +2,25 @@ import { CiphersFactoryService } from './../domain/services/ciphers-factory.serv
 import { Injectable } from '@angular/core';
 import { CiphersFactoryPresenter } from '../domain/boundaries/ciphers-factory.presenter';
 import { Observable } from 'rxjs';
-import { Music } from '../domain/models/Music';
+import { Cipher } from '../domain/models/Cipher';
 
 @Injectable()
 export class DefaultCiphersFactoryPresenter implements CiphersFactoryPresenter {
     constructor(private service: CiphersFactoryService) { }
 
-    save(music: Music): Observable<Music> {
+    save(music: Cipher): Observable<Cipher> {
         return this.service.save(music);
     }
-    update(music: Music): Observable<Music> {
+    update(music: Cipher): Observable<Cipher> {
         return this.service.update(music);
     }
-    delete(music: Music): Observable<any> {
+    delete(music: Cipher): Observable<any> {
         return this.service.delete(music);
     }
-    findById(id: string): Observable<Music> {
+    findById(id: string): Observable<Cipher> {
         return this.service.findById(id);
     }
-    findByAll(parameters: {}): Observable<Music[]> {
+    findByAll(parameters: {}): Observable<Cipher[]> {
         return this.service.findByAll(parameters);
     }
 }

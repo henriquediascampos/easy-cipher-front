@@ -13,4 +13,8 @@ export default class CipherTranslateService {
         });
     }
 
+    get(text: string): string {
+        return this.translate.instant(text);
+    }
+
 }

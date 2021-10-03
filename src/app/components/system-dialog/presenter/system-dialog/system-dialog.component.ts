@@ -7,7 +7,7 @@ export declare type TypeDialog = 'error' | 'warn' | 'sucess' | 'info'
 
 export interface DialogData {
     type: TypeDialog;
-    mensage: string;
+    message: string;
     callback?: (value?: any) => void
 }
 

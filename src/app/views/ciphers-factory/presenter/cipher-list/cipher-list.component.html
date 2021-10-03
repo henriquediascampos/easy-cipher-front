@@ -1,0 +1,26 @@
+<cipher-container class="music-book" [title-container]="title">
+
+    <div content class="container column full-heigth full-width margin-16">
+        <div class="container row margin-8">
+            <mat-form-field appearance="standard" class="container full-width">
+                <mat-label>Filter</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    [formControl]="filter"
+                    placeholder="Filter"
+                />
+            </mat-form-field>
+
+        </div>
+
+        <ec-music-card
+            *ngFor="let cipher of ciphers | async"
+            [matTooltip]="cipher.lyric"
+            [music]="cipher"
+        ></ec-music-card>
+        <span *ngIf="!(ciphers | async)?.length">
+            {{ "SONGBOOK.SONGBOOK_EMPTY" | translate }}
+        </span>
+    </div>
+</cipher-container>

@@ -8,14 +8,14 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ErrorDialogService } from './../services/error-dilog.service';
+import { SystemDialogService } from '../services/system-dilog.service';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
     constructor(
-        private dilogService: ErrorDialogService,
+        private dilogService: SystemDialogService,
         // private authService: AuthService
-    ) {}
+    ) { }
 
     intercept(
         req: HttpRequest<any>,
@@ -26,24 +26,20 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 let handled = false;
                 if (error instanceof HttpErrorResponse) {
                     if (error.status === 502) {
-                        this.dilogService.openDialog(error);
+                        this.dilogService.error({ message: error.error.message });
                     } else if (error.status === 504) {
-                        const data: any = error;
-                        data.alternativeMessage =
-                            'Parece que o servidor não está acessivel, contate o suporte técnico.';
-                        this.dilogService.openDialog(data);
+                        this.dilogService.error({ message: 'Parece que o servidor não está acessivel, contate o suporte técnico.' });
                     } else if (error.status === 401) {
                         // this.authService.redirectLogin();
                     } else if (error.status === 404) {
-                        const data: any = error;
-                        data.alternativeMessage = 'Página não encontrada.';
-                        this.dilogService.openDialog(data);
-                    } else if (error.status === 400 && req.responseType === 'blob')  {
+                        this.dilogService.error({ message: 'Página não encontrada.' });
+                    } else if (error.status === 400 && req.responseType === 'blob') {
                         error.error.text().then((text: any) => {
-                            this.dilogService.openDialog(JSON.parse(text));
+                            const errorExtracted = JSON.parse(text)
+                            this.dilogService.error(errorExtracted.error.message);
                         });
                     } else {
-                        this.dilogService.openDialog(error);
+                        this.dilogService.error({ message: error.error.message });
                     }
                     handled = true;
                 }

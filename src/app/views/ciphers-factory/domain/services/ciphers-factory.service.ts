@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Music } from './../models/Music';
+import { Cipher } from '../models/Cipher';
 import { Injectable } from '@angular/core';
 import { CiphersFactoryGateway } from '../boundaries/ciphers-factory.gateway';
 
@@ -7,19 +7,19 @@ import { CiphersFactoryGateway } from '../boundaries/ciphers-factory.gateway';
 export class CiphersFactoryService {
     constructor(private gateway: CiphersFactoryGateway) { }
 
-    save(music: Music): Observable<Music> {
+    save(music: Cipher): Observable<Cipher> {
         return this.gateway.save(music);
     }
-    update(music: Music): Observable<Music> {
+    update(music: Cipher): Observable<Cipher> {
         return this.gateway.update(music);
     }
-    delete(music: Music): Observable<any> {
+    delete(music: Cipher): Observable<any> {
         return this.gateway.delete(music);
     }
-    findById(id: string): Observable<Music> {
+    findById(id: string): Observable<Cipher> {
         return this.gateway.findById(id);
     }
-    findByAll(parameters: {}): Observable<Music[]> {
+    findByAll(parameters: {}): Observable<Cipher[]> {
         return this.gateway.findByAll(parameters);
     }
 }

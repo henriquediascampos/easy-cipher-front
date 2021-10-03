@@ -1,3 +1,4 @@
+import { SystemDialogService } from './../../../../core/services/system-dilog.service';
 import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,10 +26,11 @@ export class CiphersFactoryComponent implements OnInit {
     firstTab!: string;
     secondaryTab!: string;
 
+    id?: string;
     constructor(
         private formBuilder: FormBuilder,
         private translate: CipherTranslateService,
-        private dialog: MatDialog,
+        private dialog: SystemDialogService,
         private presenter: CiphersFactoryPresenter
     ) {
 
@@ -87,21 +89,13 @@ export class CiphersFactoryComponent implements OnInit {
                 return accu;
             }, "");
 
-            console.log(music);
-
             this.presenter.save(music)
                 .subscribe(reponse => {
-                    console.log(reponse);
+                    this.id = reponse.id;
+                    this.dialog.warn({message: this.translate.get("MESSAGE.SAVE_SUCCESS") });
                 });
         } else {
-            this.dialog.open(SystemDialogComponent, {
-                height: '250px',
-                width: '520px',
-                data: {
-                    mensage: 'Antes de salvar preencha todos os campos obrigatórios!',
-                    type: 'warn'
-                }
-            });
+            this.dialog.warn({message: 'Antes de salvar preencha todos os campos obrigatórios!'});
         }
     }
 

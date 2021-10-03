@@ -1,3 +1,4 @@
+import { CipherListComponent } from './cipher-list/cipher-list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CiphersFactoryComponent } from './ciphers-factory/ciphers-factory.component';
@@ -5,6 +6,10 @@ import { CiphersFactoryComponent } from './ciphers-factory/ciphers-factory.compo
 export const routes: Routes = [
     {
         path: '',
+        component: CipherListComponent,
+    },
+    {
+        path: 'ciphers-factory',
         component: CiphersFactoryComponent,
     },
 ];

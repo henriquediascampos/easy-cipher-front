@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Music } from '../domain/models/Music';
+import { Cipher } from '../domain/models/Cipher';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -7,19 +7,19 @@ import { Injectable } from '@angular/core';
 export class CiphersFactoryRepository {
     constructor(private http: HttpClient) { }
 
-    save(music: Music): Observable<Music> {
-        return this.http.post<Music>(`/api/cipher`, music);
+    save(music: Cipher): Observable<Cipher> {
+        return this.http.post<Cipher>(`/api/cipher`, music);
     }
-    update(music: Music): Observable<Music> {
-        return this.http.put<Music>(`/api/cipher`, music);
+    update(music: Cipher): Observable<Cipher> {
+        return this.http.put<Cipher>(`/api/cipher`, music);
     }
-    delete(music: Music): Observable<any> {
+    delete(music: Cipher): Observable<any> {
         return this.http.delete(`/api/cipher`, {
             body: music
         });
     }
-    findById(id: string): Observable<Music> {
-        return this.http.get<Music>(`/api/cipher/${id}`);
+    findById(id: string): Observable<Cipher> {
+        return this.http.get<Cipher>(`/api/cipher/${id}`);
     }
     findByAll(parameters: {}): Observable<any[]> {
         return this.http.get<any[]>(`/api/cipher`, {

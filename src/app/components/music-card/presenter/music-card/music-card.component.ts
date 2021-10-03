@@ -1,4 +1,4 @@
-import { Music } from './../../domain/models/Music';
+import { Cipher } from '../../domain/models/Cipher';
 import { Router } from '@angular/router';
 import { Component, HostBinding, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 
@@ -13,13 +13,13 @@ export class MusicCardComponent implements OnInit {
     toggleClass: boolean = false;
 
     @ViewChild('card') card!: ElementRef;
-    @Input() music!: Music;
+    @Input() music!: Cipher;
     constructor(private router: Router) { }
 
     ngOnInit(): void {
     }
 
-    presentMusic(music: Music): void {
+    presentMusic(music: Cipher): void {
         (this.card.nativeElement as HTMLElement).classList.add('navigate');
         setTimeout(() => {
             this.router.navigate(['present-music'], {
