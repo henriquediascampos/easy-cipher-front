@@ -12,7 +12,6 @@ export interface DialogData {
 
 export type Scale = 'C' | 'C#' | 'D' | 'Eb' | 'E' | 'F' | 'F#' | 'G' | 'Ab' | 'A' | 'Bb' | 'B';
 export type Note = 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B';
-export type NoteIncrement = '#' | 'b' | 'M' | 'm' | '7' | '9';
 
 @Component({
     selector: 'cf-dialog-set-note',

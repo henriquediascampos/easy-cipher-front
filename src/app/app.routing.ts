@@ -17,7 +17,7 @@ const routes: Routes = [
             ),
     },
     {
-        path: 'ciphers-factory',
+        path: 'ciphers',
         canActivate: [RoutesGuard],
         loadChildren: () =>
             import('./views/ciphers-factory/ciphers-factory.module').then(
@@ -40,7 +40,14 @@ const routes: Routes = [
                 (module) => module.PresentMusicModule
             ),
     },
-
+    {
+        path: 'cipher-dictionary',
+        canActivate: [RoutesGuard],
+        loadChildren: () =>
+            import('./views/cipher-dictionary/cipher-dictionary.module').then(
+                (module) => module.CipherDictionaryModule
+            ),
+    },
 
 ];
 

@@ -25,12 +25,17 @@ export const MENU_ITENS: NavigationItem[] = [
     {
         name: 'MENU.CIPHER_FACTORY',
         icon: 'music_note',
-        path: 'ciphers-factory',
+        path: 'ciphers',
     },
     {
         name: 'MENU.SONGBOOK',
         icon: 'auto_stories',
         path: 'songbook',
+    },
+    {
+        name: 'MENU.CIPHER_DICTIONARY',
+        icon: 'tag',
+        path: 'cipher-dictionary',
     }
 
 ];

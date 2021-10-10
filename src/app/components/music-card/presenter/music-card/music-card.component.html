@@ -4,9 +4,9 @@
         <div class="title container full-width" (click)="toggleClass = !toggleClass">
             {{music.title}}
         </div>
-        <button mat-icon-button (click)="presentMusic(music)" [matTooltip]="'GENERIC_TOOLTIPS.ACCESS_CIPHER' | translate">
-            <mat-icon>music_note</mat-icon>
-        </button>
+        <div class="container row between full">
+            <ng-content select="[buttons]"></ng-content>
+        </div>
     </div>
     <pre class="padding-8-16 header container row full"> {{ music.lyric }} </pre>
 </div>

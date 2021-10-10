@@ -5,7 +5,8 @@
     "MENU": {
         "HOME": "Inicio",
         "CIPHER_FACTORY": "Fabrica de cifras",
-        "SONGBOOK": "Livro de musicas"
+        "SONGBOOK": "Livro de musicas",
+        "CIPHER_DICTIONARY": "Dicionário de cifras"
     },
     "BUTTONS": {
         "BUTTON_CONTINUE": "Continuar",
@@ -32,18 +33,6 @@
     },
 
     "HOME": {},
-
-    "CIPHER_FACTORY": {
-        "TITLE": "Fábrica de cifras",
-        "LYRICS": "Letra",
-        "INSERT_LYRICS_PLACEHOLDER": "Digite aqui a letra da música aqui",
-        "CIPHER": "Cifra",
-        "TITLE_MUSIC": "Título",
-        "TONE": "Tom",
-        "REQUIRE_TONE": "Selecione um tom",
-        "BACK_TONE": "Voltar um tom",
-        "NEXT_TONE": "Avançar um tom"
-    },
 
     "FORM": {
         "EMAIL": "E-mail",
@@ -93,6 +82,19 @@
         "NO_RECEIVE_CODE": "Não recebi nenhum código",
         "REGISTRATION_COMPLETION_MESSAGES": "Para concluir seu cadastro, informe o código que foi enviado no seu email:"
     },
+
+    "CIPHER_FACTORY": {
+        "TITLE": "Fábrica de cifras",
+        "LYRICS": "Letra",
+        "INSERT_LYRICS_PLACEHOLDER": "Digite aqui a letra da música aqui",
+        "CIPHER": "Cifra",
+        "TITLE_MUSIC": "Título",
+        "TONE": "Tom",
+        "REQUIRE_TONE": "Selecione um tom",
+        "BACK_TONE": "Voltar um tom",
+        "NEXT_TONE": "Avançar um tom"
+    },
+
     "SONGBOOK": {
         "TITLE_SONGBOOK":"Livro de cifras",
         "TITLE_ASSEMBLE_SONGBOOK":"Montar livro de cifras",
@@ -109,5 +111,9 @@
     },
     "MESSAGE": {
         "SAVE_SUCCESS": "{{arg}} salva com sucesso."
+    },
+
+    "CIPHER_DICTIONARY": {
+        "TITLE": "Dicionário de cifras"
     }
 }

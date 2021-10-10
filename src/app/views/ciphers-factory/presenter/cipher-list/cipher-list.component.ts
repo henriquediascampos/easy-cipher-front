@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory.presenter';
+import CipherTranslateService from 'src/app/translate/cipher-translate.service';
 
 @Component({
     selector: 'ec-cipher-list',
@@ -16,9 +17,10 @@ export class CipherListComponent implements OnInit {
     filter = new FormControl(['']);
 
     constructor(
-        private presenter: CiphersFactoryPresenter
+        private presenter: CiphersFactoryPresenter,
+        private translate: CipherTranslateService
     ) {
-
+        this.translate.change("CIPHER_FACTORY.TITLE", (t: string) => { this.title = t });
     }
 
     ngOnInit(): void {
@@ -27,8 +29,6 @@ export class CipherListComponent implements OnInit {
 
     loadCiphers(): void {
         this.presenter.findByAll({}).subscribe((response) => {
-            console.log(response);
-
             this.ciphers = this.filter.valueChanges.pipe(
                 startWith(''),
                 map((value: string) => response.filter(option => !!option.title.toUpperCase().includes(value.toUpperCase()))))

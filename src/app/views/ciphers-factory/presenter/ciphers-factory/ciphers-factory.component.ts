@@ -1,13 +1,14 @@
-import { SystemDialogService } from './../../../../core/services/system-dilog.service';
+import { FormatMusicService } from './../../../../core/services/format-musica.service';
+import { Cipher } from './../../../songbook/domain/models/Cipher';
 import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ProgressBarMode } from '@angular/material/progress-bar';
-import { SystemDialogComponent } from './../../../../components/system-dialog/presenter/system-dialog/system-dialog.component';
+import { Router } from '@angular/router';
+import CipherTranslateService from 'src/app/translate/cipher-translate.service';
+import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory.presenter';
 import { CiphersFactoryFirstTabComponent } from '../ciphers-factory-first-tab/ciphers-factory-first-tab.component';
 import { CiphersFactorySecondaryTabComponent, Line } from '../ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
-import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory.presenter';
-import CipherTranslateService from 'src/app/translate/cipher-translate.service';
+import { SystemDialogService } from './../../../../core/services/system-dilog.service';
 
 @Component({
     selector: 'ec-ciphers-factory',
@@ -27,11 +28,17 @@ export class CiphersFactoryComponent implements OnInit {
     secondaryTab!: string;
 
     id?: string;
+    state?: Cipher;
+
+    visualizarionMode = false;
+
     constructor(
         private formBuilder: FormBuilder,
         private translate: CipherTranslateService,
         private dialog: SystemDialogService,
-        private presenter: CiphersFactoryPresenter
+        private presenter: CiphersFactoryPresenter,
+        private router: Router,
+        private formatMusic: FormatMusicService
     ) {
 
         this.formGroup = this.formBuilder.group({
@@ -41,8 +48,14 @@ export class CiphersFactoryComponent implements OnInit {
             tone: [''],
         });
 
-        this.translate.change("CIPHER_FACTORY.LYRICS", (t: string) => { this.firstTab = t });
-        this.translate.change("CIPHER_FACTORY.CIPHER", (t: string) => { this.secondaryTab = t });
+        this.translate.change('CIPHER_FACTORY.LYRICS', (t: string) => { this.firstTab = t });
+        this.translate.change('CIPHER_FACTORY.CIPHER', (t: string) => { this.secondaryTab = t });
+
+        if (this.router.getCurrentNavigation()?.extras.state) {
+            const { param }: any = this.router.getCurrentNavigation()?.extras.state
+            this.state = param;
+        }
+
     }
 
     ngOnInit(): void {
@@ -51,23 +64,18 @@ export class CiphersFactoryComponent implements OnInit {
         });
         this.reflectTitle()
 
-        this.dependesOn('lyric', ['title']);
-        this.dependesOn('cipher', ['title', 'lyric', 'tone'], disable => {
-            this.secondary?.disable(disable);
-        });
+        // this.dependesOn('lyric', ['title']);
+        // this.dependesOn('cipher', ['title', 'lyric', 'tone'], disable => {
+        //     this.secondary?.disable(disable);
+        // });
 
-        this.toControl('lyric').disable();
         setTimeout(() => {
-            this.secondary?.disable(true)
+            this.visualization();
         }, 100);
 
-
-        this.presenter.findByAll({}).subscribe( sub => {
-            console.log(sub);
-        });
     }
 
-    reflectTitle() {
+    private reflectTitle() {
         let a = this.toControl('title').valueChanges.subscribe(value => {
             a.unsubscribe();
             setTimeout(() => {
@@ -77,43 +85,13 @@ export class CiphersFactoryComponent implements OnInit {
         });
     }
 
-    toControl(formControlName: string): FormControl {
-        return this.formGroup.get(formControlName) as FormControl
-    }
-
-    save(): void {
-        if (this.formGroup.valid) {
-            const music = this.formGroup.getRawValue()
-            music.cipher = music.cipher.reduce((accu: string, curr: Line) => {
-                accu = accu ? accu + "\n" + curr.content: "" + curr.content;
-                return accu;
-            }, "");
-
-            this.presenter.save(music)
-                .subscribe(reponse => {
-                    this.id = reponse.id;
-                    this.dialog.warn({message: this.translate.get("MESSAGE.SAVE_SUCCESS") });
-                });
-        } else {
-            this.dialog.warn({message: 'Antes de salvar preencha todos os campos obrigatórios!'});
-        }
-    }
-
-    disableTitle(): void {
-        if (this.toControl('title')?.disabled) {
-            this.toControl('title')?.enable()
-        } else {
-            this.toControl('title')?.disable()
-        }
-    }
-
-    dependesOn(dependsOn: string, depends: string[], fn?: (disable: boolean) => void): void {
+    private dependesOn(dependsOn: string, depends: string[], fn?: (disable: boolean) => void): void {
         const control = this.toControl(dependsOn);
         depends.forEach(depend => {
             this.toControl(depend).valueChanges.subscribe(value => {
                 const disabled = depends.some(v => this.toControl(v).valid === false)
                 if (fn) {
-                    fn(disabled)
+                    fn(disabled);
                 } else {
                     if (disabled) {
                         if (control) {
@@ -129,5 +107,61 @@ export class CiphersFactoryComponent implements OnInit {
         });
     }
 
+    toControl(formControlName: string): FormControl {
+        return this.formGroup.get(formControlName) as FormControl
+    }
+
+    save(): void {
+        if (this.formGroup.valid) {
+            const music = this.formGroup.getRawValue();
+            music.cipher = JSON.stringify(music.cipher);
+
+            music.lyric = this.formatMusic.brackText(music.lyric)
+                .filter(value => value.type !== 'cipher')
+                .reduce((accu: string, curr: Line) => {
+                    accu = accu ? accu + '\n' + curr.content : '' + curr.content;
+                    return accu;
+                }, '');
+
+            if (this.id) {
+                music.id = this.id;
+            }
+
+            this.presenter.save(music)
+                .subscribe(reponse => {
+                    this.id = reponse.id;
+                    this.dialog.sucess({ message: this.translate.getWithArgs('MESSAGE.SAVE_SUCCESS', { arg: this.translate.get('CIPHER_FACTORY.CIPHER') }) });
+                });
+        } else {
+            this.dialog.warn({ message: 'Antes de salvar preencha todos os campos obrigatórios!' });
+        }
+    }
+
+    visualization() {
+        if (this.state) {
+            this.visualizarionMode = true;
+            this.id = this.state!.id;
+            this.toControl('lyric').setValue(this.state!.lyric);
+            this.toControl('title').setValue(this.state.title);
+            this.toControl('tone').setValue(this.state.tone);
+            setTimeout(() => {
+                this.secondary?.emitterChangeText(JSON.parse(this.state!.cipher));
+            }, 200);
+        }
+    }
+
+    new(): void {
+        this.visualizarionMode = !this.visualizarionMode;
+
+        this.formGroup.reset();
+        this.id = '';
+        this.state = undefined
+    }
+
+    exclude(): void {
+        this.presenter.delete(this.id!).subscribe( response => {
+            this.router.navigate(['ciphers']);
+        });
+    }
 }
 

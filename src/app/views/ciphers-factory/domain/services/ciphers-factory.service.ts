@@ -13,8 +13,8 @@ export class CiphersFactoryService {
     update(music: Cipher): Observable<Cipher> {
         return this.gateway.update(music);
     }
-    delete(music: Cipher): Observable<any> {
-        return this.gateway.delete(music);
+    delete(id: string): Observable<any> {
+        return this.gateway.delete(id);
     }
     findById(id: string): Observable<Cipher> {
         return this.gateway.findById(id);

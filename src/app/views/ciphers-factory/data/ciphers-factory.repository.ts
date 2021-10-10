@@ -13,9 +13,9 @@ export class CiphersFactoryRepository {
     update(music: Cipher): Observable<Cipher> {
         return this.http.put<Cipher>(`/api/cipher`, music);
     }
-    delete(music: Cipher): Observable<any> {
+    delete(id: string): Observable<any> {
         return this.http.delete(`/api/cipher`, {
-            body: music
+            body: id
         });
     }
     findById(id: string): Observable<Cipher> {

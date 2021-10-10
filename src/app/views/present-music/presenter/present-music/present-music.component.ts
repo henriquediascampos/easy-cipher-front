@@ -1,7 +1,7 @@
-import { Line } from './../../../ciphers-factory/presenter/ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
+import { Router } from '@angular/router';
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { FormatMusicService } from './../../../../core/services/format-musica.service';
+import { Line } from './../../../ciphers-factory/presenter/ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
 
 @Component({
     selector: 'ec-present-music',
@@ -13,14 +13,24 @@ export class PresentMusicComponent implements OnInit {
     text!: Line[];
     title!: string;
 
-    constructor(private route: ActivatedRoute, private format: FormatMusicService) { }
+    constructor(private router: Router, private format: FormatMusicService) {
+        if (this.router.getCurrentNavigation()?.extras.state) {
+            const { param }: any = this.router.getCurrentNavigation()?.extras.state
+            this.title = param.title;
+            this.text = JSON.parse(param.cipher);
+        }
+    }
 
     ngOnInit(): void {
 
-        this.route.queryParams.subscribe(params => {
-            this.title = params['title'];
-            this.text = this.format.transformText(params['cipher'], 70);
-        });
+        // this.route.queryParams.subscribe(params => {
+        //     this.title = params['title'];
+        //     console.log(params);
+
+        //     this.text = this.format.transformText(params['cipher'], 70);
+        // });
+
+
     }
 
     splitLine(content: string): string[] {

@@ -1,10 +1,4 @@
 <cipher-container title-container="MENU.CIPHER_FACTORY">
-    <div buttons>
-        <button mat-raised-button color="accent" (click)="save()">
-            {{ "BUTTONS.SAVE" | translate }}
-        </button>
-    </div>
-
     <div content class="container column full-width margin-16">
         <section>
             <mat-progress-bar
@@ -16,7 +10,38 @@
             </mat-progress-bar>
         </section>
 
-        <div class="container column font-mono" [formGroup]="formGroup">
+        <div
+            class="container column font-mono relative"
+            [formGroup]="formGroup"
+        >
+            <div class="container absolute elevator-2 container-buttons">
+                <button
+                    *ngIf="visualizarionMode"
+                    mat-button
+                    color="accent"
+                    (click)="new()"
+                >
+                    {{ "BUTTONS.NEW" | translate }}
+                </button>
+                <button
+                    *ngIf="visualizarionMode"
+                    mat-icon-button
+                    color="primary"
+                    title="{{ 'BUTTONS.DELETE' | translate }}"
+                    (click)="exclude()"
+                >
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button
+                    mat-icon-button
+                    color="primary"
+                    title="{{ 'BUTTONS.SAVE' | translate }}"
+                    (click)="save()"
+                >
+                    <mat-icon>save</mat-icon>
+                </button>
+            </div>
+
             <mat-tab-group class="container">
                 <mat-tab [label]="firstTab">
                     <ec-first-tab
@@ -25,32 +50,18 @@
                         lyricsName="lyric"
                         titleName="title"
                     >
-                        <mat-form-field
-                            class="container"
-                            appearance="standard"
-                        >
+                        <mat-form-field class="container" appearance="standard">
                             <mat-label>{{
                                 "CIPHER_FACTORY.TITLE_MUSIC" | translate
                             }}</mat-label>
-                            <input required
+                            <input
+                                required
                                 matInput
                                 type="text"
                                 formControlName="title"
                                 [formControl]="toControl('title')"
                                 class="title-music"
                             />
-                            <button
-                                color="primary"
-                                matSuffix
-                                mat-icon-button
-                                (click)="disableTitle()"
-                            >
-                                <mat-icon>{{
-                                    this.formGroup.get("title")?.disabled
-                                        ? "edit"
-                                        : "check"
-                                }}</mat-icon>
-                            </button>
                         </mat-form-field>
                     </ec-first-tab>
                 </mat-tab>
@@ -71,25 +82,14 @@
                             <mat-label>{{
                                 "CIPHER_FACTORY.TITLE_MUSIC" | translate
                             }}</mat-label>
-                            <input required
+                            <input
+                                required
                                 matInput
                                 type="text"
                                 formControlName="title"
                                 [formControl]="toControl('title')"
                                 class="title-music"
                             />
-                            <button
-                                color="primary"
-                                matSuffix
-                                mat-icon-button
-                                (click)="disableTitle()"
-                            >
-                                <mat-icon>{{
-                                    this.formGroup.get("title")?.disabled
-                                        ? "edit"
-                                        : "check"
-                                }}</mat-icon>
-                            </button>
                         </mat-form-field>
                     </ec-secondary-tab>
                 </mat-tab>

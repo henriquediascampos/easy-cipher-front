@@ -12,13 +12,25 @@
                 />
             </mat-form-field>
 
+            <div class="container column center" >
+                <button mat-raised-button color="accent" [routerLink]="['/ciphers/ciphers-factory']">
+                    <mat-icon>add</mat-icon>
+                    {{ "BUTTONS.ADD" | translate }}
+                </button>
+            </div>
         </div>
 
-        <ec-music-card
+        <ec-music-card #card
             *ngFor="let cipher of ciphers | async"
             [matTooltip]="cipher.lyric"
             [music]="cipher"
-        ></ec-music-card>
+        >
+            <ng-container buttons>
+                <button mat-icon-button [matTooltip]="'GENERIC_TOOLTIPS.ACCESS_CIPHER' | translate" (click)="card.animateSlide('ciphers/ciphers-factory', cipher)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </ng-container>
+        </ec-music-card>
         <span *ngIf="!(ciphers | async)?.length">
             {{ "SONGBOOK.SONGBOOK_EMPTY" | translate }}
         </span>

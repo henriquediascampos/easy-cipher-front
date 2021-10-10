@@ -1,11 +1,11 @@
-import { FormatMusicService } from './../../../../core/services/format-musica.service';
 import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { from, Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MusicalScaleService } from '../../../../core/services/musical-scale.service';
 import { DialogSetNoteComponent, Scale } from '../dialog-set-note/dialog-set-note.component';
+import { FormatMusicService } from './../../../../core/services/format-musica.service';
 
 export declare type TypeLine = 'text' | 'cipher' | 'empty';
 export interface Line {
@@ -70,10 +70,10 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
                 map((value: string) => scaleOptions.filter(option => !!option.toUpperCase().includes(value.toUpperCase()))))
         })
 
-        this._formGroup.get(this._toneName)?.
-            valueChanges.subscribe(value => {
-                console.log(value);
-            });
+        // this._formGroup.get(this._toneName)?.
+        //     valueChanges.subscribe(value => {
+        //         console.log(value, " mudou o tom");
+        //     });
     }
 
     transformText(value: string): Line[] {
@@ -145,12 +145,31 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
         this.scale.backTone(this._formGroup.get(this._toneName)?.value).then(value => {
             this._formGroup.get(this._toneName)?.setValue(value);
         })
+
+        const newText = this._formGroup.get(this._cipherName)?.value.map((line: Line) => {
+            if (line.type === 'cipher') {
+                line.content = this.scale.changeNotes(line.content, 'back');
+            }
+            return line;
+        });
+
+        this.emitterChangeText(newText);
+
     }
 
     nextTone(): void {
         this.scale.nextTone(this._formGroup.get(this._toneName)?.value).then(value => {
             this._formGroup.get(this._toneName)?.setValue(value);
         })
+
+        const newText = this._formGroup.get(this._cipherName)?.value.map((line: Line) => {
+            if (line.type === 'cipher') {
+                line.content = this.scale.changeNotes(line.content, 'next');
+            }
+            return line;
+        });
+
+        this.emitterChangeText(newText);
     }
 
 }

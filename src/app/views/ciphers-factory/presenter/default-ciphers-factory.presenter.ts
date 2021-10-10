@@ -14,8 +14,8 @@ export class DefaultCiphersFactoryPresenter implements CiphersFactoryPresenter {
     update(music: Cipher): Observable<Cipher> {
         return this.service.update(music);
     }
-    delete(music: Cipher): Observable<any> {
-        return this.service.delete(music);
+    delete(id: string): Observable<any> {
+        return this.service.delete(id);
     }
     findById(id: string): Observable<Cipher> {
         return this.service.findById(id);

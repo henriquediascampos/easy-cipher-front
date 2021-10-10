@@ -1,13 +1,12 @@
-import { Songbook } from './../../domain/models/Songbook';
-import { DialogAddCipherComponent } from './../dialog-add-cipher/dialog-add-cipher.component';
-import { MatDialog } from '@angular/material/dialog';
-import { CustomCipher } from './../../domain/models/CustomCipher';
-import { startWith, map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { SongbookPresenter } from '../../domain/boundaries/songbook.presenter';
+import { CustomCipher } from './../../domain/models/CustomCipher';
+import { DialogAddCipherComponent } from './../dialog-add-cipher/dialog-add-cipher.component';
 
 @Component({
     selector: 'ec-songbook',
@@ -25,7 +24,7 @@ export class SongbookComponent implements OnInit {
         private presenter: SongbookPresenter,
         private route: ActivatedRoute,
         private dialog: MatDialog
-        ) {
+    ) {
 
     }
 
@@ -42,7 +41,10 @@ export class SongbookComponent implements OnInit {
             this.title = response.title;
             this.musicFiltered = this.filterControl.valueChanges.pipe(
                 startWith(''),
-                map((value: string) => response.ciphers.filter(option => !!option.cipher.title.toUpperCase().includes(value.toUpperCase()))))
+                map((value: string) => response.ciphers.filter(option =>
+                    !!option.cipher.title.toUpperCase().includes(value.toUpperCase())
+                     || !!option.cipher.lyric.toUpperCase().includes(value.toUpperCase())
+                    )));
         });
     }
 
@@ -51,7 +53,8 @@ export class SongbookComponent implements OnInit {
             width: '600px',
             height: '300px',
             data: {
-                songbook: this.id
+                songbook: this.id,
+                callback: () => { this.loadSongbook(); }
             }
         });
     }
@@ -59,4 +62,5 @@ export class SongbookComponent implements OnInit {
     edit() {
 
     }
+
 }

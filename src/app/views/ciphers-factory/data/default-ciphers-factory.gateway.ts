@@ -14,8 +14,8 @@ export class DefaultCiphersFactoryGateway implements CiphersFactoryGateway {
     update(music: Cipher): Observable<Cipher> {
         return this.repository.update(music);
     }
-    delete(music: Cipher): Observable<any> {
-        return this.repository.delete(music);
+    delete(id: string): Observable<any> {
+        return this.repository.delete(id);
     }
     findById(id: string): Observable<Cipher> {
         return this.repository.findById(id);
