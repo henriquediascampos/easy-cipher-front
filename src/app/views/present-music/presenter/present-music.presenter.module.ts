@@ -1,3 +1,8 @@
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { TranslateModule } from '@ngx-translate/core';
 import { ContainerModule } from './../../../components/container/container.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -17,7 +22,13 @@ import { MatDividerModule } from '@angular/material/divider';
         PresentMusicRoutingModule,
         CoreModule,
         ContainerModule,
-        MatDividerModule
+        MatDividerModule,
+        TranslateModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule
     ]
 })
 export class PresentMusicPresenterModule { }

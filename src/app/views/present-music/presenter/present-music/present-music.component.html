@@ -1,20 +1,55 @@
 <cipher-container class="music-book" title-container="PRESENTER_MUSIC.TITLE">
     <div content class="container column margin-16 full-width">
+        <div class="container row margin-8">
+            <div class="container full">
+                <!-- <span class="title-5">{{title}}</span>
+                <mat-divider></mat-divider> -->
+                <mat-form-field class="container row full" appearance="standard">
+                    <input
+                        class="upper"
+                        type="text"
+                        matInput
+                        [value]="title"
+                    />
+                </mat-form-field>
+            </div>
+            <div>
+                <button
+                    mat-icon-button
+                    color="primary"
+                    title="{{ 'CIPHER_FACTORY.BACK_TONE' | translate }}"
+                    (click)="backTone()"
+                >
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
 
-        <div class="container column padding-16">
-            <span class="title-5">{{title}}</span>
-            <mat-divider></mat-divider>
+                <mat-form-field class="form-tone" appearance="standard">
+                    <mat-label class="tone-label container center">{{
+                        "CIPHER_FACTORY.TONE" | translate
+                    }}</mat-label>
+                    <input
+                        type="text"
+                        placeholder="{{
+                            'CIPHER_FACTORY.REQUIRE_TONE' | translate
+                        }}"
+                        matInput
+                        class="tone"
+                        [formControl]="tone"
+                    />
+                </mat-form-field>
+
+                <button
+                    mat-icon-button
+                    color="primary"
+                    title="{{ 'CIPHER_FACTORY.NEXT_TONE' | translate }}"
+                    (click)="nextTone()"
+                >
+                    <mat-icon>chevron_right</mat-icon>
+                </button>
+            </div>
         </div>
 
-        <div
-            class="
-                container
-                column
-                full-width
-                cipher-container
-                font-mono
-            "
-        >
+        <div class="container column full-width cipher-container font-mono">
             <ng-container *ngFor="let line of this.text; let indexLine = index">
                 <pre
                     class="container line-text"

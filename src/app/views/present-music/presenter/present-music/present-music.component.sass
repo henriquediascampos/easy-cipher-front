@@ -17,9 +17,11 @@
 
 .tone
     text-align: center
-    font-weight: 400
+    font-weight: 500
     font-size: 12pt
-    text-transform: uppercase
+    color: #f70
+    &::placeholder
+        font-size: 10pt
 
 .cipher-container
     overflow-x: auto
@@ -39,9 +41,13 @@
                 color: #f70
                 cursor: pointer
                 position: relative
+                display: block
                 &::before
+                    display: block
                     position: absolute
                     content: var(--note)
+                &::first-letter
+                    color: red
                 &:hover::before
                     @include highlighted-note()
                 &:active::before
