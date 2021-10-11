@@ -57,20 +57,37 @@ export class FormatMusicService {
     }
 
     brackText(value: string): Line[] {
-        return value.split('\n').map<Line>(line => ({
-            type: this.checkTypeLine(line),
-            content: this.formatContent(line)
-        }));
+        return value.split('\n').map<Line>(line => {
+
+            const type = this.checkTypeLine(line);
+            return {
+                type,
+                content: this.formatContent(line, type)
+            }
+        });
     }
 
     checkTypeLine(value: string): TypeLine {
         if (value.length === 0 || value.trim().length === 0) {
             return 'text'
         }
-        return /[A-Z]{1}(\s|[m|M|/|#|b|&|7]*)/.test(value) && /\s{5,}/.test(value) ? 'cipher' : 'text';
+        return /^\s*([A-G][\s|m|M|/|#|b|&|7]*)+$/.test(value) ? 'cipher' : 'text';
     }
 
-    formatContent(value: string): string {
+    formatContent(value: string, type: TypeLine): string {
+        if (type === 'cipher') {
+            let addSpace = '';
+            value = value.split('').reduce((accu, curr) => {
+                if (accu.length > 0 && !/\s/.test(curr) && !/\s/.test(accu[accu.length - 1])) {
+                    addSpace += ' ';
+                    accu += curr;
+                } else {
+                    accu += addSpace += curr;
+                    addSpace = '';
+                }
+                return accu;
+            });
+        }
         return value.length === 0 ? '' : value;
     }
 
@@ -83,6 +100,6 @@ export class FormatMusicService {
                 accu.push(curr);
             }
             return accu;
-        }, [])
+        }, []);
     }
 }

@@ -43,7 +43,7 @@ export class DialogSetNoteComponent {
     }
 
     ok(): void {
-        this.data.callback(this.formGroup.get('note')?.value);
+        this.data.callback(this.formGroup.get('note')?.value || ' ');
         this.close();
     }
 
