@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prod
-      url: teste.com
+      url: 'teste.com'
     needs: build
     steps:
       - name: Run a one-line script
