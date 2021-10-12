@@ -24,9 +24,7 @@ export class MusicCardComponent implements OnInit {
         setTimeout(() => {
             this.router.navigate([route], {
                 skipLocationChange: false,
-                state: {
-                    param
-                }
+                state: param
             });
         }, 600);
 

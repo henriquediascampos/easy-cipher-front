@@ -18,7 +18,7 @@ export class CiphersFactoryRepository {
         return this.http.put<Cipher>(`${this.baseUre}/api/cipher`, music);
     }
     delete(id: string): Observable<any> {
-        return this.http.delete(`/ap${this.baseUre}i/cipher`, {
+        return this.http.delete(`${this.baseUre}/api/cipher`, {
             body: id
         });
     }

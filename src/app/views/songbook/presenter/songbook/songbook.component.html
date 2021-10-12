@@ -41,7 +41,7 @@
             <ng-container buttons>
                 <button
                     mat-icon-button
-                    (click)="card.animateSlide('present-music', item.cipher)"
+                    (click)="card.animateSlide('present-music', { customTone: item.customTone,  cipher: item.cipher })"
                     [matTooltip]="'GENERIC_TOOLTIPS.ACCESS_CIPHER' | translate"
                 >
                     <mat-icon>music_note</mat-icon>

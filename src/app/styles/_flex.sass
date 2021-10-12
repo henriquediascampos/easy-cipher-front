@@ -1,20 +1,28 @@
+@mixin custom-padding($firt-p)
+    &-#{$firt-p}
+        padding: #{$firt-p}px
+        &-4
+            padding: #{$firt-p}px 4px
+        &-8
+            padding: #{$firt-p}px 8px
+        &-16
+            padding: #{$firt-p}px 16px
+        &-32
+            padding: #{$firt-p}px 32px
+        &-64
+            padding: #{$firt-p}px 64px
+
+
+
 .container
     display: flex
     &.padding
-        &-8
-            padding: 8px
-
-        &-8-16
-            padding: 8px 16px
-
-        &-16
-            padding: 16px
-
-        &-20
-            padding: 20px
-
-        &-32
-            padding: 32px
+        @include custom-padding(0)
+        @include custom-padding(4)
+        @include custom-padding(8)
+        @include custom-padding(16)
+        @include custom-padding(32)
+        @include custom-padding(64)
 
     &.full
         flex: 1

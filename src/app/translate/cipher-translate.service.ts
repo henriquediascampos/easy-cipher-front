@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
-export default class CipherTranslateService {
+export class CipherTranslateService {
 
     constructor(private translate: TranslateService) { }
 

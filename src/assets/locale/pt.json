@@ -13,6 +13,7 @@
         "LANG_PT": "Português",
         "LANG_EN": "Inglês",
         "SAVE": "Salvar",
+        "CLOSE": "Fechar",
         "UPDATE": "Atualizar",
         "CANCEL": "Cancelar",
         "CLEAN": "Limpar",
@@ -66,7 +67,17 @@
         "TITLE_PLACEHOLDER": "Digite um título para seu caderno de músicas",
 
         "VISAO": "Visão",
-        "VISAO_PLACEHOLDER": "Escolha uma visão"
+        "VISAO_PLACEHOLDER": "Escolha uma visão",
+        "VISAO_TITLE": "Esse campo indica quem poderá ver esse livro musical.",
+
+        "NO_RECORDS": "Nenhum registro presente",
+
+        "PUBLIC": "Público",
+        "PRIVATE": "Privado",
+
+        "COMPLETE_REQUIRED_FIELDS": "Primero preencha todos os campos obrigatórios!"
+
+
     },
 
     "LOGIN": {

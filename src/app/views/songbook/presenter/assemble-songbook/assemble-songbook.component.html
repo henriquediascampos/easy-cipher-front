@@ -4,6 +4,7 @@
             <mat-form-field class="container full-width" appearance="standard">
                 <mat-label>{{ "FORM.TITLE" | translate }}</mat-label>
                 <input
+                    required
                     matInput
                     placeholder="{{ 'FORM.TITLE_PLACEHOLDER' | translate }}"
                     formControlName="title"
@@ -15,8 +16,10 @@
                 <input
                     type="text"
                     placeholder="{{ 'FORM.VISAO_PLACEHOLDER' | translate }}"
+                    title="{{ 'FORM.VISAO_TITLE' | translate }}"
                     aria-label="Number"
                     matInput
+                    required
                     formControlName="vision"
                     [matAutocomplete]="auto"
                 />
@@ -39,20 +42,34 @@
         </div>
         <mat-divider></mat-divider>
 
-        <div #card
+        <div
+            #card
             class="container row mat-elevation-z2 card padding-16"
             *ngFor="let item of musicFiltered | async"
         >
             <span class="container column center full">
                 {{ item.title }}
             </span>
-            <button mat-icon-button color="primary" class="hover-scale" (click)="delete(item.id)">
+            <button
+                mat-icon-button
+                color="primary"
+                class="hover-scale"
+                (click)="delete(item.id)"
+            >
                 <mat-icon>delete</mat-icon>
             </button>
 
-            <button mat-icon-button color="primary" class="hover-scale" (click)="selectSongbook(card, item.id)">
+            <button
+                mat-icon-button
+                color="primary"
+                class="hover-scale"
+                (click)="selectSongbook(card, item.id)"
+            >
                 <mat-icon>chevron_right</mat-icon>
             </button>
         </div>
+        <span *ngIf="!(musicFiltered | async)?.length">{{
+            "FORM.NO_RECORDS" | translate
+        }}</span>
     </div>
 </cipher-container>

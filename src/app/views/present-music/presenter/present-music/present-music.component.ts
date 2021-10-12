@@ -1,8 +1,8 @@
-import { FormControl } from '@angular/forms';
-import { MusicalScaleService, Note } from './../../../../core/services/musical-scale.service';
-import { Router } from '@angular/router';
 import { Component, HostBinding, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { FormatMusicService } from './../../../../core/services/format-musica.service';
+import { MusicalScaleService, Note } from './../../../../core/services/musical-scale.service';
 import { Line } from './../../../ciphers-factory/presenter/ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
 
 @Component({
@@ -14,18 +14,31 @@ export class PresentMusicComponent implements OnInit {
     @HostBinding('class') _class = 'container full';
     text!: Line[];
     title!: string;
+    origemTone!: string;
     tone = new FormControl([''])
 
     constructor(private router: Router, private format: FormatMusicService, private scale: MusicalScaleService) {
         if (this.router.getCurrentNavigation()?.extras.state) {
-            const { param }: any = this.router.getCurrentNavigation()?.extras.state
-            this.title = param.title;
-            this.tone.setValue(param.tone);
-            this.text = JSON.parse(param.cipher);
+            const { cipher, customTone }: any = this.router.getCurrentNavigation()?.extras.state
+            this.title = cipher.title;
+            this.origemTone = cipher.tone;
+            this.tone.setValue(customTone);
+            this.text = JSON.parse(cipher.cipher);
         }
     }
 
     ngOnInit(): void {
+
+        if (this.origemTone && this.origemTone !== this.tone.value) {
+            setTimeout(() => {
+                this.text = this.text.map( line => {
+                    if (line.type === 'cipher') {
+                        line.content = this.scale.changeTone(line.content, this.origemTone, this.tone.value)
+                    }
+                    return line;
+                })
+            }, 20);
+        }
 
         // this.route.queryParams.subscribe(params => {
         //     this.title = params['title'];

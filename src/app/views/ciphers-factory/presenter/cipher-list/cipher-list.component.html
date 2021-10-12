@@ -31,8 +31,6 @@
                 </button>
             </ng-container>
         </ec-music-card>
-        <span *ngIf="!(ciphers | async)?.length">
-            {{ "SONGBOOK.SONGBOOK_EMPTY" | translate }}
-        </span>
+        <span *ngIf="!(ciphers | async)?.length">{{ "FORM.NO_RECORDS" | translate }}</span>
     </div>
 </cipher-container>

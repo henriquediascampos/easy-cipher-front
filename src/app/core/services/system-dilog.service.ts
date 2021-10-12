@@ -1,9 +1,9 @@
-import { DialogData } from './../../views/songbook/presenter/dialog-add-cipher/dialog-add-cipher.component';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SystemDialogComponent, TypeDialog } from '../../components/system-dialog/presenter/system-dialog/system-dialog.component';
 
 export interface Data {
+    subtitle?: string;
     message: string;
     callback?: (value?: any) => void
 }
@@ -31,10 +31,11 @@ export class SystemDialogService {
 
     private showSystemDialog(data: Data, type: TypeDialog) {
         this.dialog.open(SystemDialogComponent, {
-            height: '250px',
+            height: '280px',
             width: '520px',
             data: {
                 type,
+                subtitle: data.subtitle,
                 message: data.message,
                 callback: data.callback,
             }

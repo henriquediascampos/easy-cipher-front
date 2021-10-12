@@ -23,15 +23,7 @@
                 >
                     {{ "BUTTONS.NEW" | translate }}
                 </button>
-                <button
-                    *ngIf="visualizarionMode"
-                    mat-icon-button
-                    color="primary"
-                    title="{{ 'BUTTONS.DELETE' | translate }}"
-                    (click)="exclude()"
-                >
-                    <mat-icon>delete</mat-icon>
-                </button>
+
                 <button
                     mat-icon-button
                     color="primary"
@@ -39,6 +31,16 @@
                     (click)="save()"
                 >
                     <mat-icon>save</mat-icon>
+                </button>
+
+                <button
+                    *ngIf="visualizarionMode"
+                    mat-icon-button
+                    color="warn"
+                    title="{{ 'BUTTONS.DELETE' | translate }}"
+                    (click)="exclude()"
+                >
+                    <mat-icon>delete</mat-icon>
                 </button>
             </div>
 

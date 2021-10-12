@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import CipherTranslateService from 'src/app/translate/cipher-translate.service';
+import { CipherTranslateService } from 'src/app/translate/cipher-translate.service';
 
 export declare type TypeDialog = 'error' | 'warn' | 'sucess' | 'info'
 
 export interface DialogData {
     type: TypeDialog;
+    subtitle?: string;
     message: string;
     callback?: (value?: any) => void
 }
@@ -26,7 +27,7 @@ export class SystemDialogComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private translate: CipherTranslateService,
     ) {
-        this.translate.change("SYSTEM.DIALOG."+this.data.type.toUpperCase(), (t: string) => { this.title = t });
+        this.translate.change("SYSTEM.DIALOG." + this.data.type.toUpperCase(), (t: string) => { this.title = t });
     }
 
     ngOnInit(): void {

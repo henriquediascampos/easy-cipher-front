@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import CipherTranslateService from './cipher-translate.service';
+import { CipherTranslateService } from './cipher-translate.service';
 
 
 @NgModule({

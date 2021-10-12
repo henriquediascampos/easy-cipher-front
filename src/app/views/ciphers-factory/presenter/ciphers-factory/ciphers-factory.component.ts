@@ -4,7 +4,7 @@ import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { Router } from '@angular/router';
-import CipherTranslateService from 'src/app/translate/cipher-translate.service';
+import { CipherTranslateService } from 'src/app/translate/cipher-translate.service';
 import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory.presenter';
 import { CiphersFactoryFirstTabComponent } from '../ciphers-factory-first-tab/ciphers-factory-first-tab.component';
 import { CiphersFactorySecondaryTabComponent, Line } from '../ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
@@ -129,8 +129,11 @@ export class CiphersFactoryComponent implements OnInit {
 
             this.presenter.save(music)
                 .subscribe(reponse => {
-                    this.id = reponse.id;
-                    this.dialog.sucess({ message: this.translate.getWithArgs('MESSAGE.SAVE_SUCCESS', { arg: this.translate.get('CIPHER_FACTORY.CIPHER') }) });
+                    this.state = reponse;
+                    this.visualization();
+                    this.dialog.sucess({
+                        message: this.translate.getWithArgs('MESSAGE.SAVE_SUCCESS', { arg: this.translate.get('CIPHER_FACTORY.CIPHER') })
+                    });
                 });
         } else {
             this.dialog.warn({ message: 'Antes de salvar preencha todos os campos obrigatórios!' });
@@ -159,8 +162,14 @@ export class CiphersFactoryComponent implements OnInit {
     }
 
     exclude(): void {
-        this.presenter.delete(this.id!).subscribe( response => {
-            this.router.navigate(['ciphers']);
+        this.dialog.warn({
+            subtitle: 'Excluir?',
+            message: 'Tem certeza que deseja seguir com essa operação!',
+            callback: () => {
+                this.presenter.delete(this.id!).subscribe(response => {
+                    this.router.navigate(['ciphers']);
+                });
+            }
         });
     }
 }

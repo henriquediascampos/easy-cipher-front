@@ -1,6 +1,9 @@
-import { Router } from '@angular/router';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FocusService } from './../../../../core/services/focus.service';
+import { SystemDialogService } from './../../../../core/services/system-dilog.service';
+import { CipherTranslateService } from 'src/app/translate/cipher-translate.service';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { SongbookPresenter } from '../../domain/boundaries/songbook.presenter';
@@ -18,13 +21,23 @@ export class AssembleSongbookComponent implements OnInit {
     options: string[];
     songbookForm: FormGroup;
 
-    constructor(private presenter: SongbookPresenter, private formBuilder: FormBuilder, private router: Router) {
+
+    constructor(
+        private presenter: SongbookPresenter,
+        private formBuilder: FormBuilder,
+        private focus: FocusService,
+        private router: Router,
+        private translate: CipherTranslateService,
+        private dialog: SystemDialogService) {
         this.songbookForm = this.formBuilder.group({
             title: ['', [Validators.required, Validators.minLength(3)]],
             vision: ['', [Validators.required]]
         });
 
-        this.options = ['PRIVATE', 'PUBLIC'];
+        this.options = [
+            this.translate.get('FORM.PRIVATE'),
+            this.translate.get('FORM.PUBLIC')
+        ];
 
         this.optionsVision = this.songbookForm.get('vision')?.valueChanges.pipe(
             startWith(''),
@@ -34,6 +47,7 @@ export class AssembleSongbookComponent implements OnInit {
     ngOnInit(): void {
         this.loadSongbooks();
     }
+
     loadSongbooks() {
         this.musicFiltered = this.presenter.findAll().pipe(
             startWith([]),
@@ -45,8 +59,16 @@ export class AssembleSongbookComponent implements OnInit {
 
     save(): void {
         if (this.songbookForm.valid) {
-            this.presenter.save(this.songbookForm.getRawValue()).subscribe(response => {
+            const param = this.songbookForm.getRawValue() as Songbook;
+            param.vision = param.vision === this.translate.get('FORM.PRIVATE') ? 'PRIVATE' : 'PUBLIC';
+            this.presenter.save(param).subscribe(response => {
+                this.songbookForm.reset();
                 this.loadSongbooks();
+            })
+        } else {
+            this.dialog.warn({
+                message: this.translate.get('FORM.COMPLETE_REQUIRED_FIELDS'),
+                callback: () => { this.focus.validateFocus(this.songbookForm, Object.getOwnPropertyNames(this.songbookForm.controls)) }
             })
         }
     }
@@ -55,15 +77,21 @@ export class AssembleSongbookComponent implements OnInit {
         card.classList.add('navigate');
         setTimeout(() => {
             this.router.navigate(['songbook/songbook'], {
-                queryParams: {id}
+                queryParams: { id }
             });
         }, 600);
 
     }
 
     delete(id: string) {
-        this.presenter.delete(id).subscribe( value => {
-
+        this.dialog.warn({
+            subtitle: 'Excluir?',
+            message: 'Tem certeza que deseja seguir com essa operação!',
+            callback: () => {
+                this.presenter.delete(id).subscribe(response => {
+                    this.loadSongbooks()
+                });
+            }
         });
     }
 }

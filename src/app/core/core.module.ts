@@ -1,3 +1,4 @@
+import { FocusService } from './services/focus.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -31,7 +32,8 @@ import { SystemDialogService } from './services/system-dilog.service';
         RoutesGuard,
         SpinnerService,
         MusicalScaleService,
-        FormatMusicService
+        FormatMusicService,
+        FocusService
     ],
 })
 export class CoreModule { }

@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory.presenter';
-import CipherTranslateService from 'src/app/translate/cipher-translate.service';
+import { CipherTranslateService } from 'src/app/translate/cipher-translate.service';
 
 @Component({
     selector: 'ec-cipher-list',
