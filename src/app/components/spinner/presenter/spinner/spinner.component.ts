@@ -20,6 +20,8 @@ export class SpinnerComponent implements OnInit {
 
     ngOnInit(): void {
         this.spinner.spinnerNotify.subscribe((on) => {
+            console.log('change spinner ', on);
+
             this.on = on;
             this.clazzOn = on;
             this.clazzColorECG = false;
@@ -27,6 +29,7 @@ export class SpinnerComponent implements OnInit {
             this.id = moment().unix();
             this.countdownChangeColorECG(on, this.id);
         });
+
     }
 
     countdownChangeColorECG(on: boolean, id: number): void {

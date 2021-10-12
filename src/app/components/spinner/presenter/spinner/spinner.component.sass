@@ -8,32 +8,42 @@
     cursor: wait
     opacity: 1
     transition: opacity 500ms ease
-
     &.on
         transition: opacity 500ms ease
         opacity: 1
         z-index: 9999
-
     svg
-        position: absolute
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
+        display: flex
         margin: auto
-
+        height: 150px
+        width: 150px
+        animation: rotate 1s linear infinite
         .beat-loader
-            stroke-dasharray: 172
+            transform: translate(5px, 5px)
+            height: 100%
+            width: 100%
+            fill: none
+            stroke-width: 10
+            stroke-linecap: round
+            stroke-dasharray: 440
             stroke-dashoffset: 0
-            animation: draw 1.8s cubic-bezier(0.82, 0.4, 0.17, 0.6) infinite
-            stroke: #0bb1dade
+            animation: draw 2s linear infinite
+            stroke: #328993
             transition: stroke 1500ms ease
-
             &.color-ECG
                 stroke: #ff0000ce
 
-@keyframes draw
+@keyframes rotate
     to
-        stroke-dashoffset: 0
+        transform: rotate(360deg)
     from
-        stroke-dashoffset: 172
+        transform: rotate(0deg)
+
+
+@keyframes draw
+    0%,100%
+        stroke-dashoffset: 440
+    50%
+        stroke-dashoffset: 0
+    50.1%
+        stroke-dashoffset: 880

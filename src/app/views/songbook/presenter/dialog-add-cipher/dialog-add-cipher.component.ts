@@ -1,3 +1,4 @@
+import { SpinnerService } from './../../../../core/services/spinner.service';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocomplete } from '@angular/material/autocomplete';
@@ -33,7 +34,8 @@ export class DialogAddCipherComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
         private presenter: SongbookPresenter,
         private formBuilder: FormBuilder,
-        private scale: MusicalScaleService
+        private scale: MusicalScaleService,
+        private spinner: SpinnerService
     ) {
         this.formGroup = this.formBuilder.group({
             cipher: ['', Validators.required],
@@ -58,32 +60,45 @@ export class DialogAddCipherComponent implements OnInit {
                 );
         });
 
-        this.presenter.findAllCiphers({}).subscribe((response) => {
-            this.filteredOptions = this.formGroup
-                .get('cipher')
-                ?.valueChanges.pipe(
-                    startWith(''),
-                    map((value) =>
-                        response.filter((option) => {
-                            return !!option.title
-                                .toUpperCase()
-                                .normalize('NFD')
-                                .replace(/[\u0300-\u036f]/g, '')
-                                .includes(
-                                    value.toUpperCase
-                                        ? value
-                                              .toUpperCase()
-                                              .normalize('NFD')
-                                              .replace(/[\u0300-\u036f]/g, '')
-                                        : (value as Cipher).title
-                                              .toUpperCase()
-                                              .normalize('NFD')
-                                              .replace(/[\u0300-\u036f]/g, '')
-                                );
-                        })
-                    )
-                );
-        });
+        this.spinner.on();
+        this.presenter.findAllCiphers({}).subscribe(
+            (response) => {
+                this.filteredOptions = this.formGroup
+                    .get('cipher')
+                    ?.valueChanges.pipe(
+                        startWith(''),
+                        map((value) =>
+                            response.filter((option) => {
+                                return !!option.title
+                                    .toUpperCase()
+                                    .normalize('NFD')
+                                    .replace(/[\u0300-\u036f]/g, '')
+                                    .includes(
+                                        value.toUpperCase
+                                            ? value
+                                                  .toUpperCase()
+                                                  .normalize('NFD')
+                                                  .replace(
+                                                      /[\u0300-\u036f]/g,
+                                                      ''
+                                                  )
+                                            : (value as Cipher).title
+                                                  .toUpperCase()
+                                                  .normalize('NFD')
+                                                  .replace(
+                                                      /[\u0300-\u036f]/g,
+                                                      ''
+                                                  )
+                                    );
+                            })
+                        )
+                    );
+            },
+            () => {},
+            () => {
+                this.spinner.off();
+            }
+        );
     }
 
     close(): void {
@@ -93,12 +108,20 @@ export class DialogAddCipherComponent implements OnInit {
     add(): void {
         const customCipher: CustomCipher = this.formGroup.getRawValue();
         customCipher.songbook = { id: this.data.songbook } as Songbook;
-        this.presenter.add(customCipher).subscribe((response) => {
-            if (this.data?.callback) {
-                this.data.callback();
+        this.spinner.on();
+
+        this.presenter.add(customCipher).subscribe(
+            (response) => {
+                if (this.data?.callback) {
+                    this.data.callback();
+                }
+                this.close();
+            },
+            () => {},
+            () => {
+                this.spinner.off();
             }
-            this.close();
-        });
+        );
     }
 
     public displayProperty(value: { title: any }) {

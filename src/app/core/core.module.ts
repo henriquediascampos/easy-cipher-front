@@ -9,7 +9,6 @@ import { AuthService } from './services/auth.service';
 import { FormatMusicService } from './services/format-musica.service';
 import { Translate } from './services/Http-loader-factory.service';
 import { MusicalScaleService } from './services/musical-scale.service';
-import { SpinnerService } from './services/spinner.service';
 import { SystemDialogService } from './services/system-dilog.service';
 
 
@@ -30,7 +29,6 @@ import { SystemDialogService } from './services/system-dilog.service';
         Translate,
         AuthService,
         RoutesGuard,
-        SpinnerService,
         MusicalScaleService,
         FormatMusicService,
         FocusService

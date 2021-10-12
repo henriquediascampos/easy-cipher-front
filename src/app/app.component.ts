@@ -1,15 +1,15 @@
 import { SpinnerService } from './core/services/spinner.service';
 import { AuthService } from './core/services/auth.service';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.sass']
+    styleUrls: ['./app.component.sass'],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
     title = 'Easy cipher';
     authenticatedUser = true;
     sub: Subscription;
@@ -23,14 +23,17 @@ export class AppComponent {
     ) {
         this.alterlang(navigator.language);
 
-        this.spinner.blurBackgroundNotify.subscribe((onBlur) => {
-            this.blur = onBlur;
-        });
-
         this.sub = this.auth.changeAuthenticate.subscribe((auth) => {
             // this.authenticatedUser = !!auth; //decomentar
         });
         this.auth.hasAuthenticated();
+
+    }
+
+    ngAfterViewInit(): void {
+        this.spinner.blurBackgroundNotify.subscribe((onBlur) => {
+            this.blur = onBlur;
+        });
     }
 
     alterlang(lang: string): void {

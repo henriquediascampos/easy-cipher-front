@@ -1,3 +1,4 @@
+import { SpinnerService } from './../../../../core/services/spinner.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,7 +12,7 @@ import { DialogAddCipherComponent } from './../dialog-add-cipher/dialog-add-ciph
 @Component({
     selector: 'ec-songbook',
     templateUrl: './songbook.component.html',
-    styleUrls: ['./songbook.component.sass']
+    styleUrls: ['./songbook.component.sass'],
 })
 export class SongbookComponent implements OnInit {
     title = '';
@@ -23,29 +24,44 @@ export class SongbookComponent implements OnInit {
     constructor(
         private presenter: SongbookPresenter,
         private route: ActivatedRoute,
-        private dialog: MatDialog
-    ) {
-
-    }
+        private dialog: MatDialog,
+        private spinner: SpinnerService
+    ) {}
 
     ngOnInit(): void {
-
-        this.route.queryParams.subscribe(params => {
+        this.route.queryParams.subscribe((params) => {
             this.id = params['id'];
-            this.loadSongbook();
-        })
+            setTimeout(() => {
+                this.loadSongbook();
+            }, 300);
+        });
     }
 
     loadSongbook() {
-        this.presenter.findById(this.id).subscribe((response) => {
-            this.title = response.title;
-            this.musicFiltered = this.filterControl.valueChanges.pipe(
-                startWith(''),
-                map((value: string) => response.ciphers.filter(option =>
-                    !!option.cipher.title.toUpperCase().includes(value.toUpperCase())
-                     || !!option.cipher.lyric.toUpperCase().includes(value.toUpperCase())
-                    )));
-        });
+        this.spinner.on();
+        this.presenter.findById(this.id).subscribe(
+            (response) => {
+                this.title = response.title;
+                this.musicFiltered = this.filterControl.valueChanges.pipe(
+                    startWith(''),
+                    map((value: string) =>
+                        response.ciphers.filter(
+                            (option) =>
+                                !!option.cipher.title
+                                    .toUpperCase()
+                                    .includes(value.toUpperCase()) ||
+                                !!option.cipher.lyric
+                                    .toUpperCase()
+                                    .includes(value.toUpperCase())
+                        )
+                    )
+                );
+            },
+            () => {},
+            () => {
+                this.spinner.off();
+            }
+        );
     }
 
     showDialogAdd(): void {
@@ -54,13 +70,12 @@ export class SongbookComponent implements OnInit {
             height: '300px',
             data: {
                 songbook: this.id,
-                callback: () => { this.loadSongbook(); }
-            }
+                callback: () => {
+                    this.loadSongbook();
+                },
+            },
         });
     }
 
-    edit() {
-
-    }
-
+    edit() {}
 }

@@ -1,13 +1,22 @@
+import { SpinnerService } from './../../../../core/services/spinner.service';
 import { FormatMusicService } from './../../../../core/services/format-musica.service';
 import { Cipher } from './../../../songbook/domain/models/Cipher';
 import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { Router } from '@angular/router';
 import { CipherTranslateService } from 'src/app/translate/cipher-translate.service';
 import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory.presenter';
 import { CiphersFactoryFirstTabComponent } from '../ciphers-factory-first-tab/ciphers-factory-first-tab.component';
-import { CiphersFactorySecondaryTabComponent, Line } from '../ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
+import {
+    CiphersFactorySecondaryTabComponent,
+    Line,
+} from '../ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
 import { SystemDialogService } from './../../../../core/services/system-dilog.service';
 
 @Component({
@@ -38,9 +47,9 @@ export class CiphersFactoryComponent implements OnInit {
         private dialog: SystemDialogService,
         private presenter: CiphersFactoryPresenter,
         private router: Router,
-        private formatMusic: FormatMusicService
+        private formatMusic: FormatMusicService,
+        private spinner: SpinnerService
     ) {
-
         this.formGroup = this.formBuilder.group({
             title: ['', [Validators.required, Validators.minLength(3)]],
             lyric: ['', [Validators.required, Validators.minLength(100)]],
@@ -48,21 +57,25 @@ export class CiphersFactoryComponent implements OnInit {
             tone: [''],
         });
 
-        this.translate.change('CIPHER_FACTORY.LYRICS', (t: string) => { this.firstTab = t });
-        this.translate.change('CIPHER_FACTORY.CIPHER', (t: string) => { this.secondaryTab = t });
+        this.translate.change('CIPHER_FACTORY.LYRICS', (t: string) => {
+            this.firstTab = t;
+        });
+        this.translate.change('CIPHER_FACTORY.CIPHER', (t: string) => {
+            this.secondaryTab = t;
+        });
 
         if (this.router.getCurrentNavigation()?.extras.state) {
-            const { cipher }: any = this.router.getCurrentNavigation()?.extras.state
+            const { cipher }: any =
+                this.router.getCurrentNavigation()?.extras.state;
             this.state = cipher;
         }
-
     }
 
     ngOnInit(): void {
-        this.toControl('lyric').valueChanges.subscribe(value => {
+        this.toControl('lyric').valueChanges.subscribe((value) => {
             this.secondary?.transformText(value);
         });
-        this.reflectTitle()
+        this.reflectTitle();
 
         // this.dependesOn('lyric', ['title']);
         // this.dependesOn('cipher', ['title', 'lyric', 'tone'], disable => {
@@ -72,11 +85,10 @@ export class CiphersFactoryComponent implements OnInit {
         setTimeout(() => {
             this.visualization();
         }, 100);
-
     }
 
     private reflectTitle() {
-        let a = this.toControl('title').valueChanges.subscribe(value => {
+        let a = this.toControl('title').valueChanges.subscribe((value) => {
             a.unsubscribe();
             setTimeout(() => {
                 this.toControl('title').setValue(value);
@@ -85,11 +97,17 @@ export class CiphersFactoryComponent implements OnInit {
         });
     }
 
-    private dependesOn(dependsOn: string, depends: string[], fn?: (disable: boolean) => void): void {
+    private dependesOn(
+        dependsOn: string,
+        depends: string[],
+        fn?: (disable: boolean) => void
+    ): void {
         const control = this.toControl(dependsOn);
-        depends.forEach(depend => {
-            this.toControl(depend).valueChanges.subscribe(value => {
-                const disabled = depends.some(v => this.toControl(v).valid === false)
+        depends.forEach((depend) => {
+            this.toControl(depend).valueChanges.subscribe((value) => {
+                const disabled = depends.some(
+                    (v) => this.toControl(v).valid === false
+                );
                 if (fn) {
                     fn(disabled);
                 } else {
@@ -108,7 +126,7 @@ export class CiphersFactoryComponent implements OnInit {
     }
 
     toControl(formControlName: string): FormControl {
-        return this.formGroup.get(formControlName) as FormControl
+        return this.formGroup.get(formControlName) as FormControl;
     }
 
     save(): void {
@@ -116,32 +134,46 @@ export class CiphersFactoryComponent implements OnInit {
             const music = this.formGroup.getRawValue();
             music.cipher = JSON.stringify(music.cipher);
 
-            music.lyric = this.formatMusic.brackText(music.lyric)
-                .filter(value => value.type !== 'cipher')
+            music.lyric = this.formatMusic
+                .brackText(music.lyric)
+                .filter((value) => value.type !== 'cipher')
                 .reduce((accu: string, curr: Line) => {
-                    accu = accu ? accu + '\n' + curr.content : '' + curr.content;
+                    accu = accu
+                        ? accu + '\n' + curr.content
+                        : '' + curr.content;
                     return accu;
                 }, '');
 
             if (this.id) {
                 music.id = this.id;
             }
+            this.spinner.on();
 
-            this.presenter.save(music)
-                .subscribe(reponse => {
+            this.presenter.save(music).subscribe(
+                (reponse) => {
                     this.state = reponse;
                     this.visualization();
                     this.dialog.sucess({
-                        message: this.translate.getWithArgs('MESSAGE.SAVE_SUCCESS', { arg: this.translate.get('CIPHER_FACTORY.CIPHER') })
+                        message: this.translate.getWithArgs(
+                            'MESSAGE.SAVE_SUCCESS',
+                            { arg: this.translate.get('CIPHER_FACTORY.CIPHER') }
+                        ),
                     });
-                });
+                },
+                () => {},
+                () => {
+                    this.spinner.off();
+                }
+            );
         } else {
-            this.dialog.warn({ message: 'Antes de salvar preencha todos os campos obrigatórios!' });
+            this.dialog.warn({
+                message:
+                    'Antes de salvar preencha todos os campos obrigatórios!',
+            });
         }
     }
 
     visualization() {
-
         if (this.state) {
             this.visualizarionMode = true;
             this.id = this.state!.id;
@@ -149,7 +181,9 @@ export class CiphersFactoryComponent implements OnInit {
             this.toControl('title').setValue(this.state.title);
             this.toControl('tone').setValue(this.state.tone);
             setTimeout(() => {
-                this.secondary?.emitterChangeText(JSON.parse(this.state!.cipher));
+                this.secondary?.emitterChangeText(
+                    JSON.parse(this.state!.cipher)
+                );
             }, 200);
         }
     }
@@ -159,7 +193,7 @@ export class CiphersFactoryComponent implements OnInit {
 
         this.formGroup.reset();
         this.id = '';
-        this.state = undefined
+        this.state = undefined;
     }
 
     exclude(): void {
@@ -167,11 +201,17 @@ export class CiphersFactoryComponent implements OnInit {
             subtitle: 'Excluir?',
             message: 'Tem certeza que deseja seguir com essa operação!',
             callback: () => {
-                this.presenter.delete(this.id!).subscribe(response => {
-                    this.router.navigate(['ciphers']);
-                });
-            }
+                this.spinner.on();
+                this.presenter.delete(this.id!).subscribe(
+                    (response) => {
+                        this.router.navigate(['ciphers']);
+                    },
+                    () => {},
+                    () => {
+                        this.spinner.off();
+                    }
+                );
+            },
         });
     }
 }
-

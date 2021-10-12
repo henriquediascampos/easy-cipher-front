@@ -1,3 +1,4 @@
+import { SpinnerService } from './core/services/spinner.service';
 import { APP_BASE_HREF } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -50,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     providers: [
         { provide: APP_BASE_HREF, useValue: '/easy-cipher' },
         { provide: MAT_DATE_LOCALE, useValue: 'pt' },
+        SpinnerService
     ],
     declarations: [AppComponent],
   bootstrap: [AppComponent]

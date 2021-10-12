@@ -1,3 +1,4 @@
+import { SpinnerService } from './../../../../core/services/spinner.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -26,7 +27,8 @@ export class AssembleSongbookComponent implements OnInit {
         private focus: FocusService,
         private router: Router,
         private translate: CipherTranslateService,
-        private dialog: SystemDialogService
+        private dialog: SystemDialogService,
+        private spinner: SpinnerService
     ) {
         this.songbookForm = this.formBuilder.group({
             title: ['', [Validators.required, Validators.minLength(3)]],
@@ -54,11 +56,21 @@ export class AssembleSongbookComponent implements OnInit {
     }
 
     loadSongbooks() {
-        this.musicFiltered = this.presenter.findAll().pipe(
+        this.spinner.on();
+        const find = this.presenter.findAll();
+        this.musicFiltered = find.pipe(
             startWith([]),
             map((value) => {
                 return value;
             })
+        );
+
+        find.subscribe(
+            () => {},
+            () => {},
+            () => {
+                this.spinner.off();
+            }
         );
     }
 
@@ -100,9 +112,16 @@ export class AssembleSongbookComponent implements OnInit {
             subtitle: 'Excluir?',
             message: 'Tem certeza que deseja seguir com essa operação!',
             callback: () => {
-                this.presenter.delete(id).subscribe((response) => {
-                    this.loadSongbooks();
-                });
+                this.spinner.on();
+                this.presenter.delete(id).subscribe(
+                    (response) => {
+                        this.loadSongbooks();
+                    },
+                    () => {},
+                    () => {
+                        this.spinner.off();
+                    }
+                );
             },
         });
     }
