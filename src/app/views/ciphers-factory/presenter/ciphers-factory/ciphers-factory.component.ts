@@ -52,8 +52,8 @@ export class CiphersFactoryComponent implements OnInit {
         this.translate.change('CIPHER_FACTORY.CIPHER', (t: string) => { this.secondaryTab = t });
 
         if (this.router.getCurrentNavigation()?.extras.state) {
-            const { param }: any = this.router.getCurrentNavigation()?.extras.state
-            this.state = param;
+            const { cipher }: any = this.router.getCurrentNavigation()?.extras.state
+            this.state = cipher;
         }
 
     }
@@ -141,6 +141,7 @@ export class CiphersFactoryComponent implements OnInit {
     }
 
     visualization() {
+
         if (this.state) {
             this.visualizarionMode = true;
             this.id = this.state!.id;

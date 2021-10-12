@@ -13,20 +13,19 @@ import { Songbook } from './../../domain/models/Songbook';
 
 export interface DialogData {
     songbook: string;
-    callback?: (value?: any) => void
+    callback?: (value?: any) => void;
 }
 
 @Component({
     selector: 'ec-dialog-add-cipher',
     templateUrl: './dialog-add-cipher.component.html',
-    styleUrls: ['./dialog-add-cipher.component.sass']
+    styleUrls: ['./dialog-add-cipher.component.sass'],
 })
 export class DialogAddCipherComponent implements OnInit {
-
-    filteredTones?: Observable<Scale[]>
+    filteredTones?: Observable<Scale[]>;
 
     formGroup: FormGroup;
-    filteredOptions?: Observable<Cipher[]>
+    filteredOptions?: Observable<Cipher[]>;
     @ViewChild('teste') teste!: MatAutocomplete;
 
     constructor(
@@ -38,29 +37,52 @@ export class DialogAddCipherComponent implements OnInit {
     ) {
         this.formGroup = this.formBuilder.group({
             cipher: ['', Validators.required],
-            customTone: ['']
+            customTone: [''],
         });
     }
 
     ngOnInit(): void {
-        this.scale.getScale().subscribe(scaleOptions => {
-            this.filteredTones = this.formGroup.get('customTone')?.valueChanges.pipe(
-                startWith(''),
-                map((value: string) => scaleOptions.filter(option => !!option.toUpperCase().includes(value.toUpperCase()))))
+        this.scale.getScale().subscribe((scaleOptions) => {
+            this.filteredTones = this.formGroup
+                .get('customTone')
+                ?.valueChanges.pipe(
+                    startWith(''),
+                    map((value: string) =>
+                        scaleOptions.filter(
+                            (option) =>
+                                !!option
+                                    .toUpperCase()
+                                    .includes(value.toUpperCase())
+                        )
+                    )
+                );
         });
 
-        this.presenter.findAllCiphers({}).subscribe(response => {
-            this.filteredOptions = this.formGroup.get('cipher')?.valueChanges.pipe(
-                startWith(''),
-                map(value => response.filter(option => {
-                    return !!option.title.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                        .includes(
-                            value.toUpperCase ?
-                                value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                                : (value as Cipher).title.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                        )
-                })))
-
+        this.presenter.findAllCiphers({}).subscribe((response) => {
+            this.filteredOptions = this.formGroup
+                .get('cipher')
+                ?.valueChanges.pipe(
+                    startWith(''),
+                    map((value) =>
+                        response.filter((option) => {
+                            return !!option.title
+                                .toUpperCase()
+                                .normalize('NFD')
+                                .replace(/[\u0300-\u036f]/g, '')
+                                .includes(
+                                    value.toUpperCase
+                                        ? value
+                                              .toUpperCase()
+                                              .normalize('NFD')
+                                              .replace(/[\u0300-\u036f]/g, '')
+                                        : (value as Cipher).title
+                                              .toUpperCase()
+                                              .normalize('NFD')
+                                              .replace(/[\u0300-\u036f]/g, '')
+                                );
+                        })
+                    )
+                );
         });
     }
 
@@ -71,7 +93,7 @@ export class DialogAddCipherComponent implements OnInit {
     add(): void {
         const customCipher: CustomCipher = this.formGroup.getRawValue();
         customCipher.songbook = { id: this.data.songbook } as Songbook;
-        this.presenter.add(customCipher).subscribe(response => {
+        this.presenter.add(customCipher).subscribe((response) => {
             if (this.data?.callback) {
                 this.data.callback();
             }
@@ -79,7 +101,7 @@ export class DialogAddCipherComponent implements OnInit {
         });
     }
 
-    public displayProperty(value: { title: any; }) {
+    public displayProperty(value: { title: any }) {
         if (value) {
             return value.title;
         }

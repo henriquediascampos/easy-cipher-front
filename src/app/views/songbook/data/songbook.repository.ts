@@ -10,23 +10,24 @@ import { Songbook } from './../domain/models/Songbook';
 export class SongBookRepository {
     baseUre = environment.apiUrl;
 
-
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     add(cipher: CustomCipher): Observable<CustomCipher> {
-        return this.http.post<CustomCipher>(`${this.baseUre}/api/custom-cipher`, cipher);
+        return this.http.post<CustomCipher>(
+            `${this.baseUre}/api/custom-cipher`,
+            cipher
+        );
     }
 
     remove(cipher: any): Observable<CustomCipher> {
         return this.http.delete(`${this.baseUre}/api/custom-cipher`, {
-            params: cipher
+            params: cipher,
         }) as any;
     }
 
-
     delete(id: string): Observable<any> {
         return this.http.request('DELETE', `${this.baseUre}/api/songbook`, {
-            body: id
+            body: id,
         });
     }
     findById(id: string): Observable<Songbook> {
@@ -34,16 +35,21 @@ export class SongBookRepository {
     }
 
     findAll(): Observable<Songbook[]> {
-        return this.http.get<Songbook[]>(`${this.baseUre}/api/songbook/resume-list`);
+        return this.http.get<Songbook[]>(
+            `${this.baseUre}/api/songbook/resume-list`
+        );
     }
 
     save(songbook: Songbook): Observable<Songbook> {
-        return this.http.post<Songbook>(`${this.baseUre}/api/songbook`, songbook);
+        return this.http.post<Songbook>(
+            `${this.baseUre}/api/songbook`,
+            songbook
+        );
     }
 
     findAllCiphers(parameters: {}): Observable<Cipher[]> {
         return this.http.get<Cipher[]>(`${this.baseUre}/api/cipher`, {
-            params: parameters
+            params: parameters,
         });
     }
 }
