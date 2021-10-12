@@ -1,7 +1,7 @@
 {
     "/api": {
         "logLevel": "debug",
-        "target": "http://localhost:8080/easy-cipher",
+        "target": "https://easy-cipher-back.herokuapp.com",
         "secure": false,
         "changeOrigin": true
     }
