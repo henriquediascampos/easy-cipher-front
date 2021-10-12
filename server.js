@@ -7,12 +7,7 @@ const $URL_API = process.env.URL_API;
 app.use(express.static(PATH));
 
 app.get('/*', ( req, res) => {
-    if(/^\/api\/.*$/.test(req.url)) {
-        console.log(`redirecionando para ${$URL_API}${req.url}`);
-        res.redirect(`${$URL_API}${req.url}`);
-    } else {
-        res.sendFile(`${PATH}/index.html`)
-    }
+    res.sendFile(`${PATH}/index.html`)
 });
 
 app.listen(PORT, () => {
