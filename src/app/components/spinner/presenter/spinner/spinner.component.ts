@@ -20,8 +20,6 @@ export class SpinnerComponent implements OnInit {
 
     ngOnInit(): void {
         this.spinner.spinnerNotify.subscribe((on) => {
-            console.log('change spinner ', on);
-
             this.on = on;
             this.clazzOn = on;
             this.clazzColorECG = false;

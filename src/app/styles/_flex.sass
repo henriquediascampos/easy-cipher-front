@@ -43,7 +43,8 @@
 
     &.row
         flex-direction: row
-
+        &.reverse
+            flex-direction: row-reverse
         &.margin
             &-8 > :not(:last-child)
                 margin-right: 8px
@@ -62,7 +63,8 @@
 
     &.column
         flex-direction: column
-
+        &.reverse
+            flex-direction: column-reverse
         &.margin
             &-8 > :not(:last-child)
                 margin-bottom: 8px

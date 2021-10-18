@@ -1,0 +1,81 @@
+<div class="container row center">
+    <div class="container column center position-relative">
+        <div
+            class="
+                container
+                center
+                row
+                full-width
+                reverse
+                position-absolute
+                string-name-container
+                elevator-1
+            "
+        >
+            <div class="container center row reverse">
+                <div
+                    #stringName
+                    *ngFor="let string of stringsName"
+                    class="container center row string-name string-preriferic"
+                >
+                    <span>{{ string }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container row center guitar-container scroll">
+            <div class="container column guitar-arm">
+                <div
+                    #houseid
+                    *ngFor="let house of houses"
+                    class="container row house reverse"
+                >
+                    <span class="container center title-house">
+                        <button mat-icon-button class="btn">
+                            <mat-icon [hoverInteract]="houseid"
+                                >arrow_right</mat-icon
+                            >
+                        </button>
+                        <span class="container column center text">
+                            {{ house+1 }}
+                        </span>
+                    </span>
+
+                    <div
+                        #stringid
+                        *ngFor="let string of strings"
+                        class="container string center"
+                    >
+                        <span
+                            class="container row center"
+                            [style.--b]="widthString(string)"
+                            (click)="select(string, house, ball)"
+                        >
+                            <span #ball class="flag container center bold-700" [id]="house+'-'+string">{{getNote(string, house+1)}}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container center row elevator-1 reverse scroll">
+            <div
+                #stringTouch
+                *ngFor="let state of stateString; let string = index"
+                class="container center row string-preriferic string-touch"
+            >
+                <button mat-icon-button (click)="touchSelect(state, string)" *ngIf="state === 'none'" >
+                    <mat-icon>close</mat-icon>
+                </button>
+
+                <button mat-icon-button (click)="touchSelect(state, string)" *ngIf="state === 'catchphrase'" class="touch">
+                    <mat-icon>circle</mat-icon>
+                </button>
+
+                <button mat-icon-button (click)="touchSelect(state, string)" *ngIf="state === 'touch'" class="touch">
+                    <mat-icon>panorama_fish_eye</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
