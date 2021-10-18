@@ -1,8 +1,8 @@
-import { environment } from './../../../../environments/environment';
-import { Observable } from 'rxjs';
-import { Cipher } from '../domain/models/Cipher';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Cipher } from '../domain/models/Cipher';
+import { environment } from './../../../../environments/environment';
 
 @Injectable()
 export class CiphersFactoryRepository {

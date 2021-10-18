@@ -1,32 +1,31 @@
 <cipher-container title-container="CIPHER_DICTIONARY.TITLE">
     <div content class="container column margin-32 full-width">
         <div class="container row margin-32 full-width">
-            <mat-form-field class="container row full" appearance="standard">
-                <mat-label>Chord</mat-label>
-                <input
-                    #chordName
-                    class="upper bold-500"
-                    type="text"
-                    matInput
-                    [formControl]="chord"
-                    required
-                    [placeholder]="placeholder"
-                />
-            </mat-form-field>
-
-            <div class="container column center">
-                <button mat-raised-button color="primary" (click)="save()">
-                    <mat-icon>add</mat-icon>
-                    {{ "BUTTONS.ADD" | translate }}
-                </button>
-            </div>
-        </div>
-
-        <div class="container row margin-32 full-width">
-            <div>
+            <div class="margin-20">
                 <ec-guitar-arm #guitarArm></ec-guitar-arm>
             </div>
             <div class="container column full">
+                <div class="container row margin-32 full-width" [formGroup]="formGroup">
+                    <mat-form-field class="container row full" appearance="standard">
+                        <mat-label>{{"CIPHER_DICTIONARY.CHORD" | translate}}</mat-label>
+                        <input
+                            #chordName
+                            class="upper bold-500"
+                            type="text"
+                            matInput
+                            formControlName="chord"
+                            required
+                            [placeholder]="placeholder"
+                        />
+                    </mat-form-field>
+
+                    <div class="container column">
+                        <button mat-raised-button color="primary" (click)="saveValidate()">
+                            <mat-icon>add</mat-icon>
+                            {{ "BUTTONS.ADD" | translate }}
+                        </button>
+                    </div>
+                </div>
                 <div class="chord container row full-width margin-32">
                     <span class="container column center legend"> Name </span>
 
@@ -49,8 +48,8 @@
                     *ngFor="let scale of scales; let i = index"
                     [style.--opacity]="calculate(i)"
                 >
-                    <span class="container column center">
-                        {{ getNameChord(scale) }}
+                    <span class="container column center pointer" (click)="setChord(scale.chordName)">
+                        {{ scale.chordName }}
                     </span>
 
                     <span class="container column center probability">

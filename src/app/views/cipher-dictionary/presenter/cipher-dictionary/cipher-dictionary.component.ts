@@ -1,14 +1,17 @@
-import { TranslateService } from '@ngx-translate/core';
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CipherDictionaryPresenter } from '../../domain/boundaries/cipher-dictionary.presenter';
 import {
     ChordNotes,
-    GuitarArmComponent
+    GuitarArmComponent,
 } from './../../../../components/guitar-arm/presenter/guitar-arm/guitar-arm.component';
 import {
     MatchChord,
-    MusicalScaleService
+    MusicalScaleService,
 } from './../../../../core/services/musical-scale.service';
+import { SpinnerService } from './../../../../core/services/spinner.service';
+import { SystemDialogService } from './../../../../core/services/system-dilog.service';
+import { CipherTranslateService } from './../../../../translate/cipher-translate.service';
 
 @Component({
     selector: 'ec-cipher-dictionary',
@@ -20,18 +23,21 @@ export class CipherDictionaryComponent implements AfterViewInit {
     @ViewChild('guitarArm') guitarArm?: GuitarArmComponent;
     graus = Array.from(new Array(7)).map((a, i) => i + 1);
 
-    @ViewChild('chordName') chordName?: ElementRef;
-    chord = new FormControl('', {
-        validators: Validators.required,
-    });
-
-    mappedChord = new FormControl('', {
-        validators: Validators.required,
-    });
-
     placeholder = 'please, inset name chord.';
-
-    constructor(private scale: MusicalScaleService, private tranlate: TranslateService) {}
+    formGroup: FormGroup;
+    constructor(
+        private scale: MusicalScaleService,
+        private translate: CipherTranslateService,
+        private presenter: CipherDictionaryPresenter,
+        private dialog: SystemDialogService,
+        private formBuilder: FormBuilder,
+        private spinner: SpinnerService
+    ) {
+        this.formGroup = this.formBuilder.group({
+            chord: ['', Validators.required],
+            chordMapped: ['', Validators.required],
+        });
+    }
 
     ngAfterViewInit(): void {
         this.guitarArm?.chordChange.subscribe((value) => {
@@ -49,7 +55,6 @@ export class CipherDictionaryComponent implements AfterViewInit {
                     accu.push(curr);
                     return accu;
                 }, []);
-            this.mappedChord.setValue(JSON.stringify(notes));
 
             const notesChord = notes.map((a) => {
                 const string = this.guitarArm?.stringsName[a.string];
@@ -65,11 +70,10 @@ export class CipherDictionaryComponent implements AfterViewInit {
 
             this.placeholder =
                 this.scales[0]?.chordName || 'please, inset name chord.';
-        });
-    }
 
-    getNameChord(scale: MatchChord) {
-        return this.scale.getNameChord(scale);
+            this.formGroup.get('chordMapped')?.setValue(JSON.stringify(notes));
+            this.formGroup.get('chord')?.reset();
+        });
     }
 
     calculateProbability(probability: number) {
@@ -86,7 +90,54 @@ export class CipherDictionaryComponent implements AfterViewInit {
     calculate(index: number) {
         return 1 - (index / 10) * 2;
     }
-    save(): void {
 
+    setChord(value: string): void {
+        this.formGroup.get('chord')?.setValue(value);
+    }
+
+    saveValidate(): void {
+        if (this.formGroup.valid) {
+            if (
+                !this.scales?.some(
+                    (scale) =>
+                        scale.chordName === this.formGroup.get('chord')?.value
+                )
+            ) {
+                this.dialog.warn({
+                    message:
+                        'O nome escolhido para o acode não pare de acordo, deseja gravar assim mesmo?',
+                    callback: () => {
+                        this.save();
+                    },
+                });
+            } else {
+                this.save();
+            }
+        } else {
+            this.dialog.warn({
+                message:
+                    'Antes de salvar preencha todos os campos obrigatórios!',
+            });
+        }
+    }
+
+    private save(): void {
+        this.spinner.on();
+        this.presenter.save(this.formGroup.getRawValue()).subscribe(
+            (reponse) => {
+                this.dialog.sucess({
+                    message: this.translate.getWithArgs(
+                        'MESSAGE.SAVE_SUCCESS',
+                        {
+                            arg: this.translate.get('CIPHER_DICTIONARY.CHORD'),
+                        }
+                    ),
+                });
+            },
+            () => {},
+            () => {
+                this.spinner.off();
+            }
+        );
     }
 }

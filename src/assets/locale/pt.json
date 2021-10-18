@@ -125,6 +125,8 @@
     },
 
     "CIPHER_DICTIONARY": {
-        "TITLE": "Dicionário de cifras"
+        "TITLE": "Dicionário de cifras",
+        "CHORD": "Acorde"
     }
+
 }
