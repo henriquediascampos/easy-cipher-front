@@ -47,7 +47,7 @@ export interface MatchChord {
     diminished: boolean;
     looseEnds: Scale[];
     omittedFifth: boolean;
-    probability: number
+    probability: number;
 }
 
 @Injectable()
@@ -189,17 +189,19 @@ export class MusicalScaleService {
     matchChord(notesChord: Scale[]): MatchChord[] {
         const catchphrase = notesChord[notesChord.length - 1] as Scale;
         const uniqNotes = [...new Set(notesChord)];
-        return this.scale.map((note) =>
-            this.checkChord(note, catchphrase, notesChord, uniqNotes)
-        ).sort((a, b) => a.probability - b.probability)
-        .reverse();
+        return this.scale
+            .map((note) =>
+                this.checkChord(note, catchphrase, notesChord, uniqNotes)
+            )
+            .sort((a, b) => a.probability - b.probability)
+            .reverse();
     }
 
     private checkChord(
         note: string,
         catchphrase: Scale,
         notesChord: Scale[],
-        uniqNotes: Scale[],
+        uniqNotes: Scale[]
     ): MatchChord {
         const scale = this.majorMusicalScale.map((i) =>
             this.searchNote(note, i)
@@ -233,7 +235,7 @@ export class MusicalScaleService {
 
         const looseEnds = this.checkLooseEnds(scale, notesChord);
 
-        const matchChord  = {
+        const matchChord = {
             name: note,
             catchphrase,
             chordInversion,
@@ -252,15 +254,15 @@ export class MusicalScaleService {
             composition: notesChord,
         } as MatchChord;
 
-        matchChord.probability = this.calculateProbability(matchChord)
-        matchChord.chordName = this.getNameChord(matchChord)
+        matchChord.chordName = this.getNameChord(matchChord);
+        matchChord.probability = this.calculateProbability(matchChord);
 
         return matchChord;
     }
 
     checkMajor(scale: Scale[], notesChord: Scale[], overwriteFifth: boolean) {
         return (
-            notesChord.includes(scale[0]) &&
+            // notesChord.includes(scale[0]) &&
             notesChord.includes(scale[2]) &&
             (notesChord.includes(scale[4]) || overwriteFifth)
         );
@@ -343,44 +345,166 @@ export class MusicalScaleService {
         return chord;
     }
 
+    scoreIfMajor(matchChord: MatchChord) {
+        return matchChord.major ? 3 : 0;
+    }
+
+    scoreIfMinor(matchChord: MatchChord) {
+        return matchChord.minor ? 3 : 0;
+    }
+
+    scoreIfSuspended(matchChord: MatchChord) {
+        return matchChord.sus ? 3 : 0;
+    }
+
+    scoreIfNotMajorNotMinorNotSuspended(matchChord: MatchChord) {
+        return !matchChord.minor && !matchChord.major && !matchChord.sus
+            ? -10
+            : 0;
+    }
+
+    scoreIfDoubleFirstDegree(matchChord: MatchChord) {
+        return !matchChord.chordInversion &&
+            matchChord.composition.filter(
+                (note) => note === matchChord.catchphrase
+            ).length > 1
+            ? 2
+            : 0;
+    }
+
+    scoreIfDoubleSecondDegree(matchChord: MatchChord) {
+        return matchChord.composition.filter(
+            (note) => note === matchChord.scale[1]
+        ).length > 1
+            ? -1
+            : 0;
+    }
+
+    scoreIfDoubleThirdDegree(matchChord: MatchChord) {
+        return matchChord.composition.filter(
+            (note) => note === matchChord.scale[2]
+        ).length > 1
+            ? 1
+            : 0;
+    }
+
+    scoreIfDoubleFifthDegree(matchChord: MatchChord) {
+        return matchChord.composition.filter(
+            (note) => note === matchChord.scale[4]
+        ).length > 1
+            ? 1
+            : 0;
+    }
+
+    scoreIfDoubleSixthDegree(matchChord: MatchChord) {
+        return matchChord.composition.filter(
+            (note) => note === matchChord.scale[5]
+        ).length > 1
+            ? -1
+            : 0;
+    }
+
+    scoreIfDoubleChordInversion(matchChord: MatchChord) {
+        let score = 0;
+        if (matchChord.chordInversion) {
+            score -= 1;
+            if (!matchChord.scale.includes(matchChord.catchphrase as Scale)) {
+                score -= 1;
+            }
+        }
+
+        return score;
+    }
+
+    scoreIfSeventh(matchChord: MatchChord) {
+        return matchChord.seventh ? 1 : 0;
+    }
+
+    scoreIfNinth(matchChord: MatchChord) {
+        return matchChord.ninth ? 1 : 0;
+    }
+
+    scoreIfEleventh(matchChord: MatchChord) {
+        return matchChord.eleventh ? 1 : 0;
+    }
+
+    scoreIfThirteenth(matchChord: MatchChord) {
+        return matchChord.thirteenth ? 1 : 0;
+    }
+
+    scoreIfDiminished(matchChord: MatchChord) {
+        return matchChord.diminished ? 1 : 0;
+    }
+
+    scoreIfSeventhMajor(matchChord: MatchChord) {
+        return matchChord.seventhMajor ? 1 : 0;
+    }
+
+    omittedTheFifthDegree(matchChord: MatchChord) {
+        let score = 0;
+
+        if (!matchChord.omittedFifth) {
+            score += 1;
+        } else {
+            if (
+                !matchChord.seventh &&
+                !matchChord.ninth &&
+                !matchChord.eleventh &&
+                !matchChord.thirteenth
+            ) {
+                score += -3;
+            }
+        }
+        return score;
+    }
+
+    scoreIfMajorAndMinor(matchChord: MatchChord) {
+        return matchChord.major && matchChord.minor ? -5 : 0;
+    }
+
+    manyVariations(matchChord: MatchChord) {
+        let variations = 0;
+        if (matchChord.seventh) variations++;
+        if (matchChord.seventhMajor) variations++;
+        if (matchChord.ninth) variations++;
+        if (matchChord.eleventh) variations++;
+        if (matchChord.thirteenth) variations++;
+        if (matchChord.chordInversion) variations++;
+
+        return variations > 2 ? -2 : 0;
+    }
+
     calculateProbability(matchChord: MatchChord) {
         let probability = 0;
 
-        if (matchChord.major) probability = probability + 3
-        else if (matchChord.minor) probability = probability + 3
-        else if (matchChord.sus) probability = probability + 1
+        //BONIFICAR
+        probability += this.scoreIfMajor(matchChord);
+        probability += this.scoreIfMinor(matchChord);
+        probability += this.scoreIfSuspended(matchChord);
+        probability += this.scoreIfDoubleFirstDegree(matchChord);
+        probability += this.scoreIfDoubleFirstDegree(matchChord);
+        probability += this.scoreIfDoubleThirdDegree(matchChord);
+        probability += this.scoreIfDoubleFifthDegree(matchChord);
 
-        if (!matchChord.chordInversion && matchChord.composition.filter(note => note === matchChord.catchphrase).length > 1) {
-            probability = probability + 2
+        probability += this.scoreIfSeventh(matchChord);
+        probability += this.scoreIfNinth(matchChord);
+        probability += this.scoreIfEleventh(matchChord);
+        probability += this.scoreIfThirteenth(matchChord);
+        probability += this.scoreIfDiminished(matchChord);
+
+        //PENALIZAR
+        probability += this.scoreIfNotMajorNotMinorNotSuspended(matchChord);
+        // probability += this.scoreIfDoubleChordInversion(matchChord);
+        probability += this.scoreIfDoubleSixthDegree(matchChord);
+        probability += this.scoreIfDoubleSecondDegree(matchChord);
+        probability += this.scoreIfSeventhMajor(matchChord);
+        probability += this.omittedTheFifthDegree(matchChord);
+        probability += this.scoreIfMajorAndMinor(matchChord);
+        probability += this.manyVariations(matchChord);
+
+        if (matchChord.looseEnds.length) {
+            probability = probability - 1;
         }
-
-        if (matchChord.composition.filter(note => note === matchChord.scale[2]).length > 1) {
-            probability = probability + 1
-        }
-
-        if (matchChord.composition.filter(note => note === matchChord.scale[4]).length > 1) {
-            probability = probability + 1
-        }
-
-        if (matchChord.composition.filter(note => note === matchChord.scale[5]).length > 1) {
-            probability = probability - 1
-        }
-
-        if (matchChord.composition.filter(note => note === matchChord.scale[1]).length > 1) {
-            probability = probability - 1
-        }
-
-
-        if (matchChord.seventh) probability = probability + 1
-        if (matchChord.ninth) probability = probability + 1
-        if (matchChord.eleventh) probability = probability + 1
-        if (matchChord.thirteenth) probability = probability + 1
-        if (matchChord.diminished) probability = probability + 1
-
-        if (matchChord.chordInversion) probability = probability - 1
-        if (matchChord.seventhMajor) probability = probability - 1
-        if (matchChord.looseEnds.length) probability = probability - 1
-        if (matchChord.omittedFifth) probability = probability - 1
 
         return probability;
     }

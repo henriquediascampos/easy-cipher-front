@@ -1,3 +1,5 @@
+import { Scale } from 'src/app/core/services/musical-scale.service';
+import { Note } from './../../../ciphers-factory/presenter/dialog-set-note/dialog-set-note.component';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CipherDictionaryPresenter } from '../../domain/boundaries/cipher-dictionary.presenter';
@@ -140,4 +142,22 @@ export class CipherDictionaryComponent implements AfterViewInit {
             }
         );
     }
+
+    variationsNotation(index: number, note: string): string {
+        return  index?  index === 4 || index === 5 ? 'dim' : '-' : ''
+    }
+
+    variationsNote(index: number, note: string): string {
+        return index ? this.scale.changeNotes(note as Note, 'back') as Scale : ''
+    }
+
+    match(scale: MatchChord, note: string): boolean {
+        return scale.composition.includes(note as Scale);
+    }
+    // 2° maior     -1 fica menor           +1 fica aumentada
+    // 3° maior     -1 fica menor           +1 fica aumentada
+    // 4° justa     -1 fica diminuta        +1 fica aumentada
+    // 5° justa     -1 fica diminuta        +1 fica aumentada
+    // 6° maior     -1 fica menor           +1 fica aumentada
+    // 7° maior     -1 fica menor           +1 fica aumentada
 }

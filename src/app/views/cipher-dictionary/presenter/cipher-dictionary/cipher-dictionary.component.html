@@ -5,12 +5,20 @@
                 <ec-guitar-arm #guitarArm></ec-guitar-arm>
             </div>
             <div class="container column full">
-                <div class="container row margin-32 full-width" [formGroup]="formGroup">
-                    <mat-form-field class="container row full" appearance="standard">
-                        <mat-label>{{"CIPHER_DICTIONARY.CHORD" | translate}}</mat-label>
+                <div
+                    class="container row margin-32 full-width"
+                    [formGroup]="formGroup"
+                >
+                    <mat-form-field
+                        class="container row full"
+                        appearance="standard"
+                    >
+                        <mat-label>{{
+                            "CIPHER_DICTIONARY.CHORD" | translate
+                        }}</mat-label>
                         <input
                             #chordName
-                            class="upper bold-500"
+                            class="bold-500"
                             type="text"
                             matInput
                             formControlName="chord"
@@ -20,7 +28,11 @@
                     </mat-form-field>
 
                     <div class="container column">
-                        <button mat-raised-button color="primary" (click)="saveValidate()">
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            (click)="saveValidate()"
+                        >
                             <mat-icon>add</mat-icon>
                             {{ "BUTTONS.ADD" | translate }}
                         </button>
@@ -43,24 +55,43 @@
                         {{ grau }}ª
                     </span>
                 </div>
-                <div
-                    class="chord container row full-width margin-32"
-                    *ngFor="let scale of scales; let i = index"
-                    [style.--opacity]="calculate(i)"
-                >
-                    <span class="container column center pointer" (click)="setChord(scale.chordName)">
-                        {{ scale.chordName }}
-                    </span>
-
-                    <span class="container column center probability">
-                        {{ calculateProbability(scale.probability) }}
-                    </span>
-                    <span
-                        *ngFor="let scale of scale.scale"
-                        class="container column center scale"
+                <div class="container column full-width" *ngFor="let scale of scales; let i = index">
+                    <div
+                        class="chord container row full-width margin-32"
+                        [style.--opacity]="calculate(i)"
                     >
-                        {{ scale }}
-                    </span>
+                        <span
+                            class="container column flex-end pointer"
+                            (click)="setChord(scale.chordName)"
+                        >
+                            {{ scale.chordName }}
+                        </span>
+
+                        <span class="container column flex-end probability">
+                            {{ calculateProbability(scale.probability) }}
+                        </span>
+                        <span
+                            *ngFor="let s of scale.scale"
+                            class="container column flex-end scale"
+                            [ngClass]="{ 'match': match(scale, s) }"
+                        >
+                            {{ s }}
+                        </span>
+                    </div>
+                    <div class="container row end variations" [style.--opacity]="calculate(i)">
+                        <span
+                            *ngFor="let s of scale.scale; let i = index"
+                            class="container"
+                            [ngClass]="{ 'match': match(scale, variationsNote(i, s)) }"
+                        >
+                            <span class="variations-note">
+                                {{ variationsNote(i, s) }}
+                            </span>
+                            <span class="variations-notation">
+                                {{ variationsNotation(i, s) }}
+                            </span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
