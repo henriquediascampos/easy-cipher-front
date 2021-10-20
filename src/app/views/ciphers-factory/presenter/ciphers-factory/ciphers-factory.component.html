@@ -45,7 +45,9 @@
             </div>
 
             <mat-tab-group class="container">
+
                 <mat-tab [label]="firstTab">
+
                     <ec-first-tab
                         #primary
                         [formGroup]="formGroup"
@@ -65,10 +67,32 @@
                                 class="title-music"
                             />
                         </mat-form-field>
+
+
+                        <mat-form-field class="example-chip-list" appearance="standard">
+                            <mat-label>Tags</mat-label>
+                            <mat-chip-list #chipList>
+                            <mat-chip
+                                *ngFor="let tag of tags"
+                                [removable]="true"
+                                (removed)="remove(tag)">
+                                {{ tag }}
+                            </mat-chip>
+                            <input
+                                [placeholder]="('CIPHER_FACTORY.NEW_TAG' |translate)+'...'"
+                                formControlName="tags"
+                                [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="add($event)">
+                            </mat-chip-list>
+                        </mat-form-field>
+
                     </ec-first-tab>
+
                 </mat-tab>
 
                 <mat-tab [label]="secondaryTab">
+
                     <ec-secondary-tab
                         #secondary
                         [formGroup]="formGroup"
@@ -94,7 +118,10 @@
                             />
                         </mat-form-field>
                     </ec-secondary-tab>
+
                 </mat-tab>
+
+
             </mat-tab-group>
         </div>
     </div>

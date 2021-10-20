@@ -440,29 +440,35 @@ export class MusicalScaleService {
         return matchChord.seventhMajor ? 1 : 0;
     }
 
-    omittedTheFifthDegree(matchChord: MatchChord) {
-        let score = 0;
+    notOmittedTheFifthDegree(matchChord: MatchChord) {
+        return !matchChord.omittedFifth ? 1 : 0;
+    }
 
-        if (!matchChord.omittedFifth) {
-            score += 1;
-        } else {
-            if (
-                !matchChord.seventh &&
-                !matchChord.ninth &&
-                !matchChord.eleventh &&
-                !matchChord.thirteenth
-            ) {
-                score += -3;
-            }
-        }
-        return score;
+    omittedTheFifthDegreeCorrectly(matchChord: MatchChord) {
+        return matchChord.omittedFifth &&
+            (matchChord.seventh ||
+                matchChord.ninth ||
+                matchChord.eleventh ||
+                matchChord.thirteenth)
+            ? 1
+            : 0;
+    }
+
+    omittedTheFifthDegreeNotCorrectly(matchChord: MatchChord) {
+        return matchChord.omittedFifth &&
+            !matchChord.seventh &&
+            !matchChord.ninth &&
+            !matchChord.eleventh &&
+            !matchChord.thirteenth
+            ? -3
+            : 0;
     }
 
     scoreIfMajorAndMinor(matchChord: MatchChord) {
         return matchChord.major && matchChord.minor ? -5 : 0;
     }
 
-    manyVariations(matchChord: MatchChord) {
+    moreThanTwoVariations(matchChord: MatchChord) {
         let variations = 0;
         if (matchChord.seventh) variations++;
         if (matchChord.seventhMajor) variations++;
@@ -482,7 +488,6 @@ export class MusicalScaleService {
         probability += this.scoreIfMinor(matchChord);
         probability += this.scoreIfSuspended(matchChord);
         probability += this.scoreIfDoubleFirstDegree(matchChord);
-        probability += this.scoreIfDoubleFirstDegree(matchChord);
         probability += this.scoreIfDoubleThirdDegree(matchChord);
         probability += this.scoreIfDoubleFifthDegree(matchChord);
 
@@ -491,16 +496,18 @@ export class MusicalScaleService {
         probability += this.scoreIfEleventh(matchChord);
         probability += this.scoreIfThirteenth(matchChord);
         probability += this.scoreIfDiminished(matchChord);
+        probability += this.scoreIfSeventhMajor(matchChord);
+        probability += this.notOmittedTheFifthDegree(matchChord);
+        probability += this.omittedTheFifthDegreeCorrectly(matchChord);
 
         //PENALIZAR
         probability += this.scoreIfNotMajorNotMinorNotSuspended(matchChord);
         // probability += this.scoreIfDoubleChordInversion(matchChord);
         probability += this.scoreIfDoubleSixthDegree(matchChord);
         probability += this.scoreIfDoubleSecondDegree(matchChord);
-        probability += this.scoreIfSeventhMajor(matchChord);
-        probability += this.omittedTheFifthDegree(matchChord);
+        probability += this.omittedTheFifthDegreeNotCorrectly(matchChord);
         probability += this.scoreIfMajorAndMinor(matchChord);
-        probability += this.manyVariations(matchChord);
+        probability += this.moreThanTwoVariations(matchChord);
 
         if (matchChord.looseEnds.length) {
             probability = probability - 1;

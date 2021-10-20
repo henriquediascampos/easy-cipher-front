@@ -103,7 +103,8 @@
         "TONE": "Tom",
         "REQUIRE_TONE": "Selecione um tom",
         "BACK_TONE": "Voltar um tom",
-        "NEXT_TONE": "Avançar um tom"
+        "NEXT_TONE": "Avançar um tom",
+        "NEW_TAG": "Nova tag"
     },
 
     "SONGBOOK": {

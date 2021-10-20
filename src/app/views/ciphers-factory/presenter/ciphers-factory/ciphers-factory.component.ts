@@ -1,7 +1,14 @@
+import { Observable } from 'rxjs';
 import { SpinnerService } from './../../../../core/services/spinner.service';
 import { FormatMusicService } from './../../../../core/services/format-musica.service';
 import { Cipher } from './../../../songbook/domain/models/Cipher';
-import { Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import {
+    Component,
+    HostBinding,
+    OnInit,
+    ViewChild,
+    ElementRef,
+} from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -18,6 +25,10 @@ import {
     Line,
 } from '../ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
 import { SystemDialogService } from './../../../../core/services/system-dilog.service';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { map, startWith } from 'rxjs/operators';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
     selector: 'ec-ciphers-factory',
@@ -41,6 +52,9 @@ export class CiphersFactoryComponent implements OnInit {
 
     visualizarionMode = false;
 
+    tags: string[] = [];
+    separatorKeysCodes: number[] = [ENTER, COMMA];
+
     constructor(
         private formBuilder: FormBuilder,
         private translate: CipherTranslateService,
@@ -55,6 +69,7 @@ export class CiphersFactoryComponent implements OnInit {
             lyric: ['', [Validators.required, Validators.minLength(100)]],
             cipher: [''],
             tone: [''],
+            tags: [''],
         });
 
         this.translate.change('CIPHER_FACTORY.LYRICS', (t: string) => {
@@ -77,11 +92,6 @@ export class CiphersFactoryComponent implements OnInit {
         });
         this.reflectTitle();
 
-        // this.dependesOn('lyric', ['title']);
-        // this.dependesOn('cipher', ['title', 'lyric', 'tone'], disable => {
-        //     this.secondary?.disable(disable);
-        // });
-
         setTimeout(() => {
             this.visualization();
         }, 100);
@@ -97,34 +107,6 @@ export class CiphersFactoryComponent implements OnInit {
         });
     }
 
-    private dependesOn(
-        dependsOn: string,
-        depends: string[],
-        fn?: (disable: boolean) => void
-    ): void {
-        const control = this.toControl(dependsOn);
-        depends.forEach((depend) => {
-            this.toControl(depend).valueChanges.subscribe((value) => {
-                const disabled = depends.some(
-                    (v) => this.toControl(v).valid === false
-                );
-                if (fn) {
-                    fn(disabled);
-                } else {
-                    if (disabled) {
-                        if (control) {
-                            control.disable();
-                        }
-                    } else {
-                        if (control) {
-                            control.enable();
-                        }
-                    }
-                }
-            });
-        });
-    }
-
     toControl(formControlName: string): FormControl {
         return this.formGroup.get(formControlName) as FormControl;
     }
@@ -133,6 +115,10 @@ export class CiphersFactoryComponent implements OnInit {
         if (this.formGroup.valid) {
             const music = this.formGroup.getRawValue();
             music.cipher = JSON.stringify(music.cipher);
+            music.tags = this.tags.reduce((accu, curr) => {
+                accu = accu ? accu + ',' + curr : accu + curr;
+                return accu;
+            }, '');
 
             music.lyric = this.formatMusic
                 .brackText(music.lyric)
@@ -177,6 +163,7 @@ export class CiphersFactoryComponent implements OnInit {
         if (this.state) {
             this.visualizarionMode = true;
             this.id = this.state!.id;
+            this.tags = this.state!.tags?.split(',');
             this.toControl('lyric').setValue(this.state!.lyric);
             this.toControl('title').setValue(this.state.title);
             this.toControl('tone').setValue(this.state.tone);
@@ -213,5 +200,17 @@ export class CiphersFactoryComponent implements OnInit {
                 );
             },
         });
+    }
+
+    remove(tagRemove: string): void {
+        this.tags = this.tags.filter((tag) => tag !== tagRemove);
+    }
+
+    add(event: MatChipInputEvent): void {
+        const value = (event.value || '').trim();
+        if (value && !this.tags.includes(value)) {
+            this.tags.push(value.toUpperCase());
+        }
+        event.chipInput!.clear();
     }
 }

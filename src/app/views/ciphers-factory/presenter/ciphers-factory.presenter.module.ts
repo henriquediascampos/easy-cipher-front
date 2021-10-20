@@ -4,11 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -27,9 +29,14 @@ import { CiphersFactoryComponent } from './ciphers-factory/ciphers-factory.compo
 import { DefaultCiphersFactoryPresenter } from './default-ciphers-factory.presenter';
 import { DialogSetNoteComponent } from './dialog-set-note/dialog-set-note.component';
 
-
 @NgModule({
-    declarations: [CiphersFactoryComponent, DialogSetNoteComponent, CiphersFactoryFirstTabComponent, CiphersFactorySecondaryTabComponent, CipherListComponent],
+    declarations: [
+        CiphersFactoryComponent,
+        DialogSetNoteComponent,
+        CiphersFactoryFirstTabComponent,
+        CiphersFactorySecondaryTabComponent,
+        CipherListComponent,
+    ],
     imports: [
         CommonModule,
         CiphersFactoryRouting,
@@ -51,13 +58,15 @@ import { DialogSetNoteComponent } from './dialog-set-note/dialog-set-note.compon
         MatCardModule,
         SystemDialogModule,
         MusicCardModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatChipsModule,
+        MatStepperModule,
     ],
     providers: [
         {
             provide: CiphersFactoryPresenter,
-            useClass: DefaultCiphersFactoryPresenter
-        }
-    ]
+            useClass: DefaultCiphersFactoryPresenter,
+        },
+    ],
 })
-export class CiphersFactoryPresenterModule { }
+export class CiphersFactoryPresenterModule {}

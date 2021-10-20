@@ -4,4 +4,5 @@ export interface Cipher {
     cipher: string;
     tone: string;
     title: string;
+    tags: string;
 }
