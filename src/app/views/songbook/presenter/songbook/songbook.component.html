@@ -37,6 +37,7 @@
             *ngFor="let item of musicFiltered | async"
             [matTooltip]="item.cipher.lyric"
             [music]="item.cipher"
+            (dblclick)="card.animateSlide('present-music', { customTone: item.customTone,  cipher: item.cipher })"
         >
             <ng-container buttons>
                 <button

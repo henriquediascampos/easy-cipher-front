@@ -1,109 +1,151 @@
+
+
+$width-general-container: 450px
+$width-general-internal-component: 300px
+
+$height-house: 65px
+
 $width-block: 50px
-$height-block: 64px
+$height-block: 60px
 
-.scroll
-    overflow-y: scroll
-    overflow-x: hidden
+$base-limit: 1200px
 
-.string-name-container
-    top: 0
-    left: 50%
-    transform: translateX(-50%)
+@mixin limit-container($property, $value)
+    @include limit-container-aditional($property, $value, 1)
+
+@mixin limit-container-aditional($property, $value, $additional)
+    #{$property}: $value
+    @for $i from 100 through 70
+        $current-value: $i/100
+        @media (max-width: calc(#{$base-limit} * #{$current-value}))
+            #{$property}: calc(#{$value} * #{$current-value} * #{$additional})
+
+@mixin limit-container-width($width)
+    width: 100%
+    @include limit-container(max-width, $width)
+
+@mixin limit-container-height($height)
+    height: 100%
+    @include limit-container-aditional(max-height, $height, 1)
+
+
+.general-container
+    min-width: 144px
+
+
+.guitar-arm
+    @include limit-container-width(calc( #{$width-block} + #{$width-block} + 5px + #{$width-general-internal-component}))
+    padding-left: $width-block
+    padding-right: $width-block
+
+.guitar-arm-header
     overflow-y: scroll
-    height: 31px
-    > div
-        background: #979797
-        box-shadow: 0px 3px 5px -2px #a3a3a3e9
+    @include limit-container-width($width-general-container)
+    @include limit-container(height, 30px)
+    @include limit-container(font-size, 11pt)
+    > .guitar-arm
         z-index: 1
-        border-top-right-radius: 2px
-        border-top-left-radius: 2px
+        .string-name
+            background: #979797
+            color: #fff
+            font-weight: 500
+            min-width: 24px
+            &:nth-child(1)
+                border-top-right-radius: 4px
+            &:nth-child(6)
+                border-top-left-radius: 4px
+
 
 .string-preriferic
-    width: $width-block
-    height: 30px
+    @include limit-container-width(55px)
     align-items: center
 
-.string-name
-    color: #fff
-    font-weight: 500
 
-.string-touch
-    font-weight: 500
-    height: 50px
-    .touch
-        color: #ff7700e9
+.guitar-arm-body
+    @include limit-container-width($width-general-container)
+    @include limit-container(height, 320px)
+    overflow-y: scroll
+    overflow-x: hidden
+    .guitar-arm
+        box-shadow: inset 0px -5px 12px -12px #a3a3a3e9
+        >.house
+            margin: auto
+            position: relative
+            &:not(:last-child)
+                border-bottom: 5px solid
+                border-image: linear-gradient(45deg, #52442b, #917046) .5
+            > .title-house
+                @include limit-container-width($width-block)
+                position: absolute
+                left: -18%
+                top: 50%
+                transform: translateY(-50%)
+                text-align: center
+                color: #ccc
+                cursor: pointer
+                @include limit-container(font-size, 15pt)
+                align-items: center
+                .btn
+                    display: none
+                    mat-icon
+                        @include limit-container(font-size, 50pt)
+                        transform: translateX(-85%)
+                &:hover
+                    .text
+                        display: none
+                    .btn
+                        display: block
+            .string
+                @include limit-container(width, 55px)
+                @include limit-container(height, $height-block)
+                min-width: 24px
+                background-color: #ebebeb
+                &:nth-child(2)
+                    border-right: .5px solid #00000014
+                &:nth-child(7)
+                    border-left: .5px solid #00000014
+                span
+                    position: relative
+                    background: #5c5c5c
+                    width: var(--b)
+                    align-items: center
+                    .flag
+                        align-items: center
+                        cursor: pointer
+                        position: absolute
+                        content: " "
+                        @include limit-container(width, 28px)
+                        @include limit-container(height, 28px)
+                        opacity: 0
+                        background: #00000000
+                        box-shadow: inset 0px 0px 7px 4px #9999998e
+                        border-radius: 100%
+                        color: #ffffff
+                        text-shadow: 0px 0px 4px #000000
+                        &:active
+                            background: #fff
+                            box-shadow: inset 0px 0px 10px 7px #ff7700e9
+                        &.select,&.select-interact
+                            color: #fff
+                            text-shadow: 0px 0px 4px #ff7700
+                            background: #fff
+                            box-shadow: inset 0px 0px 12px 8px #ff7700e9
+                            opacity: 1
+                &:hover,&.interact
+                    span
+                        .flag
+                            opacity: 1
 
 
-.guitar-container
-    height: 409px
-    width: 400px
-    margin-top: 30px
-    box-shadow: inset 0px -5px 12px -12px #a3a3a3e9
 
-.title-house
-    width: $width-block
-    height: $height-block
-    position: absolute
-    left: -20%
-    top: 50%
-    transform: translateY(-50%)
-    text-align: center
-    color: #ccc
-    cursor: pointer
-    font-size: 15pt
-    align-items: center
-    .btn
-        display: none
-        mat-icon
-            font-size: 50pt
-            transform: translateX(-85%)
-    &:hover
-        .text
-            display: none
-        .btn
-            display: block
+.guitar-arm-footer
+    @include limit-container-width($width-general-container)
+    overflow-y: scroll
+    .string-touch
+        font-weight: 500
+        @include limit-container-height(50px)
+        .touch
+            color: #ff7700e9
+    .button-adaptable
+        width: 100%
 
-.house
-    position: relative
-    border-bottom: 5px solid
-    border-image: linear-gradient(45deg, #52442b, #917046) .5
-
-.string
-    width: $width-block
-    height: $height-block
-    background-color: #ebebeb
-    &:nth-child(2)
-        border-right: .5px solid #00000014
-    &:nth-child(7)
-        border-left: .5px solid #00000014
-    span
-        position: relative
-        background: #5c5c5c
-        width: var(--b)
-        align-items: center
-        .flag
-            align-items: center
-            cursor: pointer
-            position: absolute
-            content: " "
-            width: 28px
-            height: 28px
-            opacity: 0
-            background: #00000000
-            box-shadow: inset 0px 0px 7px 4px #9999998e
-            border-radius: 100%
-            color: #ffffff
-            text-shadow: 0px 0px 4px #000000
-            &:active
-                background: #fff
-                box-shadow: inset 0px 0px 10px 7px #ff7700e9
-            &.select,&.select-interact
-                color: #fff
-                text-shadow: 0px 0px 4px #ff7700
-                background: #fff
-                box-shadow: inset 0px 0px 12px 8px #ff7700e9
-                opacity: 1
-    &:hover,&.interact
-        span
-            .flag
-                opacity: 1

@@ -1,4 +1,5 @@
-@use "../../../../styles/reponsive"
+.margin-20
+    margin-top: 20px
 
 .chord
     height: 28px
@@ -9,8 +10,7 @@
     &:first-child
         margin-top: 30px
     >:first-child
-        // font-size: 15pt
-        @include limit-container(font-size, 15pt)
+        font-size: 15pt
         width: 150px
         font-weight: 700
         color: #ff8a24
@@ -18,17 +18,14 @@
         &:hover:not(.legend)
             background: #fae7d649
             transform: scale(1.01)
+    // >:nth-child(1):not(.legend)
+    //     background: #fae7d6
     .probability
         width: 75px
     .scale
         width: 25px
     .legend
         color: #6e6e6e
-
-.margin-20
-    margin-top: 20px
-
-
 
 .graus
     margin-left: 285px
@@ -49,6 +46,5 @@
     &-notation
         font-size: 8pt
         transform: translateY(11%)
-
 
 

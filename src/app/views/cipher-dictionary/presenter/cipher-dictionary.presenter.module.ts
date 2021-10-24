@@ -21,7 +21,6 @@ import { DefaultCipherDictionaryPresenter } from './default-cipher-dictionary.pr
     imports: [
         CommonModule,
         CipherDictionaryRouting,
-        CoreModule,
         ContainerModule,
         GuitarArmModule,
         FormsModule,

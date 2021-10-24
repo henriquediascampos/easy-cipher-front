@@ -1,0 +1,105 @@
+<mat-toolbar color="primary" class="toolbar">
+    <span>My Application</span>
+</mat-toolbar>
+<div content class="container column margin-32 full-width">
+    <div class="container row margin-32 full-width">
+        <div class="margin-20">
+            <ec-guitar-arm #guitarArm></ec-guitar-arm>
+        </div>
+        <div class="container column full">
+            <div
+                class="container row margin-32 full-width"
+                [formGroup]="formGroup"
+            >
+                <mat-form-field
+                    class="container row full"
+                    appearance="standard"
+                >
+                    <mat-label>{{
+                        "CIPHER_DICTIONARY.CHORD" | translate
+                    }}</mat-label>
+                    <input
+                        #chordName
+                        class="bold-500"
+                        type="text"
+                        matInput
+                        formControlName="chord"
+                        required
+                        [placeholder]="placeholder"
+                    />
+                </mat-form-field>
+
+                <div class="container column center">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        (click)="saveValidate()"
+                    >
+                        <mat-icon>add</mat-icon>
+                        {{ "BUTTONS.ADD" | translate }}
+                    </button>
+                </div>
+            </div>
+            <div class="chord container row full-width margin-32">
+                <span class="container column center legend"> Name </span>
+
+                <span class="container column center probability legend">
+                    %
+                </span>
+                <span class="container column center legend"> Scale </span>
+            </div>
+
+            <div class="container row graus margin-32">
+                <span *ngFor="let grau of graus" class="container center scale">
+                    {{ grau }}ª
+                </span>
+            </div>
+            <div
+                class="container column full-width"
+                *ngFor="let scale of scales; let i = index"
+            >
+                <div
+                    class="chord container row full-width margin-32"
+                    [style.--opacity]="calculate(i)"
+                >
+                    <span
+                        class="container column flex-end pointer"
+                        (click)="setChord(scale.chordName)"
+                    >
+                        {{ scale.chordName }}
+                    </span>
+
+                    <span class="container column flex-end probability">
+                        {{ calculateProbability(scale.probability) }}
+                    </span>
+                    <span
+                        *ngFor="let s of scale.scale"
+                        class="container column flex-end scale"
+                        [ngClass]="{ match: match(scale, s) }"
+                    >
+                        {{ s }}
+                    </span>
+                </div>
+                <div
+                    class="container row end variations"
+                    [style.--opacity]="calculate(i)"
+                >
+                    <span
+                        *ngFor="let s of scale.scale; let i = index"
+                        class="container"
+                        [ngClass]="{
+                            match: match(scale, variationsNote(i, s))
+                        }"
+                    >
+                        <span class="variations-note">
+                            {{ variationsNote(i, s) }}
+                        </span>
+                        <span class="variations-notation">
+                            {{ variationsNotation(i, s) }}
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

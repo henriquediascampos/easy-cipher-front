@@ -1,6 +1,7 @@
+import { DialogChordComponent } from './../../../../components/dialog-chord/presenter/dialog-chord/dialog-chord.component';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, pipe } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -26,6 +27,7 @@ export class DialogSetNoteComponent {
     constructor(
         public dialogRef: MatDialogRef<DialogSetNoteComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
+        public dialog: MatDialog,
         private formBuilder: FormBuilder) {
 
         this.formGroup = this.formBuilder.group({
@@ -92,4 +94,10 @@ export class DialogSetNoteComponent {
     }
 
 
+    openDialogAddChord(): void {
+        this.dialog.open(DialogChordComponent, {
+            // width: '880px',
+            height: '680px',
+        })
+    }
 }

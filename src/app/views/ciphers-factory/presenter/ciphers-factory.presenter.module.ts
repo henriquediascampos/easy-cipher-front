@@ -1,3 +1,4 @@
+import { DialogChordModule } from './../../../components/dialog-chord/dialog-chord.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -61,6 +62,7 @@ import { DialogSetNoteComponent } from './dialog-set-note/dialog-set-note.compon
         MatTooltipModule,
         MatChipsModule,
         MatStepperModule,
+        DialogChordModule
     ],
     providers: [
         {
