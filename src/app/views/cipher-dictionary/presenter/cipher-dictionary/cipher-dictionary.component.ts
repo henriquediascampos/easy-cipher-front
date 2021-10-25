@@ -144,7 +144,7 @@ export class CipherDictionaryComponent implements AfterViewInit {
     }
 
     variationsNotation(index: number, note: string): string {
-        return  index?  index === 4 || index === 5 ? 'dim' : '-' : ''
+        return  index?  index === 3 || index === 4 ? 'dim' : '-' : ''
     }
 
     variationsNote(index: number, note: string): string {

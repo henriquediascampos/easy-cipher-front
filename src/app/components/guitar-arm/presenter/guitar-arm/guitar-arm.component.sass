@@ -1,4 +1,4 @@
-
+@use "../../../../styles/reponsive"
 
 $width-general-container: 450px
 $width-general-internal-component: 300px
@@ -8,25 +8,14 @@ $height-house: 65px
 $width-block: 50px
 $height-block: 60px
 
-$base-limit: 1200px
-
-@mixin limit-container($property, $value)
-    @include limit-container-aditional($property, $value, 1)
-
-@mixin limit-container-aditional($property, $value, $additional)
-    #{$property}: $value
-    @for $i from 100 through 70
-        $current-value: $i/100
-        @media (max-width: calc(#{$base-limit} * #{$current-value}))
-            #{$property}: calc(#{$value} * #{$current-value} * #{$additional})
 
 @mixin limit-container-width($width)
     width: 100%
-    @include limit-container(max-width, $width)
+    @include reponsive.limit-container(max-width, $width)
 
 @mixin limit-container-height($height)
     height: 100%
-    @include limit-container-aditional(max-height, $height, 1)
+    @include reponsive.limit-container-aditional(max-height, $height, 1)
 
 
 .general-container
@@ -41,8 +30,8 @@ $base-limit: 1200px
 .guitar-arm-header
     overflow-y: scroll
     @include limit-container-width($width-general-container)
-    @include limit-container(height, 30px)
-    @include limit-container(font-size, 11pt)
+    @include reponsive.limit-container(height, 30px)
+    @include reponsive.limit-container(font-size, 11pt)
     > .guitar-arm
         z-index: 1
         .string-name
@@ -63,7 +52,7 @@ $base-limit: 1200px
 
 .guitar-arm-body
     @include limit-container-width($width-general-container)
-    @include limit-container(height, 320px)
+    @include reponsive.limit-container(height, 320px)
     overflow-y: scroll
     overflow-x: hidden
     .guitar-arm
@@ -83,12 +72,12 @@ $base-limit: 1200px
                 text-align: center
                 color: #ccc
                 cursor: pointer
-                @include limit-container(font-size, 15pt)
+                @include reponsive.limit-container(font-size, 15pt)
                 align-items: center
                 .btn
                     display: none
                     mat-icon
-                        @include limit-container(font-size, 50pt)
+                        @include reponsive.limit-container(font-size, 50pt)
                         transform: translateX(-85%)
                 &:hover
                     .text
@@ -96,8 +85,8 @@ $base-limit: 1200px
                     .btn
                         display: block
             .string
-                @include limit-container(width, 55px)
-                @include limit-container(height, $height-block)
+                @include reponsive.limit-container(width, 55px)
+                @include reponsive.limit-container(height, $height-block)
                 min-width: 24px
                 background-color: #ebebeb
                 &:nth-child(2)
@@ -114,8 +103,8 @@ $base-limit: 1200px
                         cursor: pointer
                         position: absolute
                         content: " "
-                        @include limit-container(width, 28px)
-                        @include limit-container(height, 28px)
+                        @include reponsive.limit-container(width, 28px)
+                        @include reponsive.limit-container(height, 28px)
                         opacity: 0
                         background: #00000000
                         box-shadow: inset 0px 0px 7px 4px #9999998e
@@ -140,6 +129,7 @@ $base-limit: 1200px
 
 .guitar-arm-footer
     @include limit-container-width($width-general-container)
+    min-height: 40px
     overflow-y: scroll
     .string-touch
         font-weight: 500

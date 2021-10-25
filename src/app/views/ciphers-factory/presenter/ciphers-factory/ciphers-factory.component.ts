@@ -1,20 +1,17 @@
-import { Observable } from 'rxjs';
-import { SpinnerService } from './../../../../core/services/spinner.service';
-import { FormatMusicService } from './../../../../core/services/format-musica.service';
-import { Cipher } from './../../../songbook/domain/models/Cipher';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import {
     Component,
     HostBinding,
     OnInit,
-    ViewChild,
-    ElementRef,
+    ViewChild
 } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
     FormGroup,
-    Validators,
+    Validators
 } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { Router } from '@angular/router';
 import { CipherTranslateService } from 'src/app/translate/cipher-translate.service';
@@ -22,13 +19,12 @@ import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory
 import { CiphersFactoryFirstTabComponent } from '../ciphers-factory-first-tab/ciphers-factory-first-tab.component';
 import {
     CiphersFactorySecondaryTabComponent,
-    Line,
+    Line
 } from '../ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
+import { FormatMusicService } from './../../../../core/services/format-musica.service';
+import { SpinnerService } from './../../../../core/services/spinner.service';
 import { SystemDialogService } from './../../../../core/services/system-dilog.service';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { map, startWith } from 'rxjs/operators';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Cipher } from './../../../songbook/domain/models/Cipher';
 
 @Component({
     selector: 'ec-ciphers-factory',

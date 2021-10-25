@@ -1,50 +1,73 @@
-.margin-20
-    margin-top: 20px
+@use "../../../../styles/reponsive"
+$scale-width: 24px
+
+.margin-32 > :not(:last-child)
+    @include reponsive.limit-container(margin-right, 32px)
+
+.principal-container
+    width: 100%
+    max-width: 700px
 
 .chord
     height: 28px
     padding-bottom: 4px
     color: #000000
     opacity: var(--opacity)
-    font-size: 13pt
+    @include reponsive.limit-container(font-size, 13pt)
     &:first-child
         margin-top: 30px
     >:first-child
-        font-size: 15pt
-        width: 150px
+        @include reponsive.limit-container(font-size, 15pt)
+        @include reponsive.limit-container(width, 130px)
         font-weight: 700
         color: #ff8a24
         padding: 4px
         &:hover:not(.legend)
             background: #fae7d649
             transform: scale(1.01)
-    // >:nth-child(1):not(.legend)
-    //     background: #fae7d6
     .probability
-        width: 75px
+        @include reponsive.limit-container(width, 45px)
     .scale
-        width: 25px
+        @include reponsive.limit-container(width, $scale-width)
     .legend
         color: #6e6e6e
 
+.margin-20
+    margin-top: 20px
+
+
+
 .graus
-    margin-left: 285px
     span
-        width: 25px
+        @include reponsive.limit-container(width, $scale-width)
 
 .match
     color: #ff9034
 
 .variations
-    margin-left: 273px
     color: #6e6e6e
     opacity: var(--opacity)
-    > span
-        width: 57px
+    > .variations-span
+        @include reponsive.limit-container(width, $scale-width)
+        transform: translate(-55%, -15%)
     &-note
-        font-size: 9pt
+        @include reponsive.limit-container(font-size, 9pt)
     &-notation
-        font-size: 8pt
-        transform: translateY(11%)
+        @include reponsive.limit-container(font-size, 8pt)
+        transform: translateY(8%)
 
 
+
+@media (max-width: 818px)
+    .principal-container
+        flex-direction: column
+
+
+
+
+// .patos
+//     background: #d65f5f
+
+// @media (max-width: 500px)
+//     .patos
+//         background: #000

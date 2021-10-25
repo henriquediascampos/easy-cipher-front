@@ -96,8 +96,8 @@ export class DialogSetNoteComponent {
 
     openDialogAddChord(): void {
         this.dialog.open(DialogChordComponent, {
-            // width: '880px',
-            height: '680px',
+            width: '880px',
+            height: '600px',
         })
     }
 }
