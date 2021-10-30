@@ -1,39 +1,50 @@
-import { Scale } from 'src/app/core/services/musical-scale.service';
-import { Note } from './../../../ciphers-factory/presenter/dialog-set-note/dialog-set-note.component';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CipherDictionaryPresenter } from '../../domain/boundaries/cipher-dictionary.presenter';
 import {
     ChordNotes,
     GuitarArmComponent,
-} from './../../../../components/guitar-arm/presenter/guitar-arm/guitar-arm.component';
-import {
-    MatchChord,
-    MusicalScaleService,
-} from './../../../../core/services/musical-scale.service';
+} from './../../../guitar-arm/presenter/guitar-arm/guitar-arm.component';
 import { SpinnerService } from './../../../../core/services/spinner.service';
 import { SystemDialogService } from './../../../../core/services/system-dilog.service';
 import { CipherTranslateService } from './../../../../translate/cipher-translate.service';
+import {
+    MatchChord,
+    Scale,
+    Note,
+    MusicalScaleService,
+} from './../../../../core/services/musical-scale.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { DialogData } from './../../../system-dialog/presenter/system-dialog/system-dialog.component';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+    Component,
+    Inject,
+    OnInit,
+    AfterViewInit,
+    ViewChild,
+} from '@angular/core';
+import { DialogChordPresenter } from '../../domain/boudaries/dialog-chord.presenter';
 
 @Component({
-    selector: 'ec-cipher-dictionary',
-    templateUrl: './cipher-dictionary.component.html',
-    styleUrls: ['./cipher-dictionary.component.sass'],
+    selector: 'ec-dialog-chord',
+    templateUrl: './dialog-chord.component.html',
+    styleUrls: ['./dialog-chord.component.sass'],
 })
-export class CipherDictionaryComponent implements AfterViewInit {
+export class DialogChordComponent implements AfterViewInit {
     scales?: MatchChord[];
     @ViewChild('guitarArm') guitarArm?: GuitarArmComponent;
     graus = Array.from(new Array(7)).map((a, i) => i + 1);
 
     placeholder = 'please, inset name chord.';
     formGroup: FormGroup;
+
     constructor(
         private scale: MusicalScaleService,
         private translate: CipherTranslateService,
-        private presenter: CipherDictionaryPresenter,
+        private presenter: DialogChordPresenter,
         private dialog: SystemDialogService,
-        private formBuilder: FormBuilder,
-        private spinner: SpinnerService
+        private spinner: SpinnerService,
+        public dialogRef: MatDialogRef<DialogChordComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: DialogData,
+        private formBuilder: FormBuilder
     ) {
         this.formGroup = this.formBuilder.group({
             chord: ['', Validators.required],
@@ -136,6 +147,7 @@ export class CipherDictionaryComponent implements AfterViewInit {
                             arg: this.translate.get('CIPHER_CHORD.CHORD'),
                         }
                     ),
+                    callback: () => this.close()
                 });
             },
             () => {},
@@ -146,20 +158,23 @@ export class CipherDictionaryComponent implements AfterViewInit {
     }
 
     variationsNotation(index: number, note: string): string {
-        return  index?  index === 3 || index === 4 ? 'dim' : '-' : ''
+        return index ? (index === 4 || index === 5 ? 'dim' : '-') : '';
     }
 
     variationsNote(index: number, note: string): string {
-        return index ? this.scale.changeNotes(note as Note, 'back') as Scale : ''
+        return index
+            ? (this.scale.changeNotes(note as Note, 'back') as Scale)
+            : '';
     }
 
     match(scale: MatchChord, note: string): boolean {
         return scale.composition.includes(note as Scale);
     }
-    // 2° maior     -1 fica menor           +1 fica aumentada
-    // 3° maior     -1 fica menor           +1 fica aumentada
-    // 4° justa     -1 fica diminuta        +1 fica aumentada
-    // 5° justa     -1 fica diminuta        +1 fica aumentada
-    // 6° maior     -1 fica menor           +1 fica aumentada
-    // 7° maior     -1 fica menor           +1 fica aumentada
+
+    close(): void {
+        this.dialogRef.close();
+        if (this.data?.callback) {
+            this.data.callback();
+        }
+    }
 }

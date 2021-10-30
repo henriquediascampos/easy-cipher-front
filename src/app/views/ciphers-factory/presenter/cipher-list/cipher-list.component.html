@@ -28,6 +28,7 @@
             *ngFor="let cipher of ciphers | async"
             [matTooltip]="cipher.lyric"
             [music]="cipher"
+            (dblclick)="card.animateSlide('ciphers/ciphers-factory', {cipher})"
         >
             <ng-container buttons>
                 <button

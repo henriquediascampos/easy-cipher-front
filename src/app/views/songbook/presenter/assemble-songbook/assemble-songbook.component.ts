@@ -52,7 +52,9 @@ export class AssembleSongbookComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadSongbooks();
+        setTimeout(() => {
+            this.loadSongbooks();
+        }, 200);
     }
 
     loadSongbooks() {

@@ -1,3 +1,4 @@
+import { Chord } from './../../../components/dialog-chord/domain/models/Chord';
 import { Observable } from 'rxjs';
 import { Cipher } from '../domain/models/Cipher';
 import { CiphersFactoryRepository } from './ciphers-factory.repository';
@@ -22,5 +23,9 @@ export class DefaultCiphersFactoryGateway implements CiphersFactoryGateway {
     }
     findByAll(parameters: {}): Observable<Cipher[]> {
         return this.repository.findByAll(parameters);
+    }
+
+    loadChords(): Observable<Chord[]> {
+        return this.repository.loadChords();
     }
 }

@@ -1,109 +1,123 @@
-$width-block: 50px
-$height-block: 64px
+@use "../../../../styles/reponsive"
 
-.scroll
+@function base($multiplay)
+    $result: calc( var(--height) * #{$multiplay})
+    @return $result
+
+@mixin limit-container-width($width)
+    width: 100%
+    @include reponsive.limit-container(max-width, $width)
+
+@mixin limit-container-height($height)
+    height: 100%
+    @include reponsive.limit-container-aditional(max-height, $height, 1)
+
+
+.general-container
+    @include limit-container-width(base(.7))
+
+.guitar-arm
+    width: 95%
+    user-select: none
+
+.guitar-arm-header
+    overflow-y: scroll
+    @include limit-container-height(base(.065))
+    padding-left: base(0.055)
+    > .guitar-arm
+        background: #979797
+        border-top-right-radius: 4px
+        border-top-left-radius: 4px
+        .string-name
+            > span
+                color: #fff
+                font-weight: 500
+                align-self: center
+                @include reponsive.limit-container(font-size, base(.03))
+
+.guitar-arm-body
     overflow-y: scroll
     overflow-x: hidden
+    height: 100%
+    @include limit-container-height(base(1))
+    padding-left: base(0.055)
+    .guitar-arm
+        box-shadow: inset 0px -5px 12px -12px #a3a3a3e9
+        >.house
+            min-height: 20%
+            &:not(:last-child)
+                border-bottom: base(.009) solid
+                border-image: linear-gradient(45deg, #52442b, #917046) .5
+            > .title-house
+                width: 110%
+                height: 100%
+                text-align: center
+                color: #ccc
+                cursor: pointer
+                @include reponsive.limit-container(font-size, base(.04))
+                align-items: center
+                .btn
+                    height: 100%
+                    display: none
+                    transform: translateX(base(-.05))
+                    mat-icon
+                        @include reponsive.limit-container(font-size, base(.1))
+                &:hover
+                    .text
+                        display: none
+                    .btn
+                        display: block
+            .string
+                align-items: center
+                width: 100%
+                padding: 1px
+                background-color: #ebebeb
+                &:nth-child(2)
+                    border-right: .5px solid #00000014
+                &:nth-child(7)
+                    border-left: .5px solid #00000014
+                > .rope
+                    background: #5c5c5c
+                    width: calc( var(--height) * var(--width-rope) * 0.0022)
+                    align-items: center
+                > .flag
+                    @include limit-container-height(base(.055))
+                    @include limit-container-width(base(.055))
+                    @include reponsive.limit-container(font-size, base(.0285))
+                    font-weight: 500
+                    align-items: center
+                    cursor: pointer
+                    opacity: 0
+                    background: #00000000
+                    box-shadow: inset 0px 0px 7px 4px #9999998e
+                    border-radius: 100%
+                    color: #ffffff
+                    text-shadow: 0px 0px 4px #000000
+                    &:active
+                        background: #fff
+                        box-shadow: inset 0px 0px 10px 7px #ff7700e9
+                    &.select,&.select-interact
+                        color: #fff
+                        text-shadow: 0px 0px 4px #ff7700
+                        background: #fff
+                        box-shadow: inset 0px 0px 12px 8px #ff7700e9
+                        opacity: 1
+                &:hover,&.interact
+                    .flag
+                        opacity: 1
 
-.string-name-container
-    top: 0
-    left: 50%
-    transform: translateX(-50%)
+.guitar-arm-footer
     overflow-y: scroll
-    height: 31px
-    > div
-        background: #979797
-        box-shadow: 0px 3px 5px -2px #a3a3a3e9
-        z-index: 1
-        border-top-right-radius: 2px
-        border-top-left-radius: 2px
-
-.string-preriferic
-    width: $width-block
-    height: 30px
-    align-items: center
-
-.string-name
-    color: #fff
-    font-weight: 500
-
-.string-touch
-    font-weight: 500
-    height: 50px
-    .touch
-        color: #ff7700e9
-
-
-.guitar-container
-    height: 409px
-    width: 400px
-    margin-top: 30px
-    box-shadow: inset 0px -5px 12px -12px #a3a3a3e9
-
-.title-house
-    width: $width-block
-    height: $height-block
-    position: absolute
-    left: -20%
-    top: 50%
-    transform: translateY(-50%)
-    text-align: center
-    color: #ccc
-    cursor: pointer
-    font-size: 15pt
-    align-items: center
-    .btn
-        display: none
-        mat-icon
-            font-size: 50pt
-            transform: translateX(-85%)
-    &:hover
-        .text
-            display: none
-        .btn
-            display: block
-
-.house
-    position: relative
-    border-bottom: 5px solid
-    border-image: linear-gradient(45deg, #52442b, #917046) .5
-
-.string
-    width: $width-block
-    height: $height-block
-    background-color: #ebebeb
-    &:nth-child(2)
-        border-right: .5px solid #00000014
-    &:nth-child(7)
-        border-left: .5px solid #00000014
-    span
-        position: relative
-        background: #5c5c5c
-        width: var(--b)
+    @include limit-container-height(base(.08))
+    padding-left: base(0.055)
+    .string-touch
+        font-weight: 500
         align-items: center
-        .flag
-            align-items: center
-            cursor: pointer
-            position: absolute
-            content: " "
-            width: 28px
-            height: 28px
-            opacity: 0
-            background: #00000000
-            box-shadow: inset 0px 0px 7px 4px #9999998e
-            border-radius: 100%
-            color: #ffffff
-            text-shadow: 0px 0px 4px #000000
-            &:active
-                background: #fff
-                box-shadow: inset 0px 0px 10px 7px #ff7700e9
-            &.select,&.select-interact
-                color: #fff
-                text-shadow: 0px 0px 4px #ff7700
-                background: #fff
-                box-shadow: inset 0px 0px 12px 8px #ff7700e9
-                opacity: 1
-    &:hover,&.interact
-        span
-            .flag
-                opacity: 1
+        .touch
+            color: #ff7700e9
+        mat-icon
+            width: 100%
+            height: 50%
+            text-align: center
+            @include reponsive.limit-container(font-size, base(.06))
+

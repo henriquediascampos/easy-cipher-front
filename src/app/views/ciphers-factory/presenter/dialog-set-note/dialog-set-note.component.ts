@@ -1,8 +1,11 @@
+import { Chord } from './../../../../components/dialog-chord/domain/models/Chord';
+import { DialogChordComponent } from './../../../../components/dialog-chord/presenter/dialog-chord/dialog-chord.component';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, pipe } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory.presenter';
 
 export interface DialogData {
     animal: string;
@@ -20,12 +23,13 @@ export type Note = 'C' | 'D' | 'E' | 'F' | 'G' | 'A' | 'B';
 })
 export class DialogSetNoteComponent {
     formGroup: FormGroup;
-
-    filteredOptionsNote!: Observable<string[]>;
+    filteredOptionsNote!: Observable<Chord[]>;
 
     constructor(
         public dialogRef: MatDialogRef<DialogSetNoteComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogData,
+        public dialog: MatDialog,
+        private presenter: CiphersFactoryPresenter,
         private formBuilder: FormBuilder) {
 
         this.formGroup = this.formBuilder.group({
@@ -34,7 +38,7 @@ export class DialogSetNoteComponent {
     }
 
     ngOnInit() {
-        this.filteredOptionsNote = this.filter('note', () => this.optionsNote())
+        this.loadChords();
     }
 
 
@@ -51,7 +55,7 @@ export class DialogSetNoteComponent {
         return this.formGroup.get(formControlName) as FormControl
     }
 
-    private filter(formControlName: string, options: () => string[]): Observable<string[]> {
+    private filter(formControlName: string, options: () => Chord[]): Observable<Chord[]> {
         return this.toControl(formControlName).valueChanges
             .pipe(
                 startWith(''),
@@ -59,19 +63,17 @@ export class DialogSetNoteComponent {
             );
     }
 
-    private _filter(value: string, options: string[]): string[] {
+    private _filter(value: string, options: Chord[]): Chord[] {
         const filterValue = value.toUpperCase();
-        return options.filter(option => option.toUpperCase().includes(filterValue));
+        return options.filter(option => option.chord.toUpperCase().includes(filterValue));
     }
 
 
 
-    optionsNote(): string[] {
-        const completeScale: Scale[] = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
-        const scales = this.generate<string[]>(completeScale, [0, 2, 2, 1, 2, 2, 2])
-        const majorChords = scales.reduce((accu: string[], curr: string[]) => [...accu, this.simpleGenerate(curr, [0, 3, 1], 0)] as string[], []);
-
-        return completeScale;
+    private loadChords(): void {
+        this.presenter.loadChords().subscribe(reponse => {
+            this.filteredOptionsNote = this.filter('note', () => reponse)
+        });
     }
 
 
@@ -92,4 +94,15 @@ export class DialogSetNoteComponent {
     }
 
 
+    openDialogAddChord(): void {
+        this.dialog.open(DialogChordComponent, {
+            minHeight: 485,
+            minWidth: 775,
+            data: {
+                callback: () => {
+                    this.loadChords()
+                }
+            }
+        })
+    }
 }

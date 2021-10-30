@@ -6,7 +6,7 @@
         "HOME": "Inicio",
         "CIPHER_FACTORY": "Fabrica de cifras",
         "SONGBOOK": "Livro de musicas",
-        "CIPHER_DICTIONARY": "Dicionário de cifras"
+        "CIPHER_CHORD": "Dicionário de cifras"
     },
     "BUTTONS": {
         "BUTTON_CONTINUE": "Continuar",
@@ -102,6 +102,7 @@
         "TITLE_MUSIC": "Título",
         "TONE": "Tom",
         "REQUIRE_TONE": "Selecione um tom",
+        "REQUIRE_CHORD": "Escolha um acorde para esta posição",
         "BACK_TONE": "Voltar um tom",
         "NEXT_TONE": "Avançar um tom",
         "NEW_TAG": "Nova tag"
@@ -125,9 +126,10 @@
         "SAVE_SUCCESS": "{{arg}} salva com sucesso."
     },
 
-    "CIPHER_DICTIONARY": {
-        "TITLE": "Dicionário de cifras",
-        "CHORD": "Acorde"
+    "CIPHER_CHORD": {
+        "TITLE": "Dicionário de acordes",
+        "CHORD": "Acorde",
+        "CREATE_NEW_CHORD": "Criar novo acorde"
     }
 
 }

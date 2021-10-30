@@ -1,3 +1,4 @@
+import { Chord } from './../../../components/dialog-chord/domain/models/Chord';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -29,5 +30,9 @@ export class CiphersFactoryRepository {
         return this.http.get<any[]>(`${this.baseUre}/api/cipher`, {
             params: parameters
         });
+    }
+
+    loadChords(): Observable<Chord[]> {
+        return this.http.get<Chord[]>(`${this.baseUre}/api/chord`);
     }
 }

@@ -1,80 +1,89 @@
-<div class="container row center">
-    <div class="container column center position-relative">
-        <div
-            class="
-                container
-                center
-                row
-                full-width
-                reverse
-                position-absolute
-                string-name-container
-                elevator-1
-            "
-        >
-            <div class="container center row reverse">
-                <div
-                    #stringName
-                    *ngFor="let string of stringsName"
-                    class="container center row string-name string-preriferic"
-                >
-                    <span>{{ string }}</span>
-                </div>
+<div class="position-relative container column full-height general-container" [ec-resize]="teste">
+    <div class="container row full-width guitar-arm-header elevator-1">
+        <div class="container center row full-width reverse guitar-arm" >
+            <div
+                #stringName
+                *ngFor="let string of stringsName"
+                class="container center row string-name full-width"
+            >
+                <span>{{ string }}</span>
             </div>
         </div>
+    </div>
 
-        <div class="container row center guitar-container scroll">
-            <div class="container column guitar-arm">
-                <div
-                    #houseid
-                    *ngFor="let house of houses"
-                    class="container row house reverse"
-                >
-                    <span class="container center title-house">
-                        <button mat-icon-button class="btn">
-                            <mat-icon [hoverInteract]="houseid"
-                                >arrow_right</mat-icon
-                            >
-                        </button>
-                        <span class="container column center text">
-                            {{ house+1 }}
-                        </span>
-                    </span>
-
-                    <div
-                        #stringid
-                        *ngFor="let string of strings"
-                        class="container string center"
-                    >
-                        <span
-                            class="container row center"
-                            [style.--b]="widthString(string)"
-                            (click)="select(string, house, ball)"
+    <div
+        class="container column guitar-arm-body position-relative full-height"
+    >
+        <div class="container column guitar-arm full-height">
+            <div
+                #houseid
+                *ngFor="let house of houses"
+                class="container row house reverse full-width position-relative"
+            >
+                <span class="container title-house position-absolute">
+                    <button mat-icon-button class="btn" disableRipple="true">
+                        <mat-icon [hoverInteract]="houseid"
+                            >arrow_right</mat-icon
                         >
-                            <span #ball class="flag container center bold-700" [id]="house+'-'+string">{{getNote(string, house+1)}}</span>
-                        </span>
-                    </div>
+                    </button>
+                    <span class="container column center text">
+                        {{ house + 1 }}
+                    </span>
+                </span>
+
+                <div
+                    #stringid
+                    *ngFor="let string of strings"
+                    class="container string center position-relative"
+                >
+                    <span
+                        class="container row center rope position-absolute full-height"
+                        [style.--width-rope]="widthString(string)"
+                    >
+                    </span>
+                    <span
+                        (click)="select(string, house, ball)"
+                        #ball
+                        matRipple
+                        [matRippleUnbounded]="true"
+                        [matRippleCentered]="true"
+                        class="flag container center bold-700 position-absolute"
+                        [id]="house + '-' + string"
+                    >
+                        {{ getNote(string, house + 1) }}
+                    </span>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="container center row elevator-1 reverse scroll">
+    <div class="container row full-width elevator-1 guitar-arm-footer">
+        <div class="container row reverse full-width guitar-arm">
             <div
                 #stringTouch
                 *ngFor="let state of stateString; let string = index"
-                class="container center row string-preriferic string-touch"
+                class="container center row string-touch full-width"
             >
-                <button mat-icon-button (click)="touchSelect(state, string)" *ngIf="state === 'none'" >
-                    <mat-icon>close</mat-icon>
-                </button>
+                <mat-icon disableRipple="false"
+                    (click)="touchSelect(state, string)"
+                    *ngIf="state === 'none'"
+                    class="button-adaptable"
+                >
+                    close</mat-icon>
 
-                <button mat-icon-button (click)="touchSelect(state, string)" *ngIf="state === 'catchphrase'" class="touch">
-                    <mat-icon>circle</mat-icon>
-                </button>
+                <mat-icon disableRipple="false"
+                    (click)="touchSelect(state, string)"
+                    *ngIf="state === 'catchphrase'"
+                    class="button-adaptable touch"
+                >
+                    circle</mat-icon>
 
-                <button mat-icon-button (click)="touchSelect(state, string)" *ngIf="state === 'touch'" class="touch">
-                    <mat-icon>panorama_fish_eye</mat-icon>
-                </button>
+                <mat-icon disableRipple="false"
+                    (click)="touchSelect(state, string)"
+                    *ngIf="state === 'touch'"
+                    class="button-adaptable touch"
+                >
+                    panorama_fish_eye</mat-icon>
             </div>
         </div>
     </div>

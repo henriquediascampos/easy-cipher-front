@@ -33,7 +33,7 @@ export const MENU_ITENS: NavigationItem[] = [
         path: 'songbook',
     },
     {
-        name: 'MENU.CIPHER_DICTIONARY',
+        name: 'MENU.CIPHER_CHORD',
         icon: 'tag',
         path: 'cipher-dictionary',
     }

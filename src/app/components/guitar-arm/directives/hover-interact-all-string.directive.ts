@@ -42,14 +42,8 @@ export class HoverInteractAllStringDirective {
 
         for (const key in this.strings.children) {
             const string = this.strings.children[key];
-            const flag = string.firstElementChild as HTMLElement;
+            const flag = string.lastElementChild as HTMLElement;
             flag?.click();
-            // if(flag?.classList?.contains('select-interact')) {
-            //     flag?.classList?.remove('select-interact')
-            // } else {
-            //     flag?.click();
-            //     flag?.classList?.add('select-interact')
-            // }
         }
     }
 }

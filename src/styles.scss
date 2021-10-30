@@ -3,6 +3,7 @@
 @import "./app/styles/menu";
 @import "./app/styles/flex";
 @import "./app/styles/typography";
+@import "./app/styles/reponsive";
 
 @include mat.core();
 
@@ -36,7 +37,7 @@ body {
     margin: 0;
     width: 100vw;
     height: 100vh;
-    overflow: hidden;
+    // overflow: hidden;
 }
 
 body {
@@ -71,6 +72,7 @@ mat-toolbar.toolbar {
 .container-module-overflow {
     height: calc(100vh - (56px + 64px + 46px));
     overflow-y: auto;
+    overflow-x: auto;
 
     &::-webkit-scrollbar {
         width: 5px;
@@ -164,5 +166,34 @@ mat-toolbar.toolbar {
     }
     &-fixed {
         position: fixed;
+    }
+}
+
+
+mat-stepper.teste {
+    div.mat-horizontal-content-container {
+        padding: 0
+    }
+}
+
+.cdk-overlay-pane{
+    width: unset !important;
+    height: unset !important;
+    max-width: 100% !important;
+}
+
+.mat-dialog-container{
+    max-width: 100%;
+    max-height: 100% !important;
+    resize: both;
+}
+
+
+.button-adaptable {
+    .mat-button-wrapper {
+        line-height: 0;
+        height: 90%;
+        display: flex;
+        align-items: center;
     }
 }

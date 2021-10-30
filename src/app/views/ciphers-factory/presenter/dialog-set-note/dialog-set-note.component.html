@@ -1,39 +1,50 @@
-<div class="container column full-height margin-8">
-    <mat-toolbar color="primary">
-        <span>My Application</span>
+<div class="container column margin-16 full-height" [formGroup]="formGroup">
+    <mat-toolbar color="primary" class="toolbar">
+        <span>{{ "CIPHER_FACTORY.REQUIRE_CHORD" | translate }}</span>
     </mat-toolbar>
 
+    <div>
+        <div class="example-form" >
+            <mat-form-field appearance="fill" class="container-set-note">
+                <mat-label>{{ "CIPHER_CHORD.CHORD" | translate }}</mat-label>
+                <input
+                    type="text"
+                    placeholder="Note"
+                    matInput
+                    formControlName="note"
+                    [matAutocomplete]="autoNotePrimary"
+                />
+                <mat-autocomplete #autoNotePrimary="matAutocomplete">
+                    <mat-option
+                        *ngFor="let option of filteredOptionsNote | async"
+                        [value]="option.chord"
+                    >
+                        {{ option.chord }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+    </div>
     <div
-        class="
-            container
-            row
-            full-height full-width
-            content
-            full-width--child
-            margin-8
-        "
-        [formGroup]="formGroup"
+        class="container row full-height content margin-8"
     >
-        <mat-form-field appearance="standard" class="container full-width">
-            <mat-label>Note primary</mat-label>
-            <input
-                type="text"
-                placeholder="Note"
-                matInput
-                formControlName="note"
-                [matAutocomplete]="autoNotePrimary"
-            />
-            <mat-autocomplete #autoNotePrimary="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptionsNote | async" [value]="option">
-                    {{ option }}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
+        <div class="align-center container">
+            <button
+            [title]="'CIPHER_CHORD.CREATE_NEW_CHORD' | translate"
+                mat-icon-button
+                color="primary"
+                (click)="openDialogAddChord()"
+            >
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
     </div>
     <div class="container row flex-end margin-8">
-        <button mat-raised-button (click)="close()">Basic</button>
+        <button mat-raised-button (click)="close()">
+            {{ "BUTTONS.CANCEL" | translate }}
+        </button>
         <button mat-raised-button color="primary" (click)="ok()">
-            Primary
+            {{ "BUTTONS.BUTTON_CONTINUE" | translate }}
         </button>
     </div>
 </div>

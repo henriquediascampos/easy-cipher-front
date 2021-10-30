@@ -5,12 +5,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -18,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from 'src/app/core/core.module';
 import { CiphersFactoryPresenter } from '../domain/boundaries/ciphers-factory.presenter';
 import { ContainerModule } from './../../../components/container/container.module';
+import { DialogChordModule } from './../../../components/dialog-chord/dialog-chord.module';
 import { MusicCardModule } from './../../../components/music-card/music-card.module';
 import { SystemDialogModule } from './../../../components/system-dialog/system-dialog.module';
 import { CipherTranslateModule } from './../../../translate/cipher-translate.module';
@@ -42,25 +42,25 @@ import { DialogSetNoteComponent } from './dialog-set-note/dialog-set-note.compon
         CiphersFactoryRouting,
         TranslateModule,
         CipherTranslateModule,
-        MatInputModule,
+        MatToolbarModule,
+        MatDialogModule,
+        MatTabsModule,
         FormsModule,
         ReactiveFormsModule,
         MatFormFieldModule,
-        MatIconModule,
         MatButtonModule,
-        CoreModule,
-        MatDialogModule,
-        MatToolbarModule,
+        MatIconModule,
         MatAutocompleteModule,
-        MatTabsModule,
+        MatInputModule,
+        MatOptionModule,
+        CoreModule,
         ContainerModule,
-        MatProgressBarModule,
         MatCardModule,
-        SystemDialogModule,
         MusicCardModule,
-        MatTooltipModule,
         MatChipsModule,
-        MatStepperModule,
+        MatTooltipModule,
+        SystemDialogModule,
+        DialogChordModule
     ],
     providers: [
         {
