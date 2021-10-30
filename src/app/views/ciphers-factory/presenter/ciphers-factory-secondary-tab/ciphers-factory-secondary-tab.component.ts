@@ -123,8 +123,10 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
     alterChar(indexLine: number, indexChar: number): void {
         if (!this._disable) {
             this.dialog.open(DialogSetNoteComponent, {
-                width: '550px',
-                height: '235px',
+                // minWidth: '550px',
+                // minHeight: '535px',
+                height: '535px',
+                // width: '535px',
                 data: {
                     callback: (value: string) => {
                         this.text

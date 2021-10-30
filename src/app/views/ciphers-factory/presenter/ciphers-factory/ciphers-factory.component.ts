@@ -12,7 +12,6 @@ import {
     Validators
 } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { ProgressBarMode } from '@angular/material/progress-bar';
 import { Router } from '@angular/router';
 import { CipherTranslateService } from 'src/app/translate/cipher-translate.service';
 import { CiphersFactoryPresenter } from '../../domain/boundaries/ciphers-factory.presenter';
@@ -34,9 +33,6 @@ import { Cipher } from './../../../songbook/domain/models/Cipher';
 export class CiphersFactoryComponent implements OnInit {
     @HostBinding('class') class = 'container full';
     formGroup: FormGroup;
-    mode: ProgressBarMode = 'determinate';
-    value2 = 0;
-    bufferValue = 1;
 
     @ViewChild('secondary') secondary?: CiphersFactorySecondaryTabComponent;
     @ViewChild('primary') primary?: CiphersFactoryFirstTabComponent;

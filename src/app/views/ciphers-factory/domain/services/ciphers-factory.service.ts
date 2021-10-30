@@ -1,3 +1,4 @@
+import { Chord } from './../../../../components/dialog-chord/domain/models/Chord';
 import { Observable } from 'rxjs';
 import { Cipher } from '../models/Cipher';
 import { Injectable } from '@angular/core';
@@ -22,4 +23,9 @@ export class CiphersFactoryService {
     findByAll(parameters: {}): Observable<Cipher[]> {
         return this.gateway.findByAll(parameters);
     }
+
+    loadChords(): Observable<Chord[]> {
+        return this.gateway.loadChords();
+    }
+
 }

@@ -1,5 +1,4 @@
 <div class="container column full-height margin-16" [formGroup]="formGroup">
-
     <mat-toolbar color="accent" class="container column padding-8 center">
         <span>{{ "SONGBOOK.ADD_CIPHER" | translate }}</span>
     </mat-toolbar>
@@ -7,36 +6,56 @@
     <div class="container row full margin-8">
         <mat-form-field class="container full-width" appearance="standard">
             <mat-label>{{ "SONGBOOK.MUSICS" | translate }}</mat-label>
-            <input type="text" class="upper"
-                   placeholder="{{ 'SONGBOOK.MUSICS_PLACEHOLDER' | translate }}"
-                   matInput
-                   formControlName="cipher"
-                   [matAutocomplete]="auto">
-            <mat-autocomplete #teste autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayProperty">
-              <mat-option *ngFor="let option of filteredOptions | async; let index = index" [value]="option" >
-                {{ option.title }}
-              </mat-option>
+            <input
+                type="text"
+                class="upper"
+                placeholder="{{ 'SONGBOOK.MUSICS_PLACEHOLDER' | translate }}"
+                matInput
+                formControlName="cipher"
+                [matAutocomplete]="auto"
+            />
+            <mat-autocomplete
+                #teste
+                autoActiveFirstOption
+                #auto="matAutocomplete"
+                [displayWith]="displayProperty"
+            >
+                <mat-option
+                    *ngFor="
+                        let option of filteredOptions | async;
+                        let index = index
+                    "
+                    [value]="option"
+                >
+                    {{ option.title }}
+                </mat-option>
             </mat-autocomplete>
-          </mat-form-field>
+        </mat-form-field>
 
-          <mat-form-field class="example-full-width" appearance="standard">
+        <mat-form-field class="example-full-width" appearance="standard">
             <mat-label>{{ "CIPHER_FACTORY.TONE" | translate }}</mat-label>
-            <input type="text" class="upper"
-                   placeholder="{{ 'CIPHER_FACTORY.REQUIRE_TONE' | translate }}"
-                   matInput
-                   formControlName="customTone"
-                   [matAutocomplete]="autotone">
-            <mat-autocomplete  autoActiveFirstOption #autotone="matAutocomplete">
-              <mat-option *ngFor="let option of filteredTones | async" [value]="option" >
-                {{ option }}
-              </mat-option>
+            <input
+                type="text"
+                class="upper"
+                placeholder="{{ 'CIPHER_FACTORY.REQUIRE_TONE' | translate }}"
+                matInput
+                formControlName="customTone"
+                [matAutocomplete]="autotone"
+            />
+            <mat-autocomplete autoActiveFirstOption #autotone="matAutocomplete">
+                <mat-option
+                    *ngFor="let option of filteredTones | async"
+                    [value]="option"
+                >
+                    {{ option }}
+                </mat-option>
             </mat-autocomplete>
-          </mat-form-field>
+        </mat-form-field>
     </div>
 
     <div class="container row flex-end margin-8">
         <button mat-raised-button (click)="close()">Close</button>
-        <button mat-raised-button (click)="add()" color="accent" >
+        <button mat-raised-button (click)="add()" color="accent">
             <mat-icon>add</mat-icon>
             Add
         </button>

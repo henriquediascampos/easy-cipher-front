@@ -4,6 +4,10 @@ $scale-width: 24px
 .margin-32 > :not(:last-child)
     @include reponsive.limit-container(margin-right, 32px)
 
+.guitar-arm
+    @include reponsive.limit-container(height, 650px)
+    min-width: 500px
+
 
 .chord
     height: 28px
@@ -53,9 +57,13 @@ $scale-width: 24px
         @include reponsive.limit-container(font-size, 8pt)
         transform: translateY(8%)
 
+.principal-container
+    min-width: 500px
 
-
-@media (max-width: 818px)
+@media (max-width: 1220px)
     .principal-container
         flex-direction: column
 
+@media (max-width: 515px)
+    .principal-container
+        overflow: auto

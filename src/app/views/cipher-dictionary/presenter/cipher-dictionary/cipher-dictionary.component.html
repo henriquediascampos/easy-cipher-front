@@ -1,16 +1,16 @@
-<cipher-container title-container="CIPHER_DICTIONARY.TITLE">
-    <div content class="container column margin-32 full-width">
+<cipher-container title-container="CIPHER_CHORD.TITLE">
+    <div content class="container column margin-32 full full-width">
 
-        <div class="container row margin-32 full-width principal-container">
-            <div class="container">
-                <ec-guitar-arm #guitarArm class="container full"></ec-guitar-arm>
+        <div class="container row margin-32 full full-width principal-container">
+            <div class="container guitar-arm full-height">
+                <ec-guitar-arm #guitarArm></ec-guitar-arm>
             </div>
 
             <div class="container column full">
                 <div class="container row margin-32 full-width" [formGroup]="formGroup">
                     <mat-form-field class="container row full" appearance="standard">
                         <mat-label>{{
-                            "CIPHER_DICTIONARY.CHORD" | translate
+                            "CIPHER_CHORD.CHORD" | translate
                             }}</mat-label>
                         <input #chordName class="bold-500" type="text" matInput formControlName="chord" required
                             [placeholder]="placeholder" />
@@ -54,7 +54,7 @@
                             {{ s }}
                         </span>
                     </div>
-                    <div class="chord container row end margin-32 variations" [style.--opacity]="calculate(i)">
+                    <div *ngIf="i < 5" class="chord container row end margin-32 variations" [style.--opacity]="calculate(i)">
                         <span class="container"></span>
                         <span class="container probability"></span>
                         <span *ngFor="let s of scale.scale; let i = index" class="container variations-span"

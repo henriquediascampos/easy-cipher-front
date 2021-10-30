@@ -1,13 +1,8 @@
 @use "../../../../styles/reponsive"
 
-$width-general-container: 450px
-$width-general-internal-component: 300px
-
-$height-house: 65px
-
-$width-block: 50px
-$height-block: 60px
-
+@function base($multiplay)
+    $result: calc( var(--height) * #{$multiplay})
+    @return $result
 
 @mixin limit-container-width($width)
     width: 100%
@@ -19,123 +14,110 @@ $height-block: 60px
 
 
 .general-container
-    min-width: 144px
-
+    @include limit-container-width(base(.7))
 
 .guitar-arm
-    @include limit-container-width(calc( #{$width-block} + #{$width-block} + 5px + #{$width-general-internal-component}))
-    padding-left: $width-block
-    padding-right: $width-block
+    width: 95%
+    user-select: none
 
 .guitar-arm-header
     overflow-y: scroll
-    @include limit-container-width($width-general-container)
-    @include reponsive.limit-container(height, 30px)
-    @include reponsive.limit-container(font-size, 11pt)
+    @include limit-container-height(base(.065))
+    padding-left: base(0.055)
     > .guitar-arm
-        z-index: 1
+        background: #979797
+        border-top-right-radius: 4px
+        border-top-left-radius: 4px
         .string-name
-            background: #979797
-            color: #fff
-            font-weight: 500
-            min-width: 24px
-            &:nth-child(1)
-                border-top-right-radius: 4px
-            &:nth-child(6)
-                border-top-left-radius: 4px
-
-
-.string-preriferic
-    @include limit-container-width(55px)
-    align-items: center
-
+            > span
+                color: #fff
+                font-weight: 500
+                align-self: center
+                @include reponsive.limit-container(font-size, base(.03))
 
 .guitar-arm-body
-    @include limit-container-width($width-general-container)
-    @include reponsive.limit-container(height, 320px)
     overflow-y: scroll
     overflow-x: hidden
+    height: 100%
+    @include limit-container-height(base(1))
+    padding-left: base(0.055)
     .guitar-arm
         box-shadow: inset 0px -5px 12px -12px #a3a3a3e9
         >.house
-            margin: auto
-            position: relative
+            min-height: 20%
             &:not(:last-child)
-                border-bottom: 5px solid
+                border-bottom: base(.009) solid
                 border-image: linear-gradient(45deg, #52442b, #917046) .5
             > .title-house
-                @include limit-container-width($width-block)
-                position: absolute
-                left: -18%
-                top: 50%
-                transform: translateY(-50%)
+                width: 110%
+                height: 100%
                 text-align: center
                 color: #ccc
                 cursor: pointer
-                @include reponsive.limit-container(font-size, 15pt)
+                @include reponsive.limit-container(font-size, base(.04))
                 align-items: center
                 .btn
+                    height: 100%
                     display: none
+                    transform: translateX(base(-.05))
                     mat-icon
-                        @include reponsive.limit-container(font-size, 50pt)
-                        transform: translateX(-85%)
+                        @include reponsive.limit-container(font-size, base(.1))
                 &:hover
                     .text
                         display: none
                     .btn
                         display: block
             .string
-                @include reponsive.limit-container(width, 55px)
-                @include reponsive.limit-container(height, $height-block)
-                min-width: 24px
+                align-items: center
+                width: 100%
+                padding: 1px
                 background-color: #ebebeb
                 &:nth-child(2)
                     border-right: .5px solid #00000014
                 &:nth-child(7)
                     border-left: .5px solid #00000014
-                span
-                    position: relative
+                > .rope
                     background: #5c5c5c
-                    width: var(--b)
+                    width: calc( var(--height) * var(--width-rope) * 0.0022)
                     align-items: center
-                    .flag
-                        align-items: center
-                        cursor: pointer
-                        position: absolute
-                        content: " "
-                        @include reponsive.limit-container(width, 28px)
-                        @include reponsive.limit-container(height, 28px)
-                        opacity: 0
-                        background: #00000000
-                        box-shadow: inset 0px 0px 7px 4px #9999998e
-                        border-radius: 100%
-                        color: #ffffff
-                        text-shadow: 0px 0px 4px #000000
-                        &:active
-                            background: #fff
-                            box-shadow: inset 0px 0px 10px 7px #ff7700e9
-                        &.select,&.select-interact
-                            color: #fff
-                            text-shadow: 0px 0px 4px #ff7700
-                            background: #fff
-                            box-shadow: inset 0px 0px 12px 8px #ff7700e9
-                            opacity: 1
+                > .flag
+                    @include limit-container-height(base(.055))
+                    @include limit-container-width(base(.055))
+                    @include reponsive.limit-container(font-size, base(.0285))
+                    font-weight: 500
+                    align-items: center
+                    cursor: pointer
+                    opacity: 0
+                    background: #00000000
+                    box-shadow: inset 0px 0px 7px 4px #9999998e
+                    border-radius: 100%
+                    color: #ffffff
+                    text-shadow: 0px 0px 4px #000000
+                    &:active
+                        background: #fff
+                        box-shadow: inset 0px 0px 10px 7px #ff7700e9
+                    &.select,&.select-interact
+                        color: #fff
+                        text-shadow: 0px 0px 4px #ff7700
+                        background: #fff
+                        box-shadow: inset 0px 0px 12px 8px #ff7700e9
+                        opacity: 1
                 &:hover,&.interact
-                    span
-                        .flag
-                            opacity: 1
-
-
+                    .flag
+                        opacity: 1
 
 .guitar-arm-footer
-    @include limit-container-width($width-general-container)
-    min-height: 40px
     overflow-y: scroll
+    @include limit-container-height(base(.08))
+    padding-left: base(0.055)
     .string-touch
         font-weight: 500
-        @include limit-container-height(50px)
+        align-items: center
         .touch
             color: #ff7700e9
-    .button-adaptable
-        width: 100%
+        mat-icon
+            width: 100%
+            height: 50%
+            text-align: center
+            @include reponsive.limit-container(font-size, base(.06))
 

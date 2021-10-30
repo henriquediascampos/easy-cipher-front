@@ -7,7 +7,7 @@ import { Component, HostBinding, Input, OnInit } from '@angular/core';
 })
 export class ContainerComponent implements OnInit {
 
-    @HostBinding('class') clazz = 'container column full';
+    @HostBinding('class') clazz = 'container column full full-height';
     @Input('title-container') title!: string;
 
     constructor() { }

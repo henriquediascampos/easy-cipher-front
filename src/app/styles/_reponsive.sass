@@ -1,3 +1,5 @@
+@use "sass:math"
+
 $base-limit: 1200px
 
 @mixin limit-container($property, $value)
@@ -6,6 +8,7 @@ $base-limit: 1200px
 @mixin limit-container-aditional($property, $value, $additional)
     #{$property}: $value
     @for $i from 100 through 70
-        $current-value: $i/100
+        $current-value: math.div($i, 100)
         @media (max-width: calc(#{$base-limit} * #{$current-value}))
             #{$property}: calc(#{$value} * #{$current-value} * #{$additional})
+

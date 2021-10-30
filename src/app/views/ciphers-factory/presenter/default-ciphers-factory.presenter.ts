@@ -1,3 +1,4 @@
+import { Chord } from './../../../components/dialog-chord/domain/models/Chord';
 import { CiphersFactoryService } from './../domain/services/ciphers-factory.service';
 import { Injectable } from '@angular/core';
 import { CiphersFactoryPresenter } from '../domain/boundaries/ciphers-factory.presenter';
@@ -22,5 +23,9 @@ export class DefaultCiphersFactoryPresenter implements CiphersFactoryPresenter {
     }
     findByAll(parameters: {}): Observable<Cipher[]> {
         return this.service.findByAll(parameters);
+    }
+
+    loadChords(): Observable<Chord[]> {
+        return this.service.loadChords();
     }
 }

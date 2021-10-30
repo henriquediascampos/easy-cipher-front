@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding, OnChanges, SimpleChanges, DoCheck, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { MusicalScaleService } from './../../../../core/services/musical-scale.service';
 
@@ -16,6 +16,8 @@ export declare type ChordNotes = {
     styleUrls: ['./guitar-arm.component.sass'],
 })
 export class GuitarArmComponent implements OnInit {
+    @HostBinding('class') c = 'container full'
+
     houses = Array.from(new Array(24)).map((a, i) => i);
     strings = Array.from(new Array(6)).map((a, i) => i);
     stringsName = ['E', 'B', 'G', 'D', 'A', 'E'];
@@ -115,10 +117,15 @@ export class GuitarArmComponent implements OnInit {
     }
 
     widthString(indexString: number) {
-        return 0.3 * indexString + 1 + 'px';
+        return 0.3 * indexString + 1 ;
     }
 
     getNote(string: number, house: number) {
         return this.scale.searchNote(this.stringsName[string], house);
+    }
+
+    teste(resize: HTMLElement) {
+        resize.style.setProperty('--height', resize.offsetHeight +'px')
+        resize.style.setProperty('--width', resize.offsetWidth +'px')
     }
 }

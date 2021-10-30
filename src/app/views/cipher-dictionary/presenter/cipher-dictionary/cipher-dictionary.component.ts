@@ -38,6 +38,7 @@ export class CipherDictionaryComponent implements AfterViewInit {
         this.formGroup = this.formBuilder.group({
             chord: ['', Validators.required],
             chordMapped: ['', Validators.required],
+            mappedAll: ['', Validators.required],
         });
     }
 
@@ -74,6 +75,7 @@ export class CipherDictionaryComponent implements AfterViewInit {
                 this.scales[0]?.chordName || 'please, inset name chord.';
 
             this.formGroup.get('chordMapped')?.setValue(JSON.stringify(notes));
+            this.formGroup.get('mappedAll')?.setValue(JSON.stringify(value));
             this.formGroup.get('chord')?.reset();
         });
     }
@@ -131,7 +133,7 @@ export class CipherDictionaryComponent implements AfterViewInit {
                     message: this.translate.getWithArgs(
                         'MESSAGE.SAVE_SUCCESS',
                         {
-                            arg: this.translate.get('CIPHER_DICTIONARY.CHORD'),
+                            arg: this.translate.get('CIPHER_CHORD.CHORD'),
                         }
                     ),
                 });

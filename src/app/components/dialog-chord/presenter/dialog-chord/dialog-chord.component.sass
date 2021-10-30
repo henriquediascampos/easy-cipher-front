@@ -1,24 +1,26 @@
 @use "../../../../styles/reponsive"
-$scale-width: 24px
+$scale-width: 20px
 
 .margin-32 > :not(:last-child)
     @include reponsive.limit-container(margin-right, 32px)
 
-.principal-container
+.guitar-arm-container
+    padding-top: 16px
+    @include reponsive.limit-container(height, 350px)
+    min-width: 35%
+
+.possible-scales
     width: 100%
-    max-width: 700px
 
 .chord
     height: 28px
     padding-bottom: 4px
     color: #000000
     opacity: var(--opacity)
-    @include reponsive.limit-container(font-size, 13pt)
-    &:first-child
-        margin-top: 30px
+    @include reponsive.limit-container(font-size, 9pt)
     >:first-child
-        @include reponsive.limit-container(font-size, 15pt)
-        @include reponsive.limit-container(width, 130px)
+        @include reponsive.limit-container(font-size, 10pt)
+        @include reponsive.limit-container(width, 95px)
         font-weight: 700
         color: #ff8a24
         padding: 4px
@@ -26,14 +28,14 @@ $scale-width: 24px
             background: #fae7d649
             transform: scale(1.01)
     .probability
-        @include reponsive.limit-container(width, 45px)
+        @include reponsive.limit-container(width, 35px)
     .scale
         @include reponsive.limit-container(width, $scale-width)
     .legend
         color: #6e6e6e
 
-.margin-20
-    margin-top: 20px
+// .margin-20
+//     margin-top: 20px
 
 
 
@@ -51,23 +53,8 @@ $scale-width: 24px
         @include reponsive.limit-container(width, $scale-width)
         transform: translate(-55%, -15%)
     &-note
-        @include reponsive.limit-container(font-size, 9pt)
+        @include reponsive.limit-container(font-size, 7pt)
     &-notation
-        @include reponsive.limit-container(font-size, 8pt)
+        @include reponsive.limit-container(font-size, 6pt)
         transform: translateY(8%)
 
-
-
-@media (max-width: 818px)
-    .principal-container
-        flex-direction: column
-
-
-
-
-// .patos
-//     background: #d65f5f
-
-// @media (max-width: 500px)
-//     .patos
-//         background: #000
