@@ -108,6 +108,9 @@ export class DialogAddCipherComponent implements OnInit {
     add(): void {
         const customCipher: CustomCipher = this.formGroup.getRawValue();
         customCipher.songbook = { id: this.data.songbook } as Songbook;
+        if (customCipher.customTone) {
+            customCipher.customTone = customCipher.cipher.tone
+        }
         this.spinner.on();
 
         this.presenter.add(customCipher).subscribe(

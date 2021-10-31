@@ -37,12 +37,22 @@
             *ngFor="let item of musicFiltered | async"
             [matTooltip]="item.cipher.lyric"
             [music]="item.cipher"
-            (dblclick)="card.animateSlide('present-music', { customTone: item.customTone,  cipher: item.cipher })"
+            (dblclick)="card.animateSlide('present-music', { customCipher: item, customTone: item.customTone,  cipher: item.cipher })"
         >
             <ng-container buttons>
                 <button
+                    *ngIf="permitedExcludeCipher"
                     mat-icon-button
-                    (click)="card.animateSlide('present-music', { customTone: item.customTone,  cipher: item.cipher })"
+                    color="primary"
+                    class="hover-scale"
+                    (click)="delete(item.id)"
+                >
+                    <mat-icon>delete</mat-icon>
+                </button>
+
+                <button
+                    mat-icon-button
+                    (click)="card.animateSlide('present-music', { customCipher: item, customTone: item.customTone,  cipher: item.cipher })"
                     [matTooltip]="'GENERIC_TOOLTIPS.ACCESS_CIPHER' | translate"
                 >
                     <mat-icon>music_note</mat-icon>

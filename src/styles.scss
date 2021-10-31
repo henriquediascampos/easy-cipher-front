@@ -176,15 +176,7 @@ mat-stepper.teste {
     }
 }
 
-.cdk-overlay-pane{
-    width: unset !important;
-    height: unset !important;
-    max-width: 100% !important;
-}
-
-.mat-dialog-container{
-    max-width: 100%;
-    max-height: 100% !important;
+.mat-dialog-container {
     resize: both;
 }
 

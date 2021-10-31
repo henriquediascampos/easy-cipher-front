@@ -8,7 +8,7 @@ import { Songbook } from './../models/Songbook';
 export abstract class SongbookPresenter {
 
     abstract add(cipher: CustomCipher): Observable<CustomCipher>;
-    abstract remove(cipher: CustomCipher): Observable<CustomCipher>;
+    abstract remove(id: string): Observable<CustomCipher>;
     abstract delete(id: string): Observable<any>;
     abstract findById(id: string): Observable<Songbook>;
     abstract findAll(): Observable<Songbook[]>;

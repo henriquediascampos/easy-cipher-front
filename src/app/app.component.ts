@@ -1,8 +1,8 @@
-import { SpinnerService } from './core/services/spinner.service';
-import { AuthService } from './core/services/auth.service';
 import { AfterViewInit, Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { AuthService } from './core/services/auth.service';
+import { SpinnerService } from './core/services/spinner.service';
 
 @Component({
     selector: 'app-root',
