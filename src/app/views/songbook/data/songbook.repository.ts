@@ -19,10 +19,10 @@ export class SongBookRepository {
         );
     }
 
-    remove(cipher: any): Observable<CustomCipher> {
-        return this.http.delete(`${this.baseUre}/api/custom-cipher`, {
-            params: cipher,
-        }) as any;
+    remove(id: string): Observable<CustomCipher> {
+        return this.http.request<CustomCipher>('DELETE', `${this.baseUre}/api/custom-cipher`, {
+            body: id,
+        });
     }
 
     delete(id: string): Observable<any> {

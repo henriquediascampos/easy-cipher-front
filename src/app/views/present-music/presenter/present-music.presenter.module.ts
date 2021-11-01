@@ -1,3 +1,4 @@
+import { DefaultPresentMusicPresenter } from './default-present-music.presenter';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -10,7 +11,7 @@ import { CoreModule } from './../../../core/core.module';
 import { PresentMusicRoutingModule } from './present-music.routing';
 import { PresentMusicComponent } from './present-music/present-music.component';
 import { MatDividerModule } from '@angular/material/divider';
-
+import { PresentMusicPresenter } from '../domain/boundaries/present-music.gateway';
 
 
 @NgModule({
@@ -29,6 +30,10 @@ import { MatDividerModule } from '@angular/material/divider';
         MatButtonModule,
         FormsModule,
         ReactiveFormsModule
-    ]
+    ],
+    providers: [{
+        provide: PresentMusicPresenter,
+        useClass: DefaultPresentMusicPresenter
+    }]
 })
 export class PresentMusicPresenterModule { }

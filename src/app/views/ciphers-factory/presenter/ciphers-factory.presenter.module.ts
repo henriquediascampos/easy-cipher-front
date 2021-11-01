@@ -43,7 +43,6 @@ import { DialogSetNoteComponent } from './dialog-set-note/dialog-set-note.compon
         TranslateModule,
         CipherTranslateModule,
         MatToolbarModule,
-        MatDialogModule,
         MatTabsModule,
         FormsModule,
         ReactiveFormsModule,

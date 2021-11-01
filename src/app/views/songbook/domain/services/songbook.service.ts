@@ -12,8 +12,8 @@ export class SongbookService {
     add(cipher: CustomCipher): Observable<CustomCipher> {
         return this.gateway.add(cipher);
     }
-    remove(cipher: CustomCipher): Observable<CustomCipher> {
-        return this.gateway.remove(cipher);
+    remove(id: string): Observable<CustomCipher> {
+        return this.gateway.remove(id);
     }
     delete(id: string): Observable<any> {
         return this.gateway.delete(id);

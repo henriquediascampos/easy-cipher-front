@@ -13,8 +13,8 @@ export class DefaultSongbookPresenter implements SongbookPresenter {
     add(cipher: CustomCipher): Observable<CustomCipher> {
         return this.service.add(cipher);
     }
-    remove(cipher: CustomCipher): Observable<CustomCipher> {
-        return this.service.remove(cipher);
+    remove(id: string): Observable<CustomCipher> {
+        return this.service.remove(id);
     }
     delete(id: string): Observable<any> {
         return this.service.delete(id);

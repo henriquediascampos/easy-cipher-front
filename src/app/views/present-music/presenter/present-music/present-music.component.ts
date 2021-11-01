@@ -1,3 +1,4 @@
+import { CustomCipher } from './../../../songbook/domain/models/CustomCipher';
 import { Location } from '@angular/common';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -8,6 +9,7 @@ import {
     Note
 } from './../../../../core/services/musical-scale.service';
 import { Line } from './../../../ciphers-factory/presenter/ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
+import { PresentMusicPresenter } from '../../domain/boundaries/present-music.gateway';
 
 @Component({
     selector: 'ec-present-music',
@@ -20,16 +22,19 @@ export class PresentMusicComponent implements OnInit {
     title!: string;
     origemTone!: string;
     tone = new FormControl(['']);
+    customCipher!: CustomCipher;
 
     constructor(
         private router: Router,
         private format: FormatMusicService,
         private scale: MusicalScaleService,
-        private location: Location
+        private location: Location,
+        private presenter: PresentMusicPresenter
     ) {
         if (this.router.getCurrentNavigation()?.extras.state) {
-            const { cipher, customTone }: any =
-                this.router.getCurrentNavigation()?.extras.state;
+            const { customCipher, cipher, customTone }: any = this.router.getCurrentNavigation()?.extras.state;
+            console.log(customCipher);
+            this.customCipher = customCipher;
             this.title = cipher.title;
             this.origemTone = cipher.tone;
             this.tone.setValue(customTone);
@@ -72,10 +77,12 @@ export class PresentMusicComponent implements OnInit {
         if (change === 'back') {
             this.scale.backTone(this.tone.value as Note).then((value) => {
                 this.tone.setValue(value);
+                this.updateCustomTone(value);
             });
         } else {
             this.scale.nextTone(this.tone.value as Note).then((value) => {
                 this.tone.setValue(value);
+                this.updateCustomTone(value);
             });
         }
 
@@ -87,5 +94,10 @@ export class PresentMusicComponent implements OnInit {
         });
 
         this.text = newText;
+    }
+
+    updateCustomTone(newTone: string): void {
+        this.customCipher.customTone = newTone;
+        this.presenter.update(this.customCipher);
     }
 }

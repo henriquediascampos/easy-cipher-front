@@ -13,8 +13,8 @@ export class DefaultSongBookGateway implements SongbookGateway {
     add(cipher: CustomCipher): Observable<CustomCipher> {
         return this.repository.add(cipher);
     }
-    remove(cipher: CustomCipher): Observable<CustomCipher> {
-        return this.repository.remove(cipher);
+    remove(id: string): Observable<CustomCipher> {
+        return this.repository.remove(id);
     }
 
     delete(id: string): Observable<any> {

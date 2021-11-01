@@ -1,3 +1,4 @@
+import { SystemDialogService } from './../../../../core/services/system-dilog.service';
 import { SpinnerService } from './../../../../core/services/spinner.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -20,11 +21,13 @@ export class SongbookComponent implements OnInit {
     filterControl = new FormControl(['']);
     musicFiltered?: Observable<CustomCipher[]>;
     id!: string;
+    permitedExcludeCipher = false;
 
     constructor(
         private presenter: SongbookPresenter,
         private route: ActivatedRoute,
         private dialog: MatDialog,
+        private systemDialog: SystemDialogService,
         private spinner: SpinnerService
     ) {}
 
@@ -77,5 +80,26 @@ export class SongbookComponent implements OnInit {
         });
     }
 
-    edit() {}
+    edit() {
+        this.permitedExcludeCipher = !this.permitedExcludeCipher;
+    }
+
+    delete(id: string): void {
+        this.systemDialog.warn({
+            subtitle: 'Excluir?',
+            message: 'Tem certeza que deseja seguir com essa operação!',
+            callback: () => {
+                this.spinner.on();
+                this.presenter.remove(id).subscribe(
+                    (response) => {
+                        this.loadSongbook();
+                    },
+                    () => {},
+                    () => {
+                        this.spinner.off();
+                    }
+                );
+            },
+        });
+    }
 }

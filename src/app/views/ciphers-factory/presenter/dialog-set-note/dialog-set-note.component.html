@@ -3,48 +3,32 @@
         <span>{{ "CIPHER_FACTORY.REQUIRE_CHORD" | translate }}</span>
     </mat-toolbar>
 
-    <div>
-        <div class="example-form" >
-            <mat-form-field appearance="fill" class="container-set-note">
-                <mat-label>{{ "CIPHER_CHORD.CHORD" | translate }}</mat-label>
-                <input
-                    type="text"
-                    placeholder="Note"
-                    matInput
-                    formControlName="note"
-                    [matAutocomplete]="autoNotePrimary"
-                />
-                <mat-autocomplete #autoNotePrimary="matAutocomplete">
-                    <mat-option
-                        *ngFor="let option of filteredOptionsNote | async"
-                        [value]="option.chord"
-                    >
-                        {{ option.chord }}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
-        </div>
-    </div>
-    <div
-        class="container row full-height content margin-8"
-    >
+    <div class="container row content margin-8">
+        <mat-form-field appearance="standard" class="container-set-note">
+            <mat-label>{{ "CIPHER_CHORD.CHORD" | translate }}</mat-label>
+            <input type="text" placeholder="Note" matInput formControlName="note" [matAutocomplete]="autoNotePrimary" />
+            <mat-autocomplete #autoNotePrimary="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptionsNote | async" [value]="option.chord">
+                    {{ option.chord }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
         <div class="align-center container">
-            <button
-            [title]="'CIPHER_CHORD.CREATE_NEW_CHORD' | translate"
-                mat-icon-button
-                color="primary"
-                (click)="openDialogAddChord()"
-            >
+            <button [title]="'CIPHER_CHORD.CREATE_NEW_CHORD' | translate" mat-icon-button color="primary"
+                (click)="openDialogAddChord()">
                 <mat-icon>add</mat-icon>
             </button>
         </div>
     </div>
-    <div class="container row flex-end margin-8">
-        <button mat-raised-button (click)="close()">
-            {{ "BUTTONS.CANCEL" | translate }}
-        </button>
-        <button mat-raised-button color="primary" (click)="ok()">
-            {{ "BUTTONS.BUTTON_CONTINUE" | translate }}
-        </button>
+    <div class="container column flex-end full-height">
+
+        <div class="container row flex-end margin-8">
+            <button mat-raised-button (click)="close()">
+                {{ "BUTTONS.CANCEL" | translate }}
+            </button>
+            <button mat-raised-button color="primary" (click)="ok()">
+                {{ "BUTTONS.BUTTON_CONTINUE" | translate }}
+            </button>
+        </div>
     </div>
 </div>
