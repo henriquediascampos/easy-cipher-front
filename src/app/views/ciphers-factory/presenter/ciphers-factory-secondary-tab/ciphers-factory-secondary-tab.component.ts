@@ -26,7 +26,7 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
     maxLengthLine = 70;
 
     @HostBinding('class') clazz = 'container column padding-16';
-    filteredTones?: Observable<Scale[]>;
+    filteredTones?: Observable<string[]>;
 
     text!: Observable<Line[]>;
     _text = new Subject<Line[]>();
@@ -70,7 +70,7 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.scale.getScale().subscribe((scaleOptions) => {
+        this.scale.getAllTones().subscribe((scaleOptions) => {
             this.filteredTones = this._formGroup
                 .get(this._toneName)
                 ?.valueChanges.pipe(

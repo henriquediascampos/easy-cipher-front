@@ -24,7 +24,7 @@ export interface DialogData {
     styleUrls: ['./dialog-add-cipher.component.sass'],
 })
 export class DialogAddCipherComponent implements OnInit {
-    filteredTones?: Observable<Scale[]>;
+    filteredTones?: Observable<string[]>;
 
     formGroup: FormGroup;
     filteredOptions?: Observable<Cipher[]>;
@@ -47,7 +47,7 @@ export class DialogAddCipherComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.scale.getScale().subscribe((scaleOptions) => {
+        this.scale.getAllTones().subscribe((scaleOptions) => {
             this.filteredTones = this.formGroup
                 .get('customTone')
                 ?.valueChanges.pipe(

@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { FormatMusicService } from './format-musica.service';
@@ -73,8 +74,13 @@ export class MusicalScaleService {
 
     constructor(private split: FormatMusicService) {}
 
-    getScale(): Observable<Scale[]> {
-        return of(this.scale);
+    getAllTones(): Observable<string[]> {
+        return of([...this.scale, ...this.scale.map(tone => tone+'m')]).pipe(
+            map(tone => {
+                console.log(tone);
+                return tone.sort()
+            })
+        );
     }
 
     async backTone(currentNote: Note): Promise<string> {
