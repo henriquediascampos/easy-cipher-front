@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PresentMusicPresenter } from '../domain/boundaries/present-music.gateway';
+import { PresentMusicPresenter } from '../domain/boundaries/present-music.presenter';
 import { CustomCipher } from './../../songbook/domain/models/CustomCipher';
 import { PresentMusicService } from './../domain/services/present-music.service';
 

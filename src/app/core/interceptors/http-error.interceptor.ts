@@ -27,7 +27,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                 if (error instanceof HttpErrorResponse) {
                     if (error.status === 502) {
                         this.dilogService.error({ message: error.error.message });
-                    } else if (error.status === 504) {
+                    } else if (error.status === 504 || error.status === 0) {
                         this.dilogService.error({ message: 'Parece que o servidor não está acessivel, contate o suporte técnico.' });
                     } else if (error.status === 401) {
                         // this.authService.redirectLogin();

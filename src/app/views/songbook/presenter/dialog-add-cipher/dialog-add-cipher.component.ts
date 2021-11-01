@@ -1,3 +1,4 @@
+import { SystemDialogService } from './../../../../core/services/system-dilog.service';
 import { SpinnerService } from './../../../../core/services/spinner.service';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -35,11 +36,13 @@ export class DialogAddCipherComponent implements OnInit {
         private presenter: SongbookPresenter,
         private formBuilder: FormBuilder,
         private scale: MusicalScaleService,
+        private dialog: SystemDialogService,
         private spinner: SpinnerService
+
     ) {
         this.formGroup = this.formBuilder.group({
             cipher: ['', Validators.required],
-            customTone: [''],
+            customTone: ['', Validators.required],
         });
     }
 
@@ -60,6 +63,18 @@ export class DialogAddCipherComponent implements OnInit {
                 );
         });
 
+        this.formGroup.get('cipher')?.valueChanges.subscribe( value => {
+            if (value.cipher.tone) {
+                this.formGroup.get('customTone')?.setValue(value.cipher.tone)
+            }
+        })
+
+        setTimeout(() => {
+            this.findAllCiphers()
+        }, 200);
+    }
+
+    findAllCiphers(): void {
         this.spinner.on();
         this.presenter.findAllCiphers({}).subscribe(
             (response) => {
@@ -106,25 +121,30 @@ export class DialogAddCipherComponent implements OnInit {
     }
 
     add(): void {
-        const customCipher: CustomCipher = this.formGroup.getRawValue();
-        customCipher.songbook = { id: this.data.songbook } as Songbook;
-        if (customCipher.customTone) {
-            customCipher.customTone = customCipher.cipher.tone
-        }
-        this.spinner.on();
+        if (this.formGroup.valid) {
+            const customCipher: CustomCipher = this.formGroup.getRawValue();
+            customCipher.songbook = { id: this.data.songbook } as Songbook;
+            this.spinner.on();
 
-        this.presenter.add(customCipher).subscribe(
-            (response) => {
-                if (this.data?.callback) {
-                    this.data.callback();
+            this.presenter.add(customCipher).subscribe(
+                (response) => {
+                    if (this.data?.callback) {
+                        this.data.callback();
+                    }
+                    this.close();
+                },
+                () => {},
+                () => {
+                    this.spinner.off();
                 }
-                this.close();
-            },
-            () => {},
-            () => {
-                this.spinner.off();
-            }
-        );
+            );
+        } else {
+            this.dialog.warn({
+                message:
+                    'Antes de salvar preencha todos os campos obrigatórios!',
+            });
+        }
+
     }
 
     public displayProperty(value: { title: any }) {

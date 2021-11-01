@@ -45,7 +45,7 @@ export class AssembleSongbookComponent implements OnInit {
             map((value: string) =>
                 this.options.filter(
                     (option) =>
-                        !!option.toUpperCase().includes(value.toUpperCase())
+                        !!option.toUpperCase().includes(value?.toUpperCase())
                 )
             )
         );

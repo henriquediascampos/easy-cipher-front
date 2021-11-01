@@ -59,7 +59,7 @@
                 </button>
             </ng-container>
         </ec-music-card>
-        <span *ngIf="!(musicFiltered | async)?.length">
+        <span *ngIf="!(musicFiltered | async)?.length" class="user-select">
             {{ "SONGBOOK.SONGBOOK_EMPTY" | translate }}
         </span>
     </div>

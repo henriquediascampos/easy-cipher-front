@@ -44,11 +44,11 @@
 
         <div
             #card
-            class="container row mat-elevation-z2 card padding-16 pointer"
+            class="container row mat-elevation-z2 card padding-16 pointer user-select"
             *ngFor="let item of musicFiltered | async"
             (dblclick)="selectSongbook(card, item.id)"
         >
-            <span class="container column center full">
+            <span class="container column center full ">
                 {{ item.title }}
             </span>
             <button

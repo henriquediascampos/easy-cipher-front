@@ -9,7 +9,7 @@ import {
     Note
 } from './../../../../core/services/musical-scale.service';
 import { Line } from './../../../ciphers-factory/presenter/ciphers-factory-secondary-tab/ciphers-factory-secondary-tab.component';
-import { PresentMusicPresenter } from '../../domain/boundaries/present-music.gateway';
+import { PresentMusicPresenter } from '../../domain/boundaries/present-music.presenter';
 
 @Component({
     selector: 'ec-present-music',
@@ -33,7 +33,6 @@ export class PresentMusicComponent implements OnInit {
     ) {
         if (this.router.getCurrentNavigation()?.extras.state) {
             const { customCipher, cipher, customTone }: any = this.router.getCurrentNavigation()?.extras.state;
-            console.log(customCipher);
             this.customCipher = customCipher;
             this.title = cipher.title;
             this.origemTone = cipher.tone;
@@ -98,6 +97,8 @@ export class PresentMusicComponent implements OnInit {
 
     updateCustomTone(newTone: string): void {
         this.customCipher.customTone = newTone;
-        this.presenter.update(this.customCipher);
+        this.presenter.update(this.customCipher).subscribe(response => {
+
+        });
     }
 }

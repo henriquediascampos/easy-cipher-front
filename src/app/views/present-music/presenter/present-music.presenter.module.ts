@@ -11,7 +11,7 @@ import { CoreModule } from './../../../core/core.module';
 import { PresentMusicRoutingModule } from './present-music.routing';
 import { PresentMusicComponent } from './present-music/present-music.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { PresentMusicPresenter } from '../domain/boundaries/present-music.gateway';
+import { PresentMusicPresenter } from '../domain/boundaries/present-music.presenter';
 
 
 @NgModule({

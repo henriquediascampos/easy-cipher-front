@@ -72,8 +72,7 @@ export class CiphersFactoryComponent implements OnInit {
         });
 
         if (this.router.getCurrentNavigation()?.extras.state) {
-            const { cipher }: any =
-                this.router.getCurrentNavigation()?.extras.state;
+            const { cipher }: any = this.router.getCurrentNavigation()?.extras.state;
             this.state = cipher;
         }
     }
@@ -151,12 +150,12 @@ export class CiphersFactoryComponent implements OnInit {
         }
     }
 
-    visualization() {
+    visualization(): void {
         if (this.state) {
             this.visualizarionMode = true;
-            this.id = this.state!.id;
-            this.tags = this.state!.tags?.split(',');
-            this.toControl('lyric').setValue(this.state!.lyric);
+            this.id = this.state.id;
+            this.tags = this.state.tags ? this.state.tags.split(',') : [];
+            this.toControl('lyric').setValue(this.state.lyric);
             this.toControl('title').setValue(this.state.title);
             this.toControl('tone').setValue(this.state.tone);
             setTimeout(() => {
@@ -169,8 +168,8 @@ export class CiphersFactoryComponent implements OnInit {
 
     new(): void {
         this.visualizarionMode = !this.visualizarionMode;
-
         this.formGroup.reset();
+        this.tags = [];
         this.id = '';
         this.state = undefined;
     }

@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export abstract class PresentMusicPresenter {
+export abstract class PresentMusicGateway {
 
     abstract update(music: CustomCipher): Observable<CustomCipher>;
 

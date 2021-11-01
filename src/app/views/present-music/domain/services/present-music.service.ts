@@ -1,7 +1,7 @@
 import { CustomCipher } from './../../../songbook/domain/models/CustomCipher';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { PresentMusicGateway } from '../boundaries/present-music.presenter';
+import { PresentMusicGateway } from '../boundaries/present-music.gateway';
 
 @Injectable()
 export class PresentMusicService {
