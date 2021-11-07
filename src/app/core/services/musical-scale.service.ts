@@ -77,7 +77,6 @@ export class MusicalScaleService {
     getAllTones(): Observable<string[]> {
         return of([...this.scale, ...this.scale.map(tone => tone+'m')]).pipe(
             map(tone => {
-                console.log(tone);
                 return tone.sort()
             })
         );
