@@ -1,3 +1,4 @@
+import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CipherTranslateModule } from './../../../translate/cipher-translate.module';
 import { CoreModule } from 'src/app/core/core.module';
@@ -46,7 +47,8 @@ import { DialogAddCipherComponent } from './dialog-add-cipher/dialog-add-cipher.
         MatAutocompleteModule,
         MatDividerModule,
         CipherTranslateModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatChipsModule
     ],
     providers: [
         {

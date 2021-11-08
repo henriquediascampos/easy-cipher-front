@@ -65,7 +65,7 @@
                             <mat-chip
                                 *ngFor="let tag of tags"
                                 [removable]="true"
-                                (removed)="remove(tag)">
+                                (removed)="removeTag(tag)">
                                 {{ tag }}
                             </mat-chip>
                             <input
@@ -73,7 +73,7 @@
                                 formControlName="tags"
                                 [matChipInputFor]="chipList"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                (matChipInputTokenEnd)="add($event)">
+                                (matChipInputTokenEnd)="addTag($event)">
                             </mat-chip-list>
                         </mat-form-field>
 

@@ -12,15 +12,35 @@
 
     <div content class="container column full-heigth full-width margin-16">
         <div class="container row margin-8">
+
             <mat-form-field appearance="standard" class="container full-width">
                 <mat-label>Filter</mat-label>
-                <input
+                <input class="ajust-height"
                     type="text"
                     matInput
                     [formControl]="filterControl"
                     placeholder="Filter"
                 />
             </mat-form-field>
+
+            <mat-form-field appearance="standard" class="container tags full-width">
+                <mat-label>Tags</mat-label>
+                <mat-chip-list #chipList>
+                <mat-chip
+                    *ngFor="let tag of tags"
+                    [removable]="true"
+                    (removed)="removeTag(tag)">
+                    {{ tag }}
+                </mat-chip>
+                <input class="ajust-height"
+                    [placeholder]="('SONGBOOK.FILTER_TAG' |translate)+'...'"
+                    [formControl]="filterTagControl"
+                    [matChipInputFor]="chipList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="addTag($event)">
+                </mat-chip-list>
+            </mat-form-field>
+
             <div class="container column center">
                 <button
                     mat-raised-button

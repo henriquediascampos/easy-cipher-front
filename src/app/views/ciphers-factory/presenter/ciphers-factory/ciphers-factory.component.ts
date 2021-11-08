@@ -193,11 +193,11 @@ export class CiphersFactoryComponent implements OnInit {
         });
     }
 
-    remove(tagRemove: string): void {
+    removeTag(tagRemove: string): void {
         this.tags = this.tags.filter((tag) => tag !== tagRemove);
     }
 
-    add(event: MatChipInputEvent): void {
+    addTag(event: MatChipInputEvent): void {
         const value = (event.value || '').trim();
         if (value && !this.tags.includes(value)) {
             this.tags.push(value.toUpperCase());

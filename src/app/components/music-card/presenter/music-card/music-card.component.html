@@ -6,7 +6,7 @@
         </div>
         <div class="container full-width">
             <div *ngIf="!!music.tags"class="container row margin-8" >
-                <div class="container tag" *ngFor="let tag of music.tags?.split(',')">
+                <div class="container tag user-select" *ngFor="let tag of music.tags?.split(',')">
                     {{ tag }}
                 </div>
             </div>

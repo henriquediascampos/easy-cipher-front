@@ -114,7 +114,8 @@
         "SONGBOOK_EMPTY": "Este livro de músicas ainda esta vazio, você pode adicionar musicas no botão adicionar.",
         "ADD_CIPHER": "Adicionar música/cifra.",
         "MUSICS": "Músicas / cifra",
-        "MUSICS_PLACEHOLDER": "Pesquise por uma música / cifra"
+        "MUSICS_PLACEHOLDER": "Pesquise por uma música / cifra",
+        "FILTER_TAG": "Filtre por uma tag"
     },
     "PRESENTER_MUSIC": {
         "TITLE": "Musica"

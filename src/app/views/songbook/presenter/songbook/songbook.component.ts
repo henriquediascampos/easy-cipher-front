@@ -1,13 +1,16 @@
-import { SystemDialogService } from './../../../../core/services/system-dilog.service';
-import { SpinnerService } from './../../../../core/services/spinner.service';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { SongbookPresenter } from '../../domain/boundaries/songbook.presenter';
+import { SpinnerService } from './../../../../core/services/spinner.service';
+import { SystemDialogService } from './../../../../core/services/system-dilog.service';
 import { CustomCipher } from './../../domain/models/CustomCipher';
+import { Songbook } from './../../domain/models/Songbook';
 import { DialogAddCipherComponent } from './../dialog-add-cipher/dialog-add-cipher.component';
 
 @Component({
@@ -19,9 +22,27 @@ export class SongbookComponent implements OnInit {
     title = '';
     panelOpenState = false;
     filterControl = new FormControl(['']);
+    filterTagControl = new FormControl(['']);
     musicFiltered?: Observable<CustomCipher[]>;
     id!: string;
     permitedExcludeCipher = false;
+
+
+    _tags: string[] = [];
+    get tags() {
+        return this._tags;
+    }
+    set tags(tags: string[]) {
+        this._tags = tags;
+        this._tagChange.next(this._tags)
+    }
+
+    private _tagChange = new Subject<any>();
+    tagChange = this._tagChange.asObservable();
+
+    separatorKeysCodes: number[] = [ENTER, COMMA];
+
+    songbook!: Songbook;
 
     constructor(
         private presenter: SongbookPresenter,
@@ -29,7 +50,7 @@ export class SongbookComponent implements OnInit {
         private dialog: MatDialog,
         private systemDialog: SystemDialogService,
         private spinner: SpinnerService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.route.queryParams.subscribe((params) => {
@@ -38,33 +59,52 @@ export class SongbookComponent implements OnInit {
                 this.loadSongbook();
             }, 300);
         });
+
+        this.tagChange.subscribe(a => {
+            this.musicFiltered = this.filterControl.valueChanges.pipe(
+                startWith(''),
+                map((value: string) => this.filter(value))
+            );
+        });
     }
 
     loadSongbook() {
         this.spinner.on();
         this.presenter.findById(this.id).subscribe(
             (response) => {
+                this.songbook = response;
                 this.title = response.title;
                 this.musicFiltered = this.filterControl.valueChanges.pipe(
                     startWith(''),
-                    map((value: string) =>
-                        response.ciphers.filter(
-                            (option) =>
-                                !!option.cipher.title
-                                    .toUpperCase()
-                                    .includes(value.toUpperCase()) ||
-                                !!option.cipher.lyric
-                                    .toUpperCase()
-                                    .includes(value.toUpperCase())
-                        )
-                    )
+                    map((value: string) => this.filter(value))
                 );
             },
-            () => {},
+            () => { },
             () => {
                 this.spinner.off();
             }
         );
+    }
+
+    private filter(value: string): any {
+        return this.songbook.ciphers.filter(
+            (option) => {
+                return (!!this.removeAccents(option.cipher.title)
+                    .toUpperCase()
+                    .includes(value.toUpperCase()) ||
+                    !!this.removeAccents(option.cipher.lyric)
+                        .toUpperCase()
+                        .includes(value.toUpperCase()))
+                    && (
+                        !this.tags.length ||
+                        this.tags.some(tag => option.cipher.tags.split(',').includes(tag))
+                    )
+            })
+    }
+
+    private removeAccents(value: string) {
+        return value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
     }
 
     showDialogAdd(): void {
@@ -94,12 +134,24 @@ export class SongbookComponent implements OnInit {
                     (response) => {
                         this.loadSongbook();
                     },
-                    () => {},
+                    () => { },
                     () => {
                         this.spinner.off();
                     }
                 );
             },
         });
+    }
+
+    removeTag(tagRemove: string): void {
+        this.tags = this.tags.filter((tag) => tag !== tagRemove);
+    }
+
+    addTag(event: MatChipInputEvent): void {
+        const value = (event.value || '').trim();
+        if (value && !this.tags.includes(value)) {
+            this.tags = [...this.tags, value.toUpperCase()];
+        }
+        event.chipInput!.clear();
     }
 }
