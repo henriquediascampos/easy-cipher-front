@@ -62,7 +62,7 @@ export class SongbookComponent implements OnInit {
         this.tagChange.subscribe((a) => {
             this.musicFiltered = this.filterControl.valueChanges.pipe(
                 startWith(''),
-                map((value: string) => this.filter(this.removeAccents(this.filterControl.value)))
+                map((value: string) => this.filter(this.removeAccents(typeof this.filterControl.value === 'string' ? this.filterControl.value : "")))
             );
         });
     }
@@ -110,7 +110,7 @@ export class SongbookComponent implements OnInit {
     }
 
     private removeAccents(value: string) {
-        return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        return value ? value.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : "";
     }
 
     showDialogAdd(): void {

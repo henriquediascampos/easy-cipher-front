@@ -115,7 +115,9 @@
         "ADD_CIPHER": "Adicionar música/cifra.",
         "MUSICS": "Músicas / cifra",
         "MUSICS_PLACEHOLDER": "Pesquise por uma música / cifra",
-        "FILTER_TAG": "Filtre por uma tag"
+        "FILTER_TAG": "Filtre por uma tag",
+        "SONG": "Canção",
+        "SONGS": "Canções"
     },
     "PRESENTER_MUSIC": {
         "TITLE": "Musica"

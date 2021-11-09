@@ -53,6 +53,12 @@
             </div>
         </div>
 
+        <div>
+            <span class="details">
+                {{(musicFiltered | async)?.length}} {{ ((musicFiltered | async)?.length  === 1 ? "SONGBOOK.SONG" : "SONGBOOK.SONGS") | translate }}
+            </span>
+        </div>
+
         <ec-music-card #card
             *ngFor="let item of musicFiltered | async"
             [matTooltip]="item.cipher.lyric"
