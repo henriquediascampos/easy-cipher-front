@@ -159,9 +159,9 @@ export class CiphersFactoryComponent implements OnInit {
             this.toControl('title').setValue(this.state.title);
             this.toControl('tone').setValue(this.state.tone);
             setTimeout(() => {
-                this.secondary?.emitterChangeText(
-                    JSON.parse(this.state!.cipher)
-                );
+                if (this.state?.cipher) {
+                    this.secondary?.emitterChangeText(JSON.parse(this.state!.cipher));
+                }
             }, 200);
         }
     }

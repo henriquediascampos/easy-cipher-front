@@ -4,10 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, of, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MusicalScaleService } from '../../../../core/services/musical-scale.service';
-import {
-    DialogSetNoteComponent,
-    Scale,
-} from '../dialog-set-note/dialog-set-note.component';
+import { DialogSetNoteComponent } from '../dialog-set-note/dialog-set-note.component';
 import { FormatMusicService } from './../../../../core/services/format-musica.service';
 
 export declare type TypeLine = 'text' | 'cipher' | 'empty';
@@ -80,7 +77,7 @@ export class CiphersFactorySecondaryTabComponent implements OnInit {
                             (option) =>
                                 !!option
                                     .toUpperCase()
-                                    .includes(value.toUpperCase())
+                                    .includes(value?.toUpperCase())
                         )
                     )
                 );

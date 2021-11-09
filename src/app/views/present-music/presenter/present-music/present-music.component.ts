@@ -23,6 +23,8 @@ export class PresentMusicComponent implements OnInit {
     origemTone!: string;
     tone = new FormControl(['']);
     customCipher!: CustomCipher;
+    lyric?: string;
+
 
     constructor(
         private router: Router,
@@ -37,7 +39,8 @@ export class PresentMusicComponent implements OnInit {
             this.title = cipher.title;
             this.origemTone = cipher.tone;
             this.tone.setValue(customTone);
-            this.text = JSON.parse(cipher.cipher);
+            this.text = cipher.cipher ? JSON.parse(cipher.cipher) : cipher.cipher;
+            this.lyric = cipher.lyric;
         } else {
             this.location.back();
         }
@@ -84,21 +87,21 @@ export class PresentMusicComponent implements OnInit {
                 this.updateCustomTone(value);
             });
         }
+        if (this.text) {
+            const newText = this.text.map((line: Line) => {
+                if (line.type === 'cipher') {
+                    line.content = this.scale.changeNotes(line.content, change);
+                }
+                return line;
+            });
 
-        const newText = this.text.map((line: Line) => {
-            if (line.type === 'cipher') {
-                line.content = this.scale.changeNotes(line.content, change);
-            }
-            return line;
-        });
+            this.text = newText;
+        }
 
-        this.text = newText;
     }
 
     updateCustomTone(newTone: string): void {
         this.customCipher.customTone = newTone;
-        this.presenter.update(this.customCipher).subscribe(response => {
-
-        });
+        this.presenter.update(this.customCipher).subscribe(response => {});
     }
 }
