@@ -27,14 +27,13 @@ export class SongbookComponent implements OnInit {
     id!: string;
     permitedExcludeCipher = false;
 
-
     _tags: string[] = [];
     get tags() {
         return this._tags;
     }
     set tags(tags: string[]) {
         this._tags = tags;
-        this._tagChange.next(this._tags)
+        this._tagChange.next(this._tags);
     }
 
     private _tagChange = new Subject<any>();
@@ -50,7 +49,7 @@ export class SongbookComponent implements OnInit {
         private dialog: MatDialog,
         private systemDialog: SystemDialogService,
         private spinner: SpinnerService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.route.queryParams.subscribe((params) => {
@@ -60,10 +59,10 @@ export class SongbookComponent implements OnInit {
             }, 300);
         });
 
-        this.tagChange.subscribe(a => {
+        this.tagChange.subscribe((a) => {
             this.musicFiltered = this.filterControl.valueChanges.pipe(
                 startWith(''),
-                map((value: string) => this.filter(value))
+                map((value: string) => this.filter(this.removeAccents(this.filterControl.value)))
             );
         });
     }
@@ -76,10 +75,10 @@ export class SongbookComponent implements OnInit {
                 this.title = response.title;
                 this.musicFiltered = this.filterControl.valueChanges.pipe(
                     startWith(''),
-                    map((value: string) => this.filter(value))
+                    map((value: string) => this.filter(this.removeAccents(value)))
                 );
             },
-            () => { },
+            () => {},
             () => {
                 this.spinner.off();
             }
@@ -87,24 +86,31 @@ export class SongbookComponent implements OnInit {
     }
 
     private filter(value: string): any {
-        return this.songbook.ciphers.filter(
-            (option) => {
-                return (!!this.removeAccents(option.cipher.title)
+        return this.songbook.ciphers.filter((option) => {
+            const matchFilter =
+                !!this.removeAccents(option.cipher.title)
                     .toUpperCase()
                     .includes(value.toUpperCase()) ||
-                    !!this.removeAccents(option.cipher.lyric)
-                        .toUpperCase()
-                        .includes(value.toUpperCase()))
-                    && (
-                        !this.tags.length ||
-                        this.tags.some(tag => option.cipher.tags.split(',').includes(tag))
-                    )
-            })
+                !!this.removeAccents(option.cipher.lyric)
+                    .toUpperCase()
+                    .includes(value.toUpperCase());
+
+            const matchTags =
+                !this.tags.length ||
+                this.tags.reduce<boolean>((accu, curr) => {
+                    return accu && option.cipher.tags.split(',').includes(curr)
+                }, true);
+
+            if (matchFilter && matchTags) {
+                return true
+            } else {
+                return false
+            }
+        });
     }
 
     private removeAccents(value: string) {
-        return value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-
+        return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     }
 
     showDialogAdd(): void {
@@ -134,7 +140,7 @@ export class SongbookComponent implements OnInit {
                     (response) => {
                         this.loadSongbook();
                     },
-                    () => { },
+                    () => {},
                     () => {
                         this.spinner.off();
                     }
