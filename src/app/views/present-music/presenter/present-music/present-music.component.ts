@@ -1,8 +1,9 @@
+import { Subscription } from 'rxjs';
 import { CustomCipher } from './../../../songbook/domain/models/CustomCipher';
 import { Location } from '@angular/common';
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormatMusicService } from './../../../../core/services/format-musica.service';
 import {
     MusicalScaleService,
@@ -16,7 +17,7 @@ import { PresentMusicPresenter } from '../../domain/boundaries/present-music.pre
     templateUrl: './present-music.component.html',
     styleUrls: ['./present-music.component.sass'],
 })
-export class PresentMusicComponent implements OnInit {
+export class PresentMusicComponent implements OnDestroy, AfterViewInit {
     @HostBinding('class') _class = 'container full';
     text!: Line[];
     title!: string;
@@ -24,29 +25,48 @@ export class PresentMusicComponent implements OnInit {
     tone = new FormControl(['']);
     customCipher!: CustomCipher;
     lyric?: string;
+    id!: string;
+    subscription = new Subscription();
 
 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
         private format: FormatMusicService,
         private scale: MusicalScaleService,
         private location: Location,
         private presenter: PresentMusicPresenter
     ) {
-        if (this.router.getCurrentNavigation()?.extras.state) {
-            const { customCipher, cipher, customTone }: any = this.router.getCurrentNavigation()?.extras.state;
-            this.customCipher = customCipher;
+        const sub = route.params.subscribe(param => {
+            this.id = param.id;
+        });
+
+        this.subscription.add(sub);
+    }
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
+    }
+
+    ngAfterViewInit(): void {
+        if (!this.id) {
+            this.location.back();
+        }
+
+        const sub = this.presenter.findById(this.id).subscribe(response => {
+            const { cipher, customTone } = response;
+            this.customCipher = response;
             this.title = cipher.title;
             this.origemTone = cipher.tone;
             this.tone.setValue(customTone);
             this.text = cipher.cipher ? JSON.parse(cipher.cipher) : cipher.cipher;
             this.lyric = cipher.lyric;
-        } else {
-            this.location.back();
-        }
+            this.customizeTone();
+        });
+        this.subscription.add(sub);
+
     }
 
-    ngOnInit(): void {
+    private customizeTone() {
         if (this.origemTone && this.origemTone !== this.tone.value) {
             setTimeout(() => {
                 this.text = this.text.map((line) => {
@@ -102,6 +122,6 @@ export class PresentMusicComponent implements OnInit {
 
     updateCustomTone(newTone: string): void {
         this.customCipher.customTone = newTone;
-        this.presenter.update(this.customCipher).subscribe(response => {});
+        this.presenter.update(this.customCipher).subscribe(response => { });
     }
 }

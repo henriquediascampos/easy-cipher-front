@@ -14,4 +14,8 @@ export class PresentMusicRepository {
         return this.http.put<CustomCipher>(`${this.baseUre}/api/custom-cipher`, music);
     }
 
+    findById(id: string): Observable<CustomCipher> {
+        return this.http.get<CustomCipher>(`${this.baseUre}/api/custom-cipher/${id}`);
+    }
+
 }

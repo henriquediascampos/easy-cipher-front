@@ -19,10 +19,10 @@ export class MusicCardComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    public animateSlide(route: string, param?: any) {
+    public animateSlide(route: string[], param?: any) {
         (this.card.nativeElement as HTMLElement).classList.add('navigate');
         setTimeout(() => {
-            this.router.navigate([route], {
+            this.router.navigate(route, {
                 skipLocationChange: false,
                 state: param
             });

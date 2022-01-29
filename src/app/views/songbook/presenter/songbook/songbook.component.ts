@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { SongbookPresenter } from '../../domain/boundaries/songbook.presenter';
@@ -25,7 +25,7 @@ export class SongbookComponent implements OnInit {
     filterTagControl = new FormControl(['']);
     musicFiltered?: Observable<CustomCipher[]>;
     id!: string;
-    permitedExcludeCipher = false;
+    permitedEdit = false;
 
     _tags: string[] = [];
     get tags() {
@@ -46,6 +46,7 @@ export class SongbookComponent implements OnInit {
     constructor(
         private presenter: SongbookPresenter,
         private route: ActivatedRoute,
+        private router: Router,
         private dialog: MatDialog,
         private systemDialog: SystemDialogService,
         private spinner: SpinnerService
@@ -65,6 +66,13 @@ export class SongbookComponent implements OnInit {
                 map((value: string) => this.filter(this.removeAccents(typeof this.filterControl.value === 'string' ? this.filterControl.value : "")))
             );
         });
+
+        // setTimeout(() => {
+            // this.filterControl.setValue('SOLDADO DO SENHOR');
+
+            // this.router.navigate(['present-music', '45eea326-58f2-c39c-32de-36a756b290b4']);
+
+        // }, 400);
     }
 
     loadSongbook() {
@@ -113,12 +121,13 @@ export class SongbookComponent implements OnInit {
         return value ? value.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : "";
     }
 
-    showDialogAdd(): void {
+    showDialogAdd(id?: string): void {
         this.dialog.open(DialogAddCipherComponent, {
             width: '600px',
             height: '300px',
             data: {
                 songbook: this.id,
+                idCustomCipher: id,
                 callback: () => {
                     this.loadSongbook();
                 },
@@ -126,8 +135,12 @@ export class SongbookComponent implements OnInit {
         });
     }
 
-    edit() {
-        this.permitedExcludeCipher = !this.permitedExcludeCipher;
+    editCipher() {
+        this.permitedEdit = !this.permitedEdit;
+    }
+
+    edit(id: string) {
+        this.showDialogAdd(id);
     }
 
     delete(id: string): void {

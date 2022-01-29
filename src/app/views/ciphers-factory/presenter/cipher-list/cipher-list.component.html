@@ -28,13 +28,13 @@
             *ngFor="let cipher of ciphers | async"
             [matTooltip]="cipher.lyric"
             [music]="cipher"
-            (dblclick)="card.animateSlide('ciphers/ciphers-factory', {cipher})"
+            (dblclick)="card.animateSlide(['ciphers/ciphers-factory'], {cipher})"
         >
             <ng-container buttons>
                 <button
                     mat-icon-button
                     [matTooltip]="'GENERIC_TOOLTIPS.ACCESS_CIPHER' | translate"
-                    (click)="card.animateSlide('ciphers/ciphers-factory', {cipher})"
+                    (click)="card.animateSlide(['ciphers/ciphers-factory'], {cipher})"
                 >
                     <mat-icon>edit</mat-icon>
                 </button>

@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 4200;
+const PORT = process.env.PORT || 3000;
 const PATH = `${__dirname}/dist/easy-cipher-front`;
 const $URL_API = process.env.URL_API;
 

@@ -15,4 +15,7 @@ export class DefaultPresentMusicPresenter implements PresentMusicPresenter {
         return this.service.update(music);
     }
 
+    findById(id: string): Observable<CustomCipher> {
+        return this.service.findById(id);
+    }
 }

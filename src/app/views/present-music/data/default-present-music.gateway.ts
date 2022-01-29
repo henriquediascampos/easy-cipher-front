@@ -15,4 +15,8 @@ export class DefaultPresentMusicGateway implements PresentMusicGateway {
         return this.repository.update(music);
     }
 
+    findById(id: string): Observable<CustomCipher> {
+        return this.repository.findById(id);
+    }
+
 }

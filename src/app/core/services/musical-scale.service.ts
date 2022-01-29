@@ -131,13 +131,16 @@ export class MusicalScaleService {
             return (
                 this.scale[index + moveHouse - this.scale.length] + increment
             );
+        } else if (index + moveHouse < 0) {
+            return this.scale[this.scale.length + moveHouse];
+        } else  {
+            return this.scale[index + moveHouse] + increment;
         }
-        return this.scale[index + moveHouse] + increment;
     }
 
     changeTone(notes: string, origemTone: string, currentTone: string): string {
-        const origemToneIndex = this.scale.indexOf(origemTone as any);
-        const currentToneIndex = this.scale.indexOf(currentTone as any);
+        const origemToneIndex = this.getIndex(origemTone).index;
+        const currentToneIndex = this.getIndex(currentTone).index;
         const changeValue = -(origemToneIndex - currentToneIndex);
 
         return this.split

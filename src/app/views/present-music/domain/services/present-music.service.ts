@@ -12,4 +12,7 @@ export class PresentMusicService {
         return this.gateway.update(music);
     }
 
+    findById(id: string): Observable<CustomCipher> {
+        return this.gateway.findById(id);
+    }
 }

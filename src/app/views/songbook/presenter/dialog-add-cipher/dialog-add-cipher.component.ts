@@ -15,6 +15,7 @@ import { Songbook } from './../../domain/models/Songbook';
 
 export interface DialogData {
     songbook: string;
+    idCustomCipher: string;
     callback?: (value?: any) => void;
 }
 
@@ -67,7 +68,7 @@ export class DialogAddCipherComponent implements OnInit {
             if (value.cipher.tone) {
                 this.formGroup.get('customTone')?.setValue(value.cipher.tone)
             }
-        })
+        });
 
         setTimeout(() => {
             this.findAllCiphers()
@@ -111,6 +112,7 @@ export class DialogAddCipherComponent implements OnInit {
             },
             () => {},
             () => {
+                this.presenter
                 this.spinner.off();
             }
         );
@@ -125,6 +127,9 @@ export class DialogAddCipherComponent implements OnInit {
             const customCipher: CustomCipher = this.formGroup.getRawValue();
             customCipher.songbook = { id: this.data.songbook } as Songbook;
             this.spinner.on();
+            if (this.data.idCustomCipher) {
+                customCipher.id = this.data.idCustomCipher;
+            }
 
             this.presenter.add(customCipher).subscribe(
                 (response) => {

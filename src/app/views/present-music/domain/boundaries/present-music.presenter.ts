@@ -7,4 +7,6 @@ export abstract class PresentMusicPresenter {
 
     abstract update(music: CustomCipher): Observable<CustomCipher>;
 
+    abstract findById(id: string): Observable<CustomCipher>;
+
 }

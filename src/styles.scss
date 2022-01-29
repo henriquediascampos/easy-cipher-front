@@ -2,6 +2,7 @@
 @import "./app/styles/palette";
 @import "./app/styles/menu";
 @import "./app/styles/flex";
+@import "./app/styles/_custom-mat-component";
 @import "./app/styles/typography";
 @import "./app/styles/reponsive";
 
@@ -63,10 +64,6 @@ body {
     div > div:last-child {
         position: relative;
     }
-}
-
-mat-toolbar.toolbar {
-    height: 56px;
 }
 
 .container-module-overflow {
@@ -167,31 +164,6 @@ mat-toolbar.toolbar {
     &-fixed {
         position: fixed;
     }
-}
-
-
-mat-stepper.teste {
-    div.mat-horizontal-content-container {
-        padding: 0
-    }
-}
-
-.mat-dialog-container {
-    resize: both;
-}
-
-
-.button-adaptable {
-    .mat-button-wrapper {
-        line-height: 0;
-        height: 90%;
-        display: flex;
-        align-items: center;
-    }
-}
-
-mat-label {
-    user-select: none;
 }
 
 .user-select {
