@@ -1,20 +1,22 @@
+import { FormGroup } from '@angular/forms';
 /* eslint-disable @typescript-eslint/ban-types */
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 
 @Injectable()
 export class RequestFilterService {
     makeFilterForm(formGroup: FormGroup): {} {
+        console.log('form teste ', new FormGroup({}, [], []) instanceof FormGroup);
+
         const filter = Object.getOwnPropertyNames(formGroup.controls).reduce((accu: any, curr) => {
             const control = formGroup.get(curr);
 
-            console.log(accu, curr, 'constructorName: ' + control?.constructor.name);
+            console.log(curr, 'constructorName: ' + control?.constructor.name, control instanceof FormGroup);
             if (curr === 'between') {
                 this.makeFilterBetween(control as FormGroup, accu, curr);
             } else if (curr === 'ageGroup') {
                 this.makeFilterAgeGroup(accu, curr, control as FormGroup);
-            } else if (control?.constructor.name === 'FormGroup') {
+            } else if (control instanceof FormGroup) {
                 this.makeFilterCompose(accu, curr, control as FormGroup);
             } else {
                 accu[curr] = control?.value;
@@ -23,7 +25,7 @@ export class RequestFilterService {
         }, {});
 
         Object.keys(filter).forEach((key) => !filter[key] && delete filter[key]);
-        console.log(filter);
+        console.log('filtro ', filter);
 
         return filter;
     }
